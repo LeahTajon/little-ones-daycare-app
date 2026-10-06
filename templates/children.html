@@ -1,0 +1,386 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="children-page">
+
+    <!-- Header -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+
+        <div>
+            <h1 class="fw-bold mb-1">Children</h1>
+            <p class="text-muted mb-0">Manage your registered children</p>
+        </div>
+
+        <a href="{{ url_for('add_child') }}" class="btn-add-child">
+            <i data-lucide="plus"></i>
+            Add New Child
+        </a>
+    </div>
+    <!--End: Header -->
+
+    <!-- Active Classroom Filter -->
+    {% if class_name %}
+        <div class="active-class-filter">
+
+            <div class="active-class-icon">
+                <i class="ti ti-school"></i>
+            </div>
+
+            <div class="active-class-info">
+                <span>Classroom</span>
+                <strong>{{ class_name }}</strong>
+            </div>
+
+            <a href="{{ url_for('children') }}" class="clear-class-filter">
+                <i class="ti ti-x"></i>
+                Clear
+            </a>
+        </div>
+    {% endif %}
+    <!--End: Active Classroom Filter -->
+
+    <!-- Search -->
+    <form method="GET" action="{{ url_for('children') }}" class="search-bar">
+
+        <i data-lucide="search"></i>
+        <input 
+            type="text"
+            name="search"
+            value="{{ search }}"
+            placeholder="Search children...">
+
+        {% if search %}
+            <a href="{{ url_for('children') }}" class="clear-search">
+                <i data-lucide="x"></i>
+            </a>
+        {% endif %}
+    </form>
+    <!--End: Search -->
+
+    {% if children.items %}
+    <!-- Table Container -->
+    <div class="table-card">
+        <div class="table-wrapper">
+            <table class="children-table" id="childrenTable">
+                <thead>
+                    <tr>
+                        <th>Child</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Class</th>
+                        <th>Parent / Guardian</th>
+                        <th>Start Date</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for child in children.items %}
+                    <tr class="child-row" data-gender="{{ child.gender|lower }}">
+                        
+                        <!-- Child Column -->
+                        <td>
+                            <div class="child-info">
+                                <!-- Link to go child details -->
+                                <a 
+                                    href="{{ url_for('child_details', child_id=child.id) }}"
+                                    class="child-link">
+
+                                    {% if child.photo %}
+                                        <img 
+                                            src="{{ url_for('static', filename='uploads/' + child.photo) }}" 
+                                            alt="{{ child.first_name }} {{ child.last_name }}"
+                                            class="child-avatar"
+                                        >
+                                    {% else %}
+                                        <div class="child-avatar-placeholder">
+                                            {{ child.first_name[0]|upper }}
+                                        </div>
+                                    {% endif %}
+                                    
+                                    <div class="child-text">
+                                        <div class="child-name">
+                                            {{ child.first_name }}
+                                            {{ child.last_name }}
+                                        </div>
+
+                                        <div class="child-subtitle">
+                                            {{ child.date_of_birth.strftime('%b %d, %Y') if child.date_of_birth else 'No birth date' }}
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </td>
+
+                        <!-- Age -->
+                        <td class="age-cell">
+                            {{ child.age_display }}
+                        </td>
+
+                        <!-- Gender -->
+                        <td>
+                            <span class="gender-badge {% if child.gender == 'male' %}male {% else %}female{% endif %}">
+                                <i data-lucide="{% if child.gender == 'male' %}mars{% else %}venus{% endif %}"></i>
+                                {{ child.gender|capitalize }}
+                            </span>
+                        </td>
+
+                        <!-- Class -->
+                        <td class="class-cell">
+                            {{ child.class_name or '--' }}
+                        </td>
+
+                        <!-- Parents -->
+                        <td>
+                            <div class="parents-info">
+                                {% if child.parents and child.parents|length > 0 %}
+                                    {% for parent in child.parents[:2] %}
+                                        <div class="parent-item">
+                                            <div class="parent-icon {% if parent.role == 'Father' %}father{% else %}mother{% endif %}">
+                                                <i data-lucide="{% if parent.role == 'Father' %}user{% else %}user-round{% endif %}"></i>
+                                        </div>
+
+                                        <div class="parent-text">
+                                            <div class="parent-name">
+                                                {{ parent.full_name }}
+                                            </div>
+                                            <div class="parent-role">
+                                                {{ parent.role }}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                        <span class="text-muted">No parents added</span>
+                                {% endif %}
+                            </div>
+                        </td>
+
+                        <!-- Start Date -->
+                        <td class="start-cell">
+                            {{ child.enrolled_date.strftime('%b %d, %Y') if child.enrolled_date else '--'}}
+                        </td>
+
+                        <!-- Actions -->
+                        <td class="text-end">
+                            
+                            <div class="dropdown">
+                                <button 
+                                    class="btn btn-sm action-menu-btn"
+                                    type="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                
+                                    <i data-lucide="more-vertical"></i>
+                                </button>
+
+                                <ul class="dropdown-menu dropdown-menu-end">
+
+                                    <!-- View -->
+                                    <li>
+                                        <a 
+                                            href="{{ url_for('child_details', child_id=child.id) }}"
+                                            class="dropdown-item"
+                                            title="View">
+
+                                            <i data-lucide="eye"></i>
+                                            View
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a 
+                                            href="{{ url_for('edit_child', child_id=child.id) }}"
+                                            class="dropdown-item"
+                                            title="Edit">
+
+                                            <i data-lucide="pencil"></i>
+                                            Edit
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <button
+                                            type="button"
+                                            class="dropdown-item text-danger"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#deleteChildModal{{ child.id }}">
+
+                                            <i data-lucide="trash-2"></i>
+                                            Delete
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Delete Confirmation Modal -->
+                    <div 
+                        class="modal fade"
+                        id="deleteChildModal{{ child.id }}"
+                        tabindex="-1"
+                        aria-labelledby="deleteChildModalLabel{{ child.id }}"
+                        aria-hidden="true">
+
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header border-0">
+                                    <h5
+                                        class="modal-title fw-bold"
+                                        id="deleteChildModal{{ child.id }}">
+                                        Delete Child
+                                    </h5>
+
+                                    <button
+                                        type="button"
+                                        class="btn-close"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Close">
+                                    </button>
+                                </div>
+
+                                <div class="modal-body text-center">
+                                    <div class="delete-icon mb-3">
+                                        <i data-lucide="trash-2"></i>
+                                    </div>
+
+                                    <h5 class="fw-bold">
+                                        Are you sure?
+                                    </h5>
+
+                                    <p class="text-muted mb-0">
+                                        You are about to delete
+                                        <strong>
+                                            {{ child.first_name }} {{ child.last_name }}
+                                        </strong>. 
+                                        This action cannot be undone
+                                    </p>
+                                </div>
+                                <div class="modal-footer border-0 justify-content-center">
+                                    <button
+                                        type="button"
+                                        class="btn btn-secondary"
+                                        data-bs-dismiss="modal">
+                                        Cancel
+                                    </button>
+
+                                    <form 
+                                        action="{{ url_for('delete_child', child_id=child.id) }}"
+                                        method="POST">
+                                    
+                                        <button
+                                            type="submit"
+                                            class="btn btn-danger">
+                                            <i data-lucide="trash-2"></i>
+                                            Yes, delete
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--End: Delete Confirmation Modal -->
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination-container">
+
+            <div class="pagination-info">
+                Showing
+                <strong>{{ children.first }}</strong>
+                -
+                <strong>{{ children.last }}</strong>
+                of 
+                <strong>{{ children.total }}</strong>
+                children
+            </div>
+
+            <div class="pagination">
+                {% if children.has_prev %}
+                    <a 
+                        href="{{ url_for('children', page=children.prev_num, search=search) }}"
+                        class="page-btn"
+                    >
+                        <i data-lucide="chevron-left"></i>
+                    </a>
+                {% else %}
+                    <span class="page-btn disabled">
+                        <i data-lucide="chevron-left"></i>
+                    </span>
+                {% endif %}
+                
+                {% for page_num in children.iter_pages(
+                    left_edge=1,
+                    left_current=1,
+                    right_current=1,
+                    right_edge=1
+                ) %}
+
+                    {% if page_num %}
+                    
+                        {% if page_num == children.page %}
+                            <span class="page-btn active">
+                                {{ page_num }}
+                            </span>
+                        {% else %}
+                            <a 
+                                href="{{ url_for('children', page=page_num, search=search) }}"
+                                class="page-btn"
+                            >
+                                {{ page_num }}
+                            </a>
+                        {% endif %}
+                    {% else %}
+                            <span class="page-dots">
+                            ...
+                            </span>
+                    {% endif %}
+                {% endfor %}
+
+                {% if children.has_next %}
+                    <a 
+                        href="{{ url_for('children', page=children.next_num, search=search) }}"
+                        class="page-btn">
+                        
+                        <i data-lucide="chevron-right"></i>
+                    </a>
+                {% else %}
+                    <span class="page-btn disabled">
+                        <i data-lucide="chevron-right"></i>
+                    </span>
+                {% endif %}               
+            </div>
+        </div>
+        <!--End: Pagination -->
+    </div>
+    <!--End: Table Container -->
+    {% else %}
+        <!-- Empty state goes here -->
+        <div class="empty-children">
+
+            <div class="empty-children-icon">
+                <i data-lucide="baby"></i>
+            </div>
+
+            <h3>No children yet</h3>
+            <p>
+                There are no children registered yet.
+                Add a child to get started.
+            </p>
+
+            <a 
+                href="{{ url_for('add_child') }}"
+                class="btn-add-child">
+                
+                <i data-lucide="plus"></i>
+                Add New Child
+            </a>
+        </div>
+        <!--End: Empty state goes here -->
+    {% endif %}
+</div>
+{% endblock %}

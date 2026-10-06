@@ -1,0 +1,571 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{{ url_for(
+        'static',
+        filename='css/nap_log.css'
+    ) }}"
+/>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container py-4">
+
+
+    <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
+
+    <div class="nap-back-wrapper">
+
+        <a
+            href="{{ url_for(
+                'child_daily_log',
+                child_id=child.id,
+                date=selected_date.strftime('%Y-%m-%d')
+            ) }}"
+            class="nap-back-link text-decoration-none"
+        >
+
+            <i class="ti ti-arrow-left me-1"></i>
+
+        </a>
+
+
+        <div class="nap-header-content">
+
+            <h1>
+                Nap Log
+            </h1>
+
+
+            <div class="nap-header-meta">
+
+                <span class="nap-child-name">
+                    {{ child.first_name }} {{ child.last_name }}
+                </span>
+
+                <span class="nap-meta-divider">
+                    •
+                </span>
+
+                <span>
+                    {{ selected_date.strftime('%B %d, %Y') }}
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- End: Page Header -->
+
+
+
+    <!-- =====================================================
+         NAP CARD
+    ====================================================== -->
+
+    <div class="nap-card">
+
+        <div class="nap-card-body">
+
+
+            {% if active_nap %}
+
+
+                <!-- =================================================
+                     NAP IN PROGRESS
+                ================================================== -->
+
+                <div class="nap-active">
+
+
+                    <!-- Nap Icon -->
+
+                    <div class="nap-icon-wrapper nap-active-icon">
+
+                        <i class="ti ti-moon-stars"></i>
+
+                    </div>
+
+
+
+                    <!-- Title -->
+
+                    <h2 class="nap-ready-title">
+
+                        Nap in Progress
+
+                    </h2>
+
+
+
+                    <!-- Description -->
+
+                    <p class="nap-description">
+
+                        {{ child.first_name }}
+                        is currently napping.
+
+                    </p>
+
+
+
+                    <!-- =================================================
+                         START TIME
+                    ================================================== -->
+
+                    <div class="nap-started-time">
+
+                        <span class="nap-started-label">
+
+                            Started at
+
+                        </span>
+
+
+                        <span class="nap-started-value">
+
+                            {{ active_nap.start_time.strftime(
+                                '%I:%M %p'
+                            ).lstrip('0') }}
+
+                        </span>
+
+                    </div>
+
+                    <!-- End Nap Form -->
+                    <form action="{{ url_for(
+                        'add_nap',
+                        child_id=child.id,
+                        date=selected_date.strftime('%Y-%m-%d')
+                        )}}"
+                        method="POST"
+                        class="nap-form"
+                    >   
+                
+                        {{ form.hidden_tag() }}
+
+                        <!-- Tell route this is an end action -->
+                        <input 
+                            type="hidden"
+                            name="action"
+                            value="end"
+                        >
+                            <!-- End Time Selection -->
+                            <div class="nap-time-selection">
+
+                                <div class="nap-field-label">
+                                    How would you like to record the end time?
+                                </div>
+
+                                <div class="row g-3 nap-time-options">
+
+                                    <!-- Automatic -->
+                                    <div class="col-12 col-md-6">
+                                        
+                                        <label class="nap-time-option">
+
+                                            <input 
+                                                type="radio"
+                                                name="time_mode"
+                                                value="automatic"
+                                                checked
+                                            >
+
+                                            <div class="nap-time-option-content">
+
+                                                <!-- icon -->
+                                                <div class="nap-time-option-icon">
+                                                    <i class="ti ti-clock"></i>
+                                                </div>
+
+                                                <!-- Text -->
+                                                <div class="nap-time-option-text">
+
+                                                    <div class="nap-time-option-title">
+                                                        Automatic
+                                                    </div>
+
+                                                    <div class="nap-time-option-description">
+                                                        Use the current time
+                                                    </div>
+                                                </div>
+
+                                                <!-- Check -->
+                                                <div class="nap-time-option-check">
+                                                    <i class="ti ti-check"></i>
+                                                </div>
+                                            </div>
+                                        </label>
+
+                                    </div>
+
+                                    <!-- Manual Time -->
+                                    <div class="col-12 col-md-6">
+
+                                        <label class="nap-time-option">
+                                            <input 
+                                                type="radio"
+                                                name="time_mode"
+                                                value="manual"
+                                            >
+
+                                            <div class="nap-time-option-content">
+
+                                                <!-- icon -->
+                                                <div class="nap-time-option-icon">
+                                                    <i class="ti ti-edit"></i>
+                                                </div>
+
+                                                <!-- Text -->
+                                                <div class="nap-time-option-text">
+
+                                                    <div class="nap-time-option-title">
+                                                        Manual Time
+                                                    </div>
+                                                    <div class="nap-time-option-description">
+                                                        Enter the end time
+                                                    </div>
+                                                </div>
+
+                                                <!-- Check -->
+                                                <div class="nap-time-option-check">
+                                                    <i class="ti ti-check"></i>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Manual End Time -->
+                            <div class="nap-manual-time">
+
+                                <label for="{{ form.nap_time.id }}" class="nap-field-label">
+                                    Nap End Time
+                                </label>
+
+                                {{ form.nap_time(
+                                    class="form-control nap-time-input"
+                                )}}
+                            </div>
+
+                            <!-- End Nap Button -->
+                            <div class="nap-action">
+                                
+                                <button
+                                    type="submit"
+                                    class="nap-end-btn">
+                                    
+                                    <i class="ti ti-player-stop"></i>
+
+                                    <span>End Nap</span>
+                                </button>
+                            </div>
+                    </form>
+
+
+                </div>
+
+
+            {% else %}
+
+
+                <!-- =================================================
+                     READY FOR NAP
+                ================================================== -->
+
+                <div class="nap-ready">
+
+
+                    <!-- Nap Icon -->
+
+                    <div class="nap-icon-wrapper">
+
+                        <i class="ti ti-moon-stars"></i>
+
+                    </div>
+
+
+
+                    <!-- Title -->
+
+                    <h2 class="nap-ready-title">
+
+                        Ready for Nap
+
+                    </h2>
+
+
+
+                    <!-- Description -->
+
+                    <p class="nap-description">
+
+                        Record the time when
+                        {{ child.first_name }}
+                        starts their nap.
+
+                    </p>
+
+
+
+                    <!-- =================================================
+                         NAP FORM
+                    ================================================== -->
+
+                    <form
+                        method="POST"
+                        action="{{ url_for(
+                            'add_nap',
+                            child_id=child.id,
+                            date=selected_date.strftime('%Y-%m-%d')
+                        ) }}"
+                        class="nap-form"
+                    >
+
+                        {{ form.hidden_tag() }}
+
+
+                        <!-- Tell route this is a START action -->
+
+                        <input
+                            type="hidden"
+                            name="action"
+                            value="start"
+                        >
+
+
+
+                        <!-- =================================================
+                             TIME SELECTION
+                        ================================================== -->
+
+                        <div class="nap-time-section">
+
+
+                            <div class="nap-field-label">
+
+                                How would you like to record
+                                the start time?
+
+                            </div>
+
+
+
+                            <div class="row g-3 nap-time-options">
+
+
+                                <!-- =================================================
+                                     AUTOMATIC TIME
+                                ================================================== -->
+
+                                <div class="col-12 col-md-6">
+
+                                    <label class="nap-time-option">
+
+
+                                        <input
+                                            type="radio"
+                                            name="time_mode"
+                                            value="automatic"
+                                            checked
+                                        >
+
+
+                                        <div class="nap-time-option-content">
+
+
+                                            <!-- Icon -->
+
+                                            <div class="nap-time-option-icon">
+
+                                                <i class="ti ti-clock"></i>
+
+                                            </div>
+
+
+
+                                            <!-- Text -->
+
+                                            <div class="nap-time-option-text">
+
+                                                <div class="nap-time-option-title">
+
+                                                    Automatic Time
+
+                                                </div>
+
+
+                                                <div class="nap-time-option-description">
+
+                                                    Use the current time
+
+                                                </div>
+
+                                            </div>
+
+
+
+                                            <!-- Check -->
+
+                                            <div class="nap-time-option-check">
+
+                                                <i class="ti ti-check"></i>
+
+                                            </div>
+
+
+                                        </div>
+
+                                    </label>
+
+                                </div>
+
+
+
+                                <!-- =================================================
+                                     MANUAL TIME
+                                ================================================== -->
+
+                                <div class="col-12 col-md-6">
+
+                                    <label class="nap-time-option">
+
+
+                                        <input
+                                            type="radio"
+                                            name="time_mode"
+                                            value="manual"
+                                        >
+
+
+                                        <div class="nap-time-option-content">
+
+
+                                            <!-- Icon -->
+
+                                            <div class="nap-time-option-icon">
+
+                                                <i class="ti ti-edit"></i>
+
+                                            </div>
+
+
+
+                                            <!-- Text -->
+
+                                            <div class="nap-time-option-text">
+
+                                                <div class="nap-time-option-title">
+
+                                                    Manual Time
+
+                                                </div>
+
+
+                                                <div class="nap-time-option-description">
+
+                                                    Enter the nap time
+
+                                                </div>
+
+                                            </div>
+
+
+
+                                            <!-- Check -->
+
+                                            <div class="nap-time-option-check">
+
+                                                <i class="ti ti-check"></i>
+
+                                            </div>
+
+
+                                        </div>
+
+                                    </label>
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- =================================================
+                             MANUAL TIME INPUT
+                        ================================================== -->
+
+                        <div class="nap-manual-time">
+
+
+                            <label
+                                for="{{ form.nap_time.id }}"
+                                class="nap-field-label"
+                            >
+
+                                Nap Start Time
+
+                            </label>
+
+
+                            {{ form.nap_time(
+                                class="form-control nap-time-input"
+                            ) }}
+
+
+                        </div>
+
+
+
+                        <!-- =================================================
+                             START NAP BUTTON
+                        ================================================== -->
+
+                        <div class="nap-action">
+
+
+                            <button
+                                type="submit"
+                                class="nap-start-btn"
+                            >
+
+                                <i class="ti ti-player-play"></i>
+
+                                <span>
+                                    Start Nap
+                                </span>
+
+                            </button>
+
+
+                        </div>
+
+
+                    </form>
+
+
+                </div>
+
+
+            {% endif %}
+
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

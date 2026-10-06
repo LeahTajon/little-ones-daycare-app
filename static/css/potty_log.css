@@ -1,0 +1,724 @@
+/* Form Card */
+.potty-form-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 28px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+/* Sections */
+.potty-section {
+  padding-bottom: 28px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid #eef0f3;
+}
+
+.potty-section:last-of-type {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.potty-label {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.potty-optional {
+  font-weight: 400;
+  color: #94a3b8;
+}
+
+.potty-option {
+  min-height: 72px;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 14px 16px;
+
+  /* Soft blue/neutral default 
+    background: #f8fbff;
+    border: 1.5px solid #dbe7f5;
+    border-radius: 12px;
+    */
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+}
+
+/* Selectable Options */
+.potty-options input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.potty-option {
+  min-height: 72px;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 14px 16px;
+
+  border: 1.5px solid;
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+}
+
+.potty-option-icon {
+  width: 40px;
+  height: 40px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+
+  border-radius: 50%;
+
+  font-size: 21px;
+  line-height: 1;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease;
+
+  opacity: 0.9;
+}
+
+/* Potty Time Options */
+.potty-time-options {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+}
+
+/* Hide the actual radio button */
+.potty-time-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Time Card */
+.potty-time-card {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  width: 100%;
+  padding: 16px 18px;
+
+  border: 1.5px solid #d7e8f7;
+  border-radius: 12px;
+
+  background: #f4f9fd;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+/* Time Icon */
+.potty-time-card .potty-option-icon {
+  flex: 0 0 44px;
+
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: #eef1f3;
+  color: #7b8794;
+
+  font-size: 22px;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+/* Hover */
+.potty-time-card:hover {
+    background: #f1f4f6;
+    border-color: #c8d0d6;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 5px 14px rgba(15, 23, 42, 0.06);
+}
+
+/* Time Content */
+.potty-time-content {
+    display: flex;
+    flex-direction: column;
+
+    flex: 1;
+    min-width: 0;
+}
+
+.potty-time-title {
+    margin-bottom: 3px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    color: #475569;
+}
+
+.potty-time-text {
+    font-size: 13px;
+    line-height: 1.4;
+
+    color: #87939e;
+}
+
+/* Time Selected - Teal */
+.potty-time-option input[type="radio"]:checked
++ .potty-time-card {
+    background: #e6f7f5;
+    border-color: #36b5a7;
+
+    box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.12);
+}
+
+/* Selected icon */
+.potty-time-option input[type="radio"]:checked 
++ .potty-time-card
+.potty-option-icon {
+    background: #c9eee9;
+    color: #0f8f82;
+}
+
+/* Selected title */
+.potty-time-option input[type="radio"]:checked
++ .potty-time-card
+.potty-time-title {
+    color: #176b63;
+}
+
+/* Time Check */
+.potty-time-check {
+    width: 26px;
+    height: 26px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1.5px solid #d2d8dd;
+    border-radius: 50%;
+
+    color: transparent;
+    background: transparent;
+
+    flex-shrink: 0;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.potty-time-check {
+    font-size: 15px;
+    font-weight: 700;
+}
+
+/* Selected Check */
+.potty-time-option input[type="radio"]:checked
++ .potty-time-card 
+.potty-time-check {
+    border-color: #14b8a6;
+    background: #14b8a6;
+    color: #fff;
+}
+
+
+/* Icon */
+.potty-time-card .potty-option-icon {
+  flex: 0 0 44px;
+
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: #e3f1fb;
+  color: #4d91c7;
+
+  font-size: 22px;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+/* Content */
+.potty-time-content {
+  display: flex;
+  flex-direction: column;
+
+  flex: 1;
+  min-width: 0;
+}
+
+.potty-time-title {
+  font-size: 15px;
+  font-weight: 600;
+
+  color: #315b78;
+
+  margin-bottom: 3px;
+}
+
+.potty-time-text {
+  font-size: 13px;
+  line-height: 1.4;
+  color: #7892a5;
+}
+
+/* Check Icon */
+.potty-time-check {
+  width: 26px;
+  height: 26px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1.5px solid #b9d4e8;
+  border-radius: 50%;
+
+  color: transparent;
+  background: transparent;
+
+  flex-shrink: 0;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.potty-time-check i {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+/* Selected Time Option */
+.potty-time-option input[type="radio"]:checked + .potty-time-card {
+  background: #e5f3fc;
+  border-color: #6faed7;
+}
+
+/* Selected Icon */
+.potty-time-option
+  input[type="radio"]:checked
+  + .potty-time-card
+  .potty-option-icon {
+  background: #c9e5f7;
+  color: #367ead;
+}
+
+/* Selected Text */
+.potty-time-option
+  input[type="radio"]:checked
+  + .potty-time-card
+  .potty-time-title {
+  color: #28658e;
+}
+
+/* Selected Check */
+.potty-time-option
+  input[type="radio"]:checked
+  + .potty-time-card
+  .potty-time-check {
+  border-color: #4d91c7;
+  background: #4d91c7;
+  color: #ffffff;
+}
+
+/* Manual Time Input */
+.potty-manual-time {
+  margin-top: 14px;
+  padding: 16px;
+
+  border: 1.5px solid #d7e8f7;
+  border-radius: 12px;
+
+  background: #f8fbfe;
+}
+
+/* Manual Time Input */
+.potty-time-input {
+  width: 100%;
+
+  min-height: 46px;
+
+  border: 1.5px solid #c9ddea;
+  border-radius: 10px;
+
+  background: #fff;
+
+  color: #315b78;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  padding: 10px 12px;
+
+  box-shadow: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Focus */
+.potty-time-input:focus {
+  border-color: #6faed7;
+  box-shadow: 0 0 0 3px rgba(111, 174, 215, 0.15);
+  outline: none;
+}
+
+/* Notes */
+.potty_notes {
+  min-height: 110px;
+
+  padding: 12px 14px;
+
+  border: 1px solid #dbe1e8;
+  border-radius: 10px;
+
+  font-size: 0.9rem;
+
+  resize: vertical;
+}
+
+.potty-notes:focus {
+  border-color: #14b8a6;
+  box-shadow: 0 0 0 0.2rem rgba(20, 184, 166, 0.12);
+}
+
+/* Potty Options */
+.potty-option {
+  position: relative;
+
+  min-height: 72px;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 14px 16px;
+
+  background: #f8fafc;
+  border: 1.5px solid dfe4e8;
+  border-radius: 12px;
+
+  color: #475569;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+/* Default Icon */
+.potty-option .potty-option-icon {
+  width: 40px;
+  height: 40px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #eef1f3;
+  color: #7b8794;
+
+  font-size: 21px;
+  line-height: 1;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+/* Hover */
+.potty-option:hover {
+  background: #f1f4f6;
+  border-color: #c8d0d6;
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 5px 14px rgba(15, 23, 42, 0.06);
+}
+
+.potty-option:hover .potty-option-icon {
+  background: #e5e9ec;
+  color: #64717d;
+}
+
+/* Selected - Teal */
+.potty-options input[type="radio"]:checked + .potty-option {
+  background: #e6f7f5;
+  border-color: #36b5a7;
+
+  color: #176b63;
+
+  box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.12);
+}
+
+/* Selected Icon */
+.potty-options input[type="radio"]:checked + .potty-option .potty-option-icon {
+  background: #c9eee9;
+  color: #0f8f82;
+
+  transform: scale(1.05);
+}
+
+/* Selected Check */
+.potty-option::after {
+  content: "";
+
+  position: absolute;
+
+  top: 10px;
+  right: 10px;
+
+  width: 22px;
+  height: 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: transparent;
+  border: 1.5px solid #d2d8dd;
+
+  opacity: 0;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+/* Check mark */
+.potty-option::before {
+  content: "✓";
+
+  position: absolute;
+
+  top: 10px;
+  right: 10px;
+
+  width: 22px;
+  height: 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #14b8a6;
+  color: #fff;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  opacity: 0;
+
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+/* Show check when selected */
+.potty-options input[type="radio"]:checked + .potty-option::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Potty Option Text */
+.potty-option-text {
+  font-size: 0.9rem;
+  font-weight: 500;
+
+  color: #475569;
+
+  transition: color 0.2s ease;
+}
+
+/* Action Buttons */
+.potty-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+
+  padding-top: 8px;
+}
+
+.btn-potty-cancel,
+.btn-potty-save {
+  min-height: 42px;
+  padding: 9px 18px;
+  border-radius: 9px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.btn-potty-cancel {
+  background: #ffffff;
+  border: 1px solid #dbe1e8;
+  color: #475569;
+}
+
+.btn-potty-cancel:hover {
+  background: #f8fafc;
+  color: #334155;
+}
+
+.btn-potty-save {
+  background: #14b8a6;
+  border: 1px solid #14b8a6;
+  color: #ffffff;
+}
+
+.btn-potty-save:hover {
+  background: #0f9f91;
+  border-color: #0f9f91;
+  color: #ffffff;
+}
+
+/* Responsive */
+@media (max-width: 767.98px) {
+  .potty-form-card {
+    padding: 20px;
+    border-radius: 14px;
+  }
+
+  .potty-section {
+    padding-bottom: 22px;
+    margin-bottom: 22px;
+  }
+
+  .potty-option {
+    min-height: 64px;
+    padding: 12px 14px;
+  }
+
+  .potty-option-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 19px;
+  }
+
+  .potty-option-text {
+    font-size: 0.85rem;
+  }
+
+  .potty-time {
+    padding: 13px 14px;
+  }
+
+  .potty-time-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+
+  .potty-time-title {
+    font-size: 0.85rem;
+  }
+
+  .potty-time-text {
+    font-size: 0.75rem;
+  }
+
+  .potty-actions {
+    flex-direction: column-reverse;
+    width: 100%;
+  }
+
+  .btn-potty-cancel,
+  .btn-potty-save {
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .potty-time-card {
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .potty-time-card .potty-option-icon {
+    width: 40px;
+    height: 40px;
+    flex-basis: 40px;
+    font-size: 20px;
+  }
+
+  .potty-time-title {
+    font-size: 14px;
+  }
+
+  .potty-time-text {
+    font-size: 12px;
+  }
+
+  .potty-time-check {
+    width: 24px;
+    height: 24px;
+  }
+}

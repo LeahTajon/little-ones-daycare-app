@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/reports.css') }}"
+>
+{% endblock %}
+
+{% block content %}
+
+<div class="reports-page">
+
+    <!-- Page Header -->
+    <div class="report-page-header">
+
+        <div class="report-header-left">
+
+            <a
+                href="{{ url_for('reports') }}"
+                class="report-back"
+            >
+                <i class="ti ti-arrow-left"></i>
+            </a>
+
+            <div>
+
+                <div class="page-eyebrow">
+                    <i class="ti ti-address-book"></i>
+                    Contact Reports
+                </div>
+
+                <h1>Parent & Pickup Contacts</h1>
+
+                <p>
+                    View parent and authorized pickup contact information.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Student Filter -->
+    <div class="daily-report-selector">
+
+        <div class="daily-report-selector-icon">
+            <i class="ti ti-user"></i>
+        </div>
+
+        <div class="daily-report-selector-content">
+
+            <h2>Select Student</h2>
+
+            <p>
+                Choose a student to view their parent and
+                authorized pickup contacts.
+            </p>
+
+
+            <form
+                action="{{ url_for('parent_contact_report_preview') }}"
+                method="get"
+                class="daily-report-date-form"
+            >
+
+                <div class="daily-report-date-field">
+
+                    <label for="student_id">
+                        Student
+                    </label>
+
+                    <select
+                        id="student_id"
+                        name="student_id"
+                    >
+
+                        <option
+                            value="all"
+                            {% if selected_student == 'all' %}
+                                selected
+                            {% endif %}
+                        >
+                            All Students
+                        </option>
+
+
+                        {% for child in children %}
+
+                            <option
+                                value="{{ child.id }}"
+                                {% if selected_student|string == child.id|string %}
+                                    selected
+                                {% endif %}
+                            >
+                                {{ child.last_name }}, {{ child.first_name }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="report-action-button"
+                >
+                    <i class="ti ti-refresh"></i>
+                    View Report
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- PDF Preview -->
+    <div class="daily-report-preview-card">
+
+        <div class="daily-report-preview-header">
+
+            <div class="daily-report-preview-title">
+
+                <div class="daily-report-preview-icon">
+                    <i class="ti ti-file-type-pdf"></i>
+                </div>
+
+                <div>
+
+                    <strong>
+                        Parent & Authorized Pickup Directory
+                    </strong>
+
+                    <span>
+                        {% if selected_student == 'all' %}
+                            All Students
+                        {% else %}
+                            Selected Student
+                        {% endif %}
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="report-preview-actions">
+
+                <a
+                    href="{{ pdf_url }}"
+                    class="report-action-button"
+                    target="_blank"
+                >
+                    <i class="ti ti-printer"></i>
+                    Print
+                </a>
+
+                <a
+                    href="{{ pdf_url }}"
+                    class="report-secondary-button"
+                    download
+                >
+                    <i class="ti ti-download"></i>
+                    Download
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="daily-report-preview-container">
+
+            <iframe
+                src="{{ pdf_url }}"
+                class="daily-report-preview-frame"
+                title="Parent and Authorized Pickup Report"
+            ></iframe>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

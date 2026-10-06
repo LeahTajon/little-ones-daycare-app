@@ -1,0 +1,496 @@
+/* Daily Log Page */
+.daily-log-page {
+    width: 100%;
+}
+
+/* Page title */
+.daily-log-title {
+    color: #0f172a;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.daily-log-subtitle {
+    color: #64748b;
+    font-size: 16px;
+}
+
+.daily-log-date {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 12px 18px;
+
+    background: #fff;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+}
+
+.daily-log-date > i {
+    font-size: 22px;
+    color: #14B8A6;
+}
+
+.daily-log-date div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.daily-log-date span {
+    color: #64748B;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.daily-log-date strong {
+    color: #0F172A;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/*  DAILY LOG CLASS SECTION */
+
+.daily-log-section {
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 18px;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+
+/* Class icon */
+
+.daily-log-class-icon {
+    width: 46px;
+    height: 46px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #E6F7F5;
+    color: #14B8A6;
+
+    border-radius: 12px;
+    flex-shrink: 0;
+}
+
+.daily-log-class-icon .ti {
+    font-size: 24px;
+}
+
+
+/* Section title */
+
+.daily-log-section-title {
+    color: #0F172A;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.daily-log-section-subtitle {
+    color: #64748B;
+    font-size: 13px;
+}
+
+
+/* See All */
+
+.daily-log-see-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    color: #14B8A6;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.daily-log-see-all:hover {
+    color: #0F9F91;
+}
+
+.daily-log-see-all .ti {
+    font-size: 18px;
+}
+
+
+/*  CHILD CARD */
+
+.daily-log-child-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    width: 100%;
+
+    padding: 14px;
+
+    background: #FFFFFF;
+
+    border: 1px solid #E5E7EB;
+    border-radius: 14px;
+
+    text-decoration: none;
+
+    transition: all 0.2s ease;
+}
+
+.daily-log-child-card:hover {
+    border-color: #14B8A6;
+    transform: translateY(-2px);
+
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.07);
+}
+
+
+/* Child photo */
+
+.daily-log-child-photo {
+    width: 58px;
+    height: 58px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background: #E6F7F5;
+    color: #14B8A6;
+
+    border-radius: 12px;
+}
+
+.daily-log-child-photo img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.daily-log-child-photo .ti {
+    font-size: 26px;
+}
+
+
+/* Child information */
+
+.daily-log-child-info {
+    min-width: 0;
+    flex: 1;
+}
+
+.daily-log-child-info h3 {
+    margin: 0 0 4px;
+
+    color: #0F172A;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.daily-log-child-info p {
+    margin: 0;
+
+    color: #64748B;
+
+    font-size: 13px;
+}
+
+/* Allergy Badge */
+.allergy-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+
+    margin-top: 7px;
+    padding: 4px 8px;
+
+    background: #fef2f2;
+    color: #dc2626;
+
+    border: 1px solid #fecaca;
+    border-radius: 6px;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    cursor:pointer;
+}
+
+.allergy-badge .ti {
+    font-size: 14px;
+}
+
+/* Arrow */
+
+.daily-log-child-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #94A3B8;
+
+    flex-shrink: 0;
+}
+
+.daily-log-child-arrow .ti {
+    font-size: 20px;
+}
+
+.daily-log-child-card:hover .daily-log-child-arrow {
+    color: #14B8A6;
+}
+
+
+/* Empty state */
+
+.daily-log-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 30px;
+
+    color: #64748B;
+
+    font-size: 14px;
+
+    background: #F8FAFC;
+
+    border-radius: 12px;
+}
+
+.daily-log-empty .ti {
+    font-size: 20px;
+    color: #14B8A6;
+}
+
+/* Back Button */
+.daily-log-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    color: #64748b;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.daily-log-back:hover {
+    color: #14b8a6;
+}
+
+.daily-log-back .ti {
+    font-size: 18px;
+}
+
+/* Class Summary */
+.daily-log-class-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+    padding: 24px;
+    margin-bottom: 24px;
+    background: #fff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+}
+
+/* Information Message */
+.daily-log-class-message {
+    display:flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 12px 18px;
+
+    background: #e6f7f5;
+    color: #0f9f91;
+
+    border-radius: 12px;
+
+    font-size: 13px;
+    font-weight: 500;
+    
+}
+
+.daily-log-class-message .ti {
+    font-size: 20px;
+}
+
+/* Children Grid */
+.daily-log-children-grid {
+    margin-bottom: 30px;
+}
+
+/* Pagination */
+.daily-log-pagination-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 30px;
+    text-align: center;
+}
+
+/* Pagination */
+.daily-log-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    gap: 10px;
+
+    margin: 0;
+    padding: 0;
+
+    list-style-type: none;
+}
+
+/* Remove Bootstrap default spacing */
+
+.daily-log-pagination .page-item {
+    margin: 0;
+}
+
+/* Page Button */
+
+.daily-log-pagination .page-link {
+    width: 46px;
+    height: 46px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    color: #0F172A;
+
+    background: #FFFFFF;
+
+    border: 1px solid #E2E8F0;
+
+    border-radius: 12px !important;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    box-shadow: none;
+
+    transition: all 0.2s ease;
+}
+
+
+/* Hover */
+
+.daily-log-pagination .page-link:hover {
+    color: #14B8A6;
+    background: #F8FAFC;
+    border-color: #14B8A6;
+}
+
+
+/* Active Page */
+
+.daily-log-pagination .page-item.active .page-link {
+    color: #FFFFFF;
+
+    background: #14B8A6;
+    border-color: #14B8A6;
+}
+
+
+/* Disabled */
+
+.daily-log-pagination .page-item.disabled .page-link {
+    color: #CBD5E1;
+
+    background: #F8FAFC;
+    border-color: #E2E8F0;
+
+    cursor: not-allowed;
+}
+
+
+/* Pagination Icons */
+
+.daily-log-pagination .ti {
+    font-size: 20px;
+}
+
+
+/* Showing Text */
+
+.daily-log-pagination-info {
+    width: 100%;
+
+    margin: 14px 0 0;
+
+    color: #64748B;
+
+    font-size: 13px;
+    font-weight: 500;
+
+    text-align: center;
+}
+
+
+/* Responsive */
+@media (max-width: 767.98px) { 
+    .daily-log-class-summary { 
+        flex-direction: column; 
+        align-items: flex-start; 
+    } 
+    
+    .daily-log-class-message { 
+        width: 100%; 
+    } 
+} 
+
+@media (max-width: 575.98px) { 
+    .daily-log-title { 
+        font-size: 30px; 
+    } 
+    
+    .daily-log-class-summary { 
+        padding: 18px; 
+    } 
+    
+    .daily-log-pagination { 
+        gap: 6px; 
+    } 
+    
+    .daily-log-pagination .page-link { 
+        width: 42px; height: 42px; 
+    } 
+}

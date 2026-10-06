@@ -1,0 +1,662 @@
+.diaper-form-page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+.diaper-page-header {
+    margin-bottom: 24px;
+}
+
+.diaper-back-link {
+    width: 42px;
+    height: 42px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    color: #00796b;
+    background: #e0f2f0;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.diaper-back-link i {
+    font-size: 22px;
+}
+
+.diaper-back-link:hover {
+    color: #ffffff;
+    background: #00897b;
+    transform: translateX(-2px);
+}
+
+.diaper-page-title {
+    margin: 0 0 4px;
+
+    font-size: 1.6rem;
+    font-weight: 700;
+
+    color: #263b39;
+}
+
+.diaper-page-subtitle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    font-size: 0.9rem;
+    color: #78908d;
+}
+
+.diaper-page-subtitle span {
+    color: #9bb9b5;
+}
+
+.diaper-form-card {
+    overflow: hidden;
+    background: #fff;
+    border-radius: 20px !important;
+    border: 1px silid #dcefeb !important;
+    box-shadow:
+        0 8px 30px rgba(0, 105, 92, 0.07);
+}
+
+.diaper-card-header {
+    padding: 24px 28px !important;
+    background: #f4fbf9 !important;
+    border-bottom: 1px solid #e2f0ed !important;
+
+}
+
+.diaper-card-heading {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.diaper-card-icon {
+    width: 48px;
+    height: 48px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    color: #00796b;
+    background: #dff4f1;
+}
+
+.diaper-card-title {
+    margin: 0 0 3px;
+
+    font-size: 1.5rem;
+    font-weight: 700;
+
+    color: #29423f;
+}
+
+.diaper-card-description {
+    margin: 0;
+    font-size: 0.85rem;
+
+    color: #78908d;
+}
+
+.diaper-card-body {
+    padding: 28px !important;
+    background: #fff;
+}
+
+/* Diaper Type */
+.diaper-option {
+    display: block;
+    width: 100%;
+    margin: 0;
+    cursor: pointer;
+}
+
+.diaper-option input[type="radio"] {
+    position:absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+}
+
+.diaper-option-card {
+    position: relative;
+
+    min-height: 130px;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    padding: 24px 18px;
+
+    border: 2px solid #cce7e2;
+    border-radius: 16px;
+
+    background: #f4fbf9;
+
+    transition: all 0.2s ease;
+}
+
+.diaper-option:hover .diaper-option-card {
+    border-color: #80cbc4;
+    background: #e8f6f3;
+    transform: translateY(-2px);
+}
+
+.diaper-option-icon {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: #dff4f1;
+    color: #00897b;
+}
+
+.diaper-option-icon i {
+    font-size: 25px;
+}
+
+.diaper-option-title {
+    font-size: 1rem;
+    font-weight: 700;
+
+    color: #28645d;
+}
+
+.diaper-option-check {
+    position: absolute;
+
+    top: 12px;
+    right: 12px;
+
+    width: 28px;
+    height: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #fff;
+    color: #00897b;
+
+    opacity: 0;
+
+    transform: scale(0.6);
+
+    transition: all 0.2s ease;
+}
+
+.diaper-option-check i {
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.diaper-option input[type="radio"]:checked + .diaper-option-card {
+    background: #229184;
+    border-color: #048677;
+
+    color: #fff;
+
+    box-shadow:  0 6px 20px rgba(0, 105, 92, 0.22);
+
+    transform: translateY(-2px);
+}
+
+.diaper-option input[type="radio"]:checked
++ .diaper-option-card
+.diaper-option-icon {
+    background: rgba(255, 255, 255, 0.18);
+    color: #ffffff;
+}
+
+.diaper-option input[type="radio"]:checked
++ .diaper-option-card
+.diaper-option-title {
+    color: #ffffff;
+}
+
+.diaper-option input[type="radio"]:checked
++ .diaper-option-card
+.diaper-option-check {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Time Options */
+.time-option {
+    display: block;
+    width: 100%;
+    margin: 0;
+    cursor: pointer;
+}
+
+/* Hide radio */
+.time-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+}
+
+/* Time Option Card */
+.time-option-card {
+    position: relative;
+
+    min-height: 100px;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 16px;
+
+    padding: 20px;
+
+    border: 2px solid #cce7e2;
+    border-radius: 16px;
+
+    background: #f4fbf9;
+
+    transition: all 0.2s ease;
+}
+
+/* Hover */
+.time-option:hover .time-option-card {
+    border-color: #80cbc4;
+    background: #e8f6f3;
+
+    transform: translateY(-2px);
+}
+
+/* Time Icon */
+.time-option-icon {
+    width: 46px;
+    height: 46px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 13px;
+
+    background: #dff4f1;
+    color: #00897b;
+}
+
+.time-option-icon i {
+    font-size: 23px;
+}
+
+/* Time Content */
+.time-option-content {
+    padding-right: 30px;
+}
+
+.time-option-title {
+    margin-bottom: 3px;
+
+    font-size: 1rem;
+    font-weight: 700;
+
+    color: #28645d;
+}
+
+.time-option-description {
+    font-size: 0.82rem;
+    color: #78908d;
+}
+
+/* Time Check */
+.time-option-check {
+    position: absolute;
+
+    top: 12px;
+    right: 12px;
+
+    width: 28px;
+    height: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #fff;
+    color: #00897b;
+
+    opacity: 0;
+
+    transform: scale(0.6);
+    transition: all 0.2s ease;
+}
+
+.time-option-check i {
+    font-size: 17px;
+    font-weight: 700;
+}
+
+/* Selected Card */
+.time-option input[type="radio"]:checked + .time-option-card {
+    background: #229184;
+    border-color: #048677;
+
+    box-shadow:
+        0 6px 20px rgba(0, 105, 92, 0.22);
+
+    transform: translateY(-2px);
+}
+
+/* Selected icon */
+
+.time-option input[type="radio"]:checked
++ .time-option-card
+.time-option-icon {
+
+    background: rgba(255, 255, 255, 0.18);
+    color: #ffffff;
+}
+
+/* Selected title */
+
+.time-option input[type="radio"]:checked
++ .time-option-card
+.time-option-title {
+
+    color: #ffffff;
+}
+
+/* Selected description */
+
+.time-option input[type="radio"]:checked
++ .time-option-card
+.time-option-description {
+
+    color: rgba(255, 255, 255, 0.82);
+}
+
+/* Selected check */
+
+.time-option input[type="radio"]:checked
++ .time-option-card
+.time-option-check {
+
+    opacity: 1;
+    transform: scale(1);
+}
+
+
+/* Manual Time */
+#manual-time-field {
+    padding: 20px;
+
+    border-radius: 16px;
+
+    background: #f4fbf9;
+    border: 1px solid #dcefeb;
+}
+
+#manual-time-field .form-label {
+    color: #28645d;
+}
+
+#manual-time-field .form-control {
+    min-height: 52px;
+
+    border: 2px solid #cce7e2;
+    border-radius: 12px;
+
+    background: #fff;
+
+    color: #29423f;
+
+    transition: all 0.2s ease;
+}
+
+#manual-time-field .form-control:focus {
+    border-color: #26a96a;
+    box-shadow:
+        0 0 0 3px rgba(38, 166, 154, 0.12);
+}
+
+#manual-time-field .form-text {
+    margin-top: 7px;
+
+    color: #78908d;
+    font-size: 0.8rem;
+}
+
+/* Form Inputs */
+.diaper-form-page .form-label {
+    color: #35534f;
+}
+
+.diaper-form-page .form-control {
+    border: 2px solid #d5e9e5;
+    border-radius: 12px;
+    background: #fff;
+    color: #29423f;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.diaper-form-page .form-control::placeholder {
+    color: #a0b4b1;
+    font-size: 1rem;
+}
+
+
+.diaper-form-page .form-control:hover {
+    border-color: #a9d6d0;
+}
+
+.diaper-form-page .form-control:focus {
+    border-color: #26a69a;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 0 0 3px rgba(38, 166, 154, 0.12);
+
+    outline: none;
+}
+
+.diaper-form-page textarea.form-control {
+    min-height: 110px;
+
+    resize: vertical;
+
+    line-height: 1.5;
+}
+
+.diaper-card-body > form > .mb-4 {
+    margin-bottom: 28px !important;
+}
+
+/* Buttons */
+.diaper-form-buttons {
+    margin-top: 8px;
+}
+
+.diaper-form-buttons .btn {
+    min-height: 50px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    border-radius: 12px;
+
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.diaper-cancel-btn {
+    border: 2px solid #d5e9e5 !important;
+    background: #f4fbf9 !important;
+    color: #52716c !important;
+}
+
+.diaper-cancel-btn:hover {
+    border-color: #a9d6d0 !important;
+
+    background: #e8f6f3 !important;
+
+    color: #28645d !important;
+
+    transform: translateY(-1px);
+}
+
+.diaper-cancel-btn:active {
+    transform: translateY(0);
+}
+
+.diaper-save-btn {
+    border: 2px solid #00796b !important;
+
+    background: #00897b !important;
+
+    color: #ffffff !important;
+
+    box-shadow:
+        0 5px 14px rgba(0, 121, 107, 0.18);
+}
+
+.diaper-save-btn:hover {
+    border-color: #00695c !important;
+
+    background: #00796b !important;
+
+    color: #ffffff !important;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 7px 18px rgba(0, 105, 92, 0.24);
+}
+
+.diaper-save-btn:active {
+    transform: translateY(0);
+
+    box-shadow:
+        0 3px 8px rgba(0, 105, 92, 0.18);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 767.98px) {
+
+    .diaper-form-page {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .diaper-page-title {
+        font-size: 1.35rem;
+    }
+
+    .diaper-page-subtitle {
+        font-size: 0.8rem;
+        flex-wrap: wrap;
+    }
+
+    .diaper-card-header {
+        padding: 20px !important;
+    }
+
+    .diaper-card-body {
+        padding: 20px !important;
+    }
+
+    .diaper-form-card {
+        border-radius: 16px !important;
+    }
+}
+
+
+@media (max-width: 575.98px) {
+
+    .diaper-option-card {
+        min-height: 90px;
+
+        flex-direction: row;
+        justify-content: flex-start;
+
+        padding: 18px;
+    }
+
+    .diaper-option-icon {
+        width: 44px;
+        height: 44px;
+    }
+
+    .diaper-option-title {
+        font-size: 0.95rem;
+    }
+
+}
+
+@media (max-width: 575.98px) {
+
+    .time-option-card {
+        min-height: 85px;
+        padding: 16px;
+    }
+
+    .time-option-icon {
+        width: 42px;
+        height: 42px;
+    }
+
+    .time-option-title {
+        font-size: 0.95rem;
+    }
+
+    .time-option-description {
+        font-size: 0.78rem;
+    }
+}

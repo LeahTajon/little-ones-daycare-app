@@ -1,0 +1,1362 @@
+/* Meal Log Page */
+.meal-page {
+    width: 100%;
+}
+
+/* Meal Container */
+.meal-container {
+    width: 100%;
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+}
+
+/* Meal Header */
+.meal-card-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    padding: 24px 28px;
+    background: #fff7d6;
+    border-bottom: 1px solid #f1dfa3;
+}
+
+.meal-header-icon {
+    width: 52px; 
+    height: 52px;
+    font-size: 26px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background: #fce9a8;
+    color: #9a6b00;
+
+    border: 1px solid #f0d37b;
+    border-radius: 14px;
+}
+
+.meal-card-header h2 { 
+    margin: 0; 
+    color: #4f430f; 
+    font-size: 1.35rem; 
+    font-weight: 700; 
+}
+
+.meal-card-header p { 
+    margin: 4px 0 0; 
+    color: #8a7a3e; 
+    font-size: 0.9rem; 
+}
+
+/* Form */
+.meal-form-wrapper {
+    width: 100%;
+    padding: 28px;
+}
+
+.meal-form {
+    width: 100%;
+}
+
+/* Section */
+.meal-section {
+    width: 100%;
+
+    padding: 24px 0;
+
+    border-bottom: 1px solid #eee4bd;
+}
+
+.meal-section:first-child {
+    padding-top: 0;
+}
+
+.meal-section:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+/* Section Heading */
+.section-heading {
+    margin-bottom: 16px;
+}
+
+.section-heading h3 {
+    margin: 0;
+
+    color: #4f430f;
+
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.section-heading p {
+    margin: 4px 0 0;
+
+    color: #91865f;
+    font-size: 0.85rem;
+}
+
+/* Hidden Radio Buttons / Checkboxes */
+/* Meal Type */
+
+.meal-type-option input[type="radio"] {
+    position: absolute;
+
+    opacity: 0;
+
+    width: 1px;
+    height: 1px;
+
+    pointer-events: none;
+}
+
+/* Food */
+.food-option input[type="checkbox"] {
+    position: absolute;
+
+    opacity: 0;
+
+    width: 1px;
+    height: 1px;
+
+    pointer-events: none;
+}
+
+/* Amount */
+.amount-option input[type="radio"] {
+    position: absolute;
+
+    opacity: 0;
+
+    width: 1px;
+    height: 1px;
+
+    pointer-events: none;
+}
+
+/* Meal Type */
+.meal-type-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 14px;
+}
+
+.meal-type-option {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    padding: 18px 16px;
+
+    background: #fffaf0;
+    border: 2px solid #eadfc7;
+    border-radius: 14px;
+
+    color: #6b5b3e;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+/* Hidden radio button */
+.meal-type-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    pointer-events: none;
+}
+
+/* Icon */
+.meal-type-option i {
+    .meal-type-option {
+        font-size: 24px;
+        line-height: 1;
+    }
+}
+
+/* Hover */
+.meal-type-option:hover {
+    background: #fff3c9;
+    border-color: #d6aa36;
+    color: #5d490c;
+    
+    transform: translateY(-1px);
+}
+
+/* Seleceted State */
+.meal-type-option:has(input[type="radio"]:checked) { 
+    background: #fce8a6; 
+    border-color: #d6aa36; 
+    color: #5d490c; 
+}
+
+.meal-type-option:has(input[type="radio"]:checked) { 
+    box-shadow: 0 3px 10px rgba(214, 170, 54, 0.15); 
+}
+
+/* Food Options */
+.food-section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+/* Food Picker */
+.food-picker {
+    width: 100%;
+    padding: 18px;
+    background: #fffaf0;
+    border: 1px solid #eadfc7;
+    border-radius: 16px;
+}
+
+/* Picker Header */
+.food-picker-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #eee4cf;
+}
+
+.food-picker-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.food-picker-icon {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #fce9a8;
+    border: 1px solid #f0d37b;
+    border-radius: 10px;
+
+    color: #9a6b00;
+    font-size: 19px;
+}
+
+.food-picker-title strong {
+    display: block;
+    margin-top: 2px;
+    color: #9a8d72;
+    font-size: 12px;
+}
+
+.food-picker-title small {
+    display: block;
+    margin-top: 2px;
+    color: #9a8d72;
+    font-size: 12px;
+}
+
+/* Food Grid */
+.food-options {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+}
+
+/* Food Card */
+.food-option {
+    position: relative;
+
+    min-height: 78px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+
+    padding: 14px;
+
+    background: #fff;
+    border: 2px solid #eadfc7;
+    border-radius: 13px;
+
+    color: #6b5b3e;
+
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        border-color 0.18s ease,
+        transform 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+.food-option:hover {
+    background: #fffdf6;
+    border-color: #d6aa36;
+    transform: translateY(-1px);
+}
+
+/* Hide Checkbox */
+.food-option input[type="checkbox"] {
+    position: relative;
+
+    width: 1px;
+    height: 1px;
+
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Food Icon */
+.food-option-icon {
+    width: 32px;
+    height:32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 9px;
+
+    background: #fff7d6;
+    border: 1px solid #f0dfaa;
+    border-radius: 9px;
+
+    color: #a77d20;
+    font-size: 17px;
+
+    transition:
+        background 0.18s ease,
+        color 0.18s ease,
+        border-color 0.18s ease;
+}
+
+/* Food Label */
+.food-label {
+    padding-right: 24px;
+
+    color: #66583f;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+/* Check Circle */
+.food-check {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+
+    width: 22px;
+    height: 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 2px solid #d8c99e;
+    border-radius: 50%;
+
+    color: transparent;
+    font-size: 13px;
+
+    transition:
+        background 0.18s ease,
+        border-color 0.18s ease,
+        color 0.18s ease;
+}
+
+/* Selected */
+.food-option:has(
+    input[type="checkbox"]:checked
+) {
+    background: #fce8a6;
+    border-color: #d6aa36;
+    box-shadow: 0 3px 10px rgba(180, 140, 40, 0.08);
+}
+
+.food-option:has(
+    input[type="checkbox"]:checked
+) .food-option-icon {
+    background: #f8d96f;
+    border-color: #d6aa36;
+    color: #73570b;
+}
+
+.food-option:has(
+    input[type="checkbox"]:checked
+) .food-label {
+    color: #5d490c;
+}
+
+.food-option:has(
+    input[type="checkbox"]:checked
+) .food-check {
+    background: #d6aa36;
+    border-color: #d6aa36;
+    color: #ffffff;
+}
+
+
+/* Selected Hover */
+
+.food-option:has(
+    input[type="checkbox"]:checked
+):hover {
+    background: #fce8a6;
+    border-color: #c99b2e;
+}
+
+/* Other Food */
+.other-food-wrapper {
+    margin-top: 14px;
+    padding: 16px 18px;
+
+    background: #fffdf7;
+    border: 1px dashed #dfc98c;
+    border-radius: 14px;
+}
+
+.other-food-heading {
+    margin-bottom: 12px;
+}
+
+.other-food-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.other-food-icon {
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background: #fff7d6;
+    border: 1px solid #ead58f;
+    border-radius: 8px;
+
+    color: #9a6b00;
+    font-size: 16px;
+}
+
+.other-food-label {
+    display: block;
+
+    margin: 0;
+
+    color: #6b5b3e;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.other-food-title small {
+    display: block;
+
+    margin-top: 2px;
+
+    color: #9a8d72;
+    font-size: 12px;
+}
+
+.other-food-input {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+}
+
+.other-food-input > i {
+    position: absolute;
+    left: 14px;
+
+    z-index: 2;
+
+    color: #b08a2e;
+    font-size: 19px;
+
+    pointer-events: none;
+}
+
+.other-food-input .form-control {
+    width: 100%;
+    min-height: 46x;
+
+    padding: 9px 14px 9px 42px;
+
+    background: #fff;
+    border: 2px solid #eadfc7;
+    border-radius: 10px;
+
+    color: #5d490c;
+    font-size: 14px;
+
+    box-shadow: none;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.other-food-input .form-control::placeholder {
+    color: #b5a98d;
+}
+
+.other-food-input .form-control:focus {
+    background: #fffdf7;
+    border-color: #d6aa36;
+    box-shadow: 0 0 0 3px rgba(214, 170, 54, 0.15);
+    outline: none;
+}
+
+
+
+
+
+/* Amount Options */
+.amount-options {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.amount-option {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 54px;
+    padding: 14px 16px;
+
+    background: #fffaf0;
+    border: 2px solid #eadfc7;
+    border-radius: 12px;
+
+    color: #6b5b3e;
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+/* Hide Radio Button */
+.amount-option input[type="radio"] {
+    position: absolute;
+
+    opacity: 0;
+
+    width: 1px;
+    height: 1px;
+
+    pointer-events: none;
+}
+
+/* Hover */
+.amount-option:hover {
+    background: #fff3c9;
+    border-color: #d6aa36; 
+    color: #5d490c;
+}   
+
+/* Selected */
+.amount-option:has(input[type="radio"]:checked) {
+    background: #fce8a6;
+    border-color: #d6aa36;
+    color: #5d490c;
+
+    box-shadow: 0 3px 10px rgba(214, 170, 54, 0.15);
+}
+
+.amount-option:has(input[type="radio"]:checked):hover { 
+    background: #fce8a6; 
+    border-color: #d6aa36; 
+    color: #5d490c; 
+}
+
+/* Time Options */
+.time-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+/* Time Option Card */
+.time-option {
+    position: relative;
+    display: block;
+
+    cursor: pointer;
+}
+
+/* Hide radio button */
+.time-option input[type="radio"] {
+    position: absolute;
+
+    opacity: 0;
+
+    width: 1px;
+    height: 1px;
+
+    pointer-events: none;
+}
+
+/* Card Content */
+.time-option-content {
+    display: flex;
+    align-items: center;
+
+    min-height: 76px;
+    padding: 16px 18px;
+
+    background: #fffaf0;
+    border: 2px solid #eadfc7;
+    border-radius: 14px;
+
+    color: #6b5b3e;
+    cursor: pointer;
+
+    transition: 
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+/* Time icon */
+.time-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    margin-right: 13px;
+
+    background: #fff3c9;
+    border: 1px solid #eadfc7;
+    border-radius: 11px;
+
+    color: #b08a2e;
+
+    flex-shrink: 0;
+}
+
+.time-text {
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+    flex: 1;
+}
+
+.time-text strong {
+    font-size: 15px;
+    font-weight: 700;
+
+    color: #5d490c;
+}
+
+.time-text small {
+    font-size: 12px;
+
+    color: #9a8d72;
+}
+
+/* Check Icon */
+.time-check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 26px;
+    height: 26px;
+
+    margin-left: 10px;
+
+    border: 2px solid #d8c99e;
+    border-radius: 50%;
+
+    color: transparent;
+
+    flex-shrink: 0;
+
+    transition: 
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.time-check i {
+    font-size: 15px;
+}
+
+/* Hover */
+.time-option:hover .time-option-content {
+    background: #fff3c9;
+    border-color: #d6aa36;
+}
+
+/* Selected */
+.time-option:has(input[type="radio"]:checked)
+.time-option-content {
+    background: #fce8a6;
+    border-color: #d6aa36;
+
+    color: #5d490c;
+    box-shadow: 0 3px 10px rgba(214, 170, 54, 0.15);
+}
+
+/* Selected icon */
+.time-option:has(input[type="radio"]:checked)
+.time-icon {
+    background: #f8df83;
+    border-color: #d6aa36;
+    color: #8a6a15;
+}
+
+/* Selected check */
+.time-option:has(input[type="radio"]:checked)
+.time-check {
+    background: #d6aa36;
+    border-color: #d6aa36;
+    color: #fff;
+}
+
+.time-option:has(input[type="radio"]:checked):hover 
+.time-option-content { 
+    background: #fce8a6; 
+    border-color: #d6aa36; 
+}
+
+/* Manual Time Wrapper */
+.manual-time-wrapper {
+    display: none;
+
+    grid-column: 1 / -1;
+    width: 100%;
+
+    margin-top: 16px;
+    padding: 18px 20px;
+
+    background: #fffaf0;
+    border: 2px solid #eadfc7;
+    border-radius: 14px;
+}
+
+.manual-time-wrapper.show {
+    display: block;
+}
+
+.manual-time-label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    color: #6b5b3e;
+}
+
+.manual-time-input {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+}
+
+.manual-time-input > i {
+    position: absolute;
+    left: 14px;
+
+    z-index: 2;
+
+    font-size: 20px;
+
+    color: #b08a2e;
+    pointer-events: none;
+}
+
+.manual-time-input .form-control {
+    width: 100%;
+
+    min-height: 48px;
+    padding: 10px 14px 10px 44px;
+
+    background: #ffffff;
+
+    border: 2px solid #eadfc7;
+    border-radius: 10px;
+
+    color: #5d490c;
+    font-size: 15px;
+
+    box-shadow: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+/* Focus */
+.manual-time-input .form-control:focus {
+    background: #fffdf7;
+    border-color: #d6aa36;
+    box-shadow: 0 0 0 3px rgba(214, 170, 54, 0.15);
+    outline: none;
+}
+
+.manual-time-wrapper > small {
+    display: block;
+
+    margin-top: 7px;
+    font-size: 12px;
+
+    color: #9a8d72;
+}
+
+/* Notes */
+.meal-notes {
+    display: block;
+
+    width: 100%;
+
+    min-height: 110px;
+    padding: 13px 15px;
+
+    box-sizing: border-box;
+
+    background: #fffdf7;
+
+    border: 2px solid #f0dfae;
+    border-radius: 12px;
+
+    color: #4f430f;
+    resize: vertical;
+
+    outline: none;
+
+    transition: 
+        border-color 0.2s ease, 
+        background-color 0.2s ease, 
+        box-shadow 0.2s ease;
+}
+
+.meal-notes:hover {
+    border-color: #e4c45d;
+}
+
+.meal-notes:focus {
+    border-color: #d6aa36;
+    box-shadow: 0 0 0 3px rgba(214, 170, 54, 0.12);
+}
+
+/* Form Actions */
+.meal-form-actions {
+    display: flex;
+
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 12px;
+
+    margin-top: 24px;
+}
+
+/* Cancel */
+.meal-cancel-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 48px;
+
+    padding: 12px 22px;
+    background: #fffaf0;
+
+    border: 2px solid #f0dfae;
+    border-radius: 12px;
+
+    color: #66551d;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transfor 0.2s ease;
+}
+
+.meal-cancel-btn:hover {
+    background: #fff3c4;
+    border-color: #e4c45d;
+    color: #5d490c;
+    transform: translateY(-1px);
+}
+
+/* Save */
+.meal-save-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 48px;
+
+    padding: 12px 22px;
+    background: #d6aa36;
+
+    border: 1px solid #c59a2d;
+    border-radius: 12px;
+
+    color: #fff;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease, 
+        transform 0.15s ease, 
+        box-shadow 0.2s ease;
+}
+
+.meal-save-btn:hover {
+    background: #bd9023;
+
+    box-shadow: 0 5px 14px rgba(181, 139, 26, 0.20);
+    transform: translateY(-1px);
+}
+
+.meal-save-btn:active {
+    transform: scale(0.98);
+}
+
+/* Form Errors */
+.text-danger {
+    color: #c0392b !important;
+}
+
+.meal-section .text-danger {
+    margin-top: 6px;
+}
+
+
+/* =========================================================
+   RESPONSIVE DESIGN
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   LARGE TABLETS / SMALL LAPTOPS
+   --------------------------------------------------------- */
+@media (max-width: 992px) {
+
+    .meal-container {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .meal-form-wrapper {
+        padding: 24px;
+    }
+
+    /* Meal Type */
+    .meal-type-options {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+    .meal-type-option {
+        padding: 16px 12px;
+        font-size: 14px;
+    }
+
+    /* Food */
+    .food-options {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+    .food-option {
+        padding: 13px 14px;
+        font-size: 14px;
+    }
+
+    /* Amount */
+    .amount-options {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+    }
+
+    /* Time */
+    .time-options {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .time-option-content {
+        padding: 14px;
+    }
+}
+
+
+/* ---------------------------------------------------------
+   TABLETS
+   --------------------------------------------------------- */
+@media (max-width: 768px) {
+
+    .meal-form-wrapper {
+        padding: 20px;
+    }
+
+    .meal-card-header {
+        padding: 18px 20px;
+    }
+
+    /* Page header */
+    .meal-page-header {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    /* Meal Type */
+    .meal-type-options {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .meal-type-option {
+        min-height: 52px;
+        padding: 14px 16px;
+    }
+
+    /* Food */
+    .food-options {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .food-option {
+        min-height: 50px;
+        padding: 12px 14px;
+    }
+
+    /* Amount */
+    .amount-options {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .amount-option {
+        min-height: 50px;
+    }
+
+    /* Time */
+    .time-options {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .time-option-content {
+        min-height: 68px;
+    }
+
+    /* Manual time */
+    .manual-time-wrapper {
+        margin-top: 12px;
+        padding: 16px;
+    }
+
+    /* Notes */
+    .notes-wrapper textarea {
+        min-height: 110px;
+    }
+
+    /* Buttons */
+    .meal-actions {
+        flex-direction: column-reverse;
+        gap: 10px;
+    }
+
+    .meal-actions .btn {
+        width: 100%;
+    }
+}
+
+
+/* ---------------------------------------------------------
+   MOBILE
+   --------------------------------------------------------- */
+@media (max-width: 576px) {
+
+    /* Main container */
+    .container,
+    .container-fluid {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .meal-container {
+        border-radius: 12px;
+    }
+
+    .meal-form-wrapper {
+        padding: 16px;
+    }
+
+    .meal-card-header {
+        padding: 16px;
+    }
+
+    /* Header */
+    .meal-card-header h2,
+    .meal-card-header h3 {
+        font-size: 20px;
+    }
+
+    .meal-card-header p {
+        font-size: 13px;
+    }
+
+    /* Section spacing */
+    .meal-form-section {
+        margin-bottom: 22px;
+    }
+
+    /* Labels */
+    .meal-form-section > label,
+    .form-section-title {
+        font-size: 14px;
+    }
+
+    /* Meal Type */
+    .meal-type-option {
+        min-height: 50px;
+        padding: 13px 14px;
+        border-radius: 11px;
+        font-size: 14px;
+    }
+
+    /* Food */
+    .food-options {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .food-option {
+        min-height: 48px;
+        padding: 10px 11px;
+        border-radius: 10px;
+        font-size: 13px;
+    }
+
+    .food-check {
+        width: 21px;
+        height: 21px;
+        flex-shrink: 0;
+    }
+
+    .food-check i {
+        font-size: 13px;
+    }
+
+    /* Other food */
+    .other-food-wrapper {
+        padding: 15px;
+        margin-top: 14px;
+        border-radius: 11px;
+    }
+
+    .other-food-input .form-control {
+        min-height: 46px;
+        font-size: 14px;
+        padding-left: 42px;
+    }
+
+    /* Amount */
+    .amount-options {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .amount-option {
+        min-height: 48px;
+        padding: 11px 10px;
+        border-radius: 10px;
+        font-size: 13px;
+    }
+
+    /* Time */
+    .time-options {
+        grid-template-columns: 1fr;
+        gap: 9px;
+    }
+
+    .time-option-content {
+        min-height: 64px;
+        padding: 12px 13px;
+        border-radius: 11px;
+    }
+
+    .time-icon {
+        width: 38px;
+        height: 38px;
+        margin-right: 10px;
+        border-radius: 9px;
+    }
+
+    .time-icon i {
+        font-size: 20px;
+    }
+
+    .time-text strong {
+        font-size: 14px;
+    }
+
+    .time-text small {
+        font-size: 11px;
+    }
+
+    .time-check {
+        width: 23px;
+        height: 23px;
+    }
+
+    /* Manual time */
+    .manual-time-wrapper {
+        padding: 14px;
+        margin-top: 10px;
+        border-radius: 11px;
+    }
+
+    .manual-time-input .form-control {
+        min-height: 46px;
+        font-size: 14px;
+    }
+
+    /* Notes */
+    .notes-wrapper textarea,
+    textarea.form-control {
+        min-height: 100px;
+        font-size: 14px;
+    }
+
+    /* Buttons */
+    .meal-actions {
+        width: 100%;
+    }
+
+    .meal-actions .btn {
+        min-height: 48px;
+        width: 100%;
+        font-size: 14px;
+    }
+}
+
+
+/* ---------------------------------------------------------
+   VERY SMALL PHONES
+   --------------------------------------------------------- */
+@media (max-width: 400px) {
+
+    .meal-form-wrapper {
+        padding: 13px;
+    }
+
+    .meal-card-header {
+        padding: 14px;
+    }
+
+    /* Food cards stay 2 columns but become smaller */
+    .food-options {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 7px;
+    }
+
+    .food-option {
+        padding: 9px 9px;
+        font-size: 12px;
+    }
+
+    .food-label {
+        overflow-wrap: anywhere;
+    }
+
+    .food-check {
+        width: 19px;
+        height: 19px;
+    }
+
+    /* Amount */
+    .amount-option {
+        font-size: 12px;
+        padding: 10px 8px;
+    }
+
+    /* Time */
+    .time-option-content {
+        padding: 11px;
+    }
+
+    .time-icon {
+        width: 35px;
+        height: 35px;
+        margin-right: 8px;
+    }
+
+    .time-text strong {
+        font-size: 13px;
+    }
+
+    .time-text small {
+        font-size: 10px;
+    }
+
+    .time-check {
+        width: 21px;
+        height: 21px;
+        margin-left: 6px;
+    }
+}
+
+

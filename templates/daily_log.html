@@ -1,0 +1,498 @@
+{% extends "base.html" %}
+
+{% block title %}Daily Log | Little Ones{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/daily_log.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="daily-log-page">
+
+    <!-- Page Header -->
+    <div class="row align-items-center g-3 mb-4">
+
+        <!-- Title -->
+        <div class="col-12 col-md">
+
+            <h1 class="daily-log-title mb-1">
+                Daily Log
+            </h1>
+
+            <p class="daily-log-subtitle mb-0">
+                Select a child to view or add today's log.
+            </p>
+        </div>
+
+
+        <!-- Date -->
+        <div class="col-12 col-md-auto">
+
+            <div class="daily-log-date">
+
+                <i class="ti ti-calendar-week"></i>
+
+                <div>
+                    <span>Date</span>
+
+                    <strong>
+                        {{ selected_date.strftime('%b %d, %Y') }}
+                    </strong>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End: Page Header -->
+
+    <!-- Infant Section -->
+    <div class="daily-log-section">
+
+        <!-- Section Header -->
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+            <div class="d-flex align-items-center gap-3">
+
+                <div class="daily-log-class-icon">
+                    <i class="ti ti-baby-carriage"></i>
+                </div>
+
+                <div>
+                    <h2 class="daily-log-section-title mb-1">
+                        Infants
+                    </h2>
+
+                    <p class="daily-log-section-subtitle mb-0">
+                        {{ infants|length }} children
+                    </p>
+                </div>
+            </div>
+
+            {% if infants|length > 2 %}
+            <a 
+                href="{{ url_for(
+                    'daily_log_class',
+                    class='Infant',
+                    date=selected_date.strftime('%Y-%m-%d')
+                )}}"
+                class="daily-log-see-all"
+            >
+                See All 
+                <i class="ti ti-arrow-right"></i>
+            </a>
+            {% endif %}
+        </div>
+
+        <!-- Children -->
+        <div class="row g-3">
+
+            {% for child in infants[:4] %}
+            <div class="col-12 col-md-6 col-xl-4">
+                <a 
+                    href="{{ url_for(
+                        'child_daily_log',
+                        child_id=child.id,
+                        date=selected_date.strftime('%Y-%m-%d')
+                    )}}"
+                    class="daily-log-child-card"
+                >
+                    <!-- Photo -->
+                    <div class="daily-log-child-photo">
+                        {% if child.photo %}
+                        <img 
+                            src="{{ url_for(
+                                'static',
+                                filename='uploads/' + child.photo
+                            )}}" 
+                            alt="{{ child.first_name }} {{ child.last_name }}">
+                        {% endif %}
+                    </div>
+
+                    <!-- Child Information -->
+                    <div class="daily-log-child-info">
+
+                        <h3>
+                            {{ child.first_name }} {{ child.last_name }}
+                        </h3>
+                        <p>
+                            {{ child.age_display }}
+                        </p>
+
+                        {% if child.allergies %}
+                        <span 
+                            class="allergy-badge"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            title="{{ child.allergies }}"
+                        >
+                            <i class="ti ti-alert-triangle"></i>
+                            Allergy
+                        </span>
+                        {% endif %}
+                    </div>
+
+                    <!-- Arrow -->
+                    <div class="daily-log-child-arrow">
+                        <i class="ti ti-chevron-right"></i>
+                    </div>
+                </a>
+            </div>
+
+            {% else %}
+            <div class="col-12">
+
+                <div class="daily-log-empty">
+
+                    <span>
+                        No infants registered yet.
+                    </span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <!--End: Infant Section -->
+
+    <!-- Toddler Section -->
+    <div class="daily-log-section">
+
+        <!-- Section Header -->
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+            <div class="d-flex align-items-center gap-3">
+
+                <div class="daily-log-class-icon">
+                    <i class="ti ti-horse-toy"></i>
+                </div>
+
+                <div>
+                    <h2 class="daily-log-section-title mb-1">
+                        Toddlers
+                    </h2>
+
+                    <p class="daily-log-section-subtitle mb-0">
+                        {{ toddlers|length }} children
+                    </p>
+                </div>
+            </div>
+
+            {% if toddlers|length > 3 %}
+            <a 
+                href="{{ url_for(
+                        'daily_log_class',
+                        class='Toddler',
+                        date=selected_date.strftime('%Y-%m-%d')
+                    ) }}"
+                class="daily-log-see-all"
+            >
+                See All
+                <i class="ti ti-arrow-right"></i>
+            </a>
+            {% endif %}
+        </div>
+
+        <!-- Children -->
+        <div class="row g-3">
+
+            {% for child in toddlers[:4] %}
+            <div class="col-12 col-md-6 col-xl-4">
+                <a 
+                    href="{{ url_for( 
+                        'child_daily_log', 
+                        child_id=child.id, 
+                        date=selected_date.strftime('%Y-%m-%d') 
+                    ) }}"
+                    class="daily-log-child-card"
+                >
+                    
+                    <!-- Photo -->
+                    <div class="daily-log-child-photo">
+                        {% if child.photo %}
+                            <img 
+                                src="{{ url_for( 
+                                    'static', 
+                                    filename='uploads/' + child.photo 
+                                ) }}" 
+                                alt="{{ child.first_name }} {{ child.last_name }}">
+                        {% else %}
+                            <strong>
+                                {{ child.first_name[0] }}
+                            </strong>
+                        {% endif %}
+                    </div>
+
+                    <!-- Child Information -->
+                    <div class="daily-log-child-info">
+                        <h3>
+                            {{ child.first_name }} {{ child.last_name }}
+                        </h3>
+
+                        <p>
+                            {{ child.age_display }}
+                        </p>
+
+                        {% if child.allergies %}
+                        <span
+                            class="allergy-badge"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            title="{{ child.allergies }}">
+
+                            <i class="ti ti-alert-triangle"></i> 
+                            Allergy
+                        </span>
+                        {% endif %}
+                    </div>
+
+                    <!-- Arrow -->
+                    <div class="daily-log-child-arrow">
+                        <i class="ti ti-chevron-right"></i>
+                    </div>
+                </a>
+            </div>
+
+            {% else %}
+            <div class="col-12">
+
+                <div class="daily-log-empty">
+                    
+
+                    <span>
+                        No toddlers registered yet.
+                    </span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+    <!-- End: Toddler Section -->
+
+    <!-- Preschool Section -->
+    <div class="daily-log-section">
+
+        <!-- Section Header -->
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+            
+            <div class="d-flex align-items-center gap-3">
+
+                <div class="daily-log-class-icon">
+                    <i class="ti ti-puzzle"></i>
+                </div>
+
+                <div>
+                    <h2 class="daily-log-section-title mb-1">
+                        Preschool
+                    </h2>
+                    <p class="daily-log-section-subtitle mb-0">
+                        {{ prek|length }} children
+                    </p>
+                </div>
+            </div>
+
+            {% if prek|length > 3 %}
+            <a 
+                href="{{ url_for(
+                        'daily_log_class',
+                        class='Pre-K',
+                        date=selected_date.strftime('%Y-%m-%d')
+                    ) }}"
+                class="daily-log-see-all"
+            >
+                See All 
+                <i class="ti ti-arrow-right"></i>
+            </a>
+            {% endif %}
+        </div>
+
+        <!-- Children -->
+        <div class="row g-3">
+
+            {% for child in prek[:4] %}
+            <div class="col-12 col-md-6 col-xl-4">
+
+                <a 
+                    href="{{ url_for( 
+                        'child_daily_log', 
+                        child_id=child.id, 
+                        date=selected_date.strftime('%Y-%m-%d') 
+                        ) }}"
+                    class="daily-log-child-card"
+                >
+                    <!-- Photo -->
+                    <div class="daily-log-child-photo">
+
+                        {% if child.photo %}
+                        <img 
+                            src="{{ url_for( 
+                                'static', 
+                                filename='uploads/' + child.photo ) 
+                            }}" 
+                            alt="{{ child.first_name }} {{ child.last_name }}">
+                        {%else %}
+                            <strong>
+                                {{ child.first_name[0]}}
+                            </strong>
+                            
+                        {% endif %}
+                    </div>
+
+                    <!-- Child Information -->
+                    <div class="daily-log-child-info">
+
+                        <h3>
+                            {{ child.first_name }} {{ child.last_name }}
+                        </h3>
+
+                        <p>
+                            {{ child.age_display }}
+                        </p>
+
+                        {% if child.allergies %} 
+                        <span 
+                            class="allergy-badge" 
+                            data-bs-toggle="tooltip" 
+                            data-bs-placement="top" 
+                            title="{{ child.allergies }}" 
+                        > 
+                            <i class="ti ti-alert-triangle"></i> 
+                            Allergy 
+                        </span> 
+                        {% endif %}
+                    </div>
+
+                    <!-- Arrow -->
+                    <div class="daily-log-child-arrow">
+                        <i class="ti ti-chevron-right"></i>
+                    </div>
+                </a>
+            </div>
+            {% else %}
+            <div class="col-12">
+
+                <div class="daily-log-empty">
+                    
+                    <span>
+                        No preschool children registered yet.
+                    </span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <!-- End: Preschool Section -->
+
+    <!-- Afterschool -->
+    <div class="daily-log-section">
+
+        <!-- Section Header -->
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+            
+            <div class="d-flex align-items-center gap-3">
+
+                <div class="daily-log-class-icon">
+                    <i class="ti ti-backpack"></i>
+                </div>
+
+                <div>
+                    <h2 class="daily-log-section-title mb-1">
+                        Afterschool
+                    </h2>
+
+                    <p class="daily-log-section-subtitle mb-0"> 
+                        {{ afterschool|length }} children 
+                    </p>
+                </div>
+            </div>
+
+            {% if afterschool|length > 3 %}
+            <a 
+                href="{{ url_for( 
+                    'daily_log_class', 
+                    class='Afterschool', 
+                    date=selected_date.strftime('%Y-%m-%d') 
+                    ) }}"
+                class="daily-log-see-all"
+            >
+                See all 
+                <i class="ti ti-arrow-right"></i>
+            </a>
+            {% endif %}
+        </div>
+
+        <!-- Children -->
+        <div class="row g-3">
+
+            {% for child in afterschool[:4] %}
+            <div class="col-12 col-md-6 col-xl-4">
+
+                <a href="{{ url_for( 
+                    'child_daily_log', 
+                    child_id=child.id, 
+                    date=selected_date.strftime('%Y-%m-%d') 
+                ) }}" 
+                class="daily-log-child-card">
+                    
+                    <!-- Photo -->
+                    <div class="daily-log-child-photo">
+                        {% if child.photo %}
+                        <img 
+                            src="{{ url_for( 
+                                'static', 
+                                filename='uploads/' + child.photo ) 
+                            }}" 
+                            alt="{{ child.first_name }} {{ child.last_name }}">
+                        {% else %}
+                            <strong>
+                                {{ child.first_name[0] }}
+                            </strong>                     
+                        {% endif %}
+                    </div>
+
+                    <!-- Child Information -->
+                    <div class="daily-log-child-info">
+                        <h3>
+                            {{ child.first_name }} {{ child.last_name }}
+                        </h3>
+                        <p>
+                                {{ child.age_display }}
+                        </p>
+
+                        {% if child.allergies %}
+                        <span
+                            class="allergy-badge"
+                            data-bs-toggele="tooltip"
+                            data-bs-placement="top"
+                            title="{{ child.allergies }}"
+                        >
+                            <i class="ti ti-alert-triangle"></i>
+                            Allergy
+                        </span>
+                        {% endif %}
+                        
+                    </div>
+
+                    <!-- Arrow -->
+                    <div class="daily-log-child-arrow">
+                        <i class="ti ti-chevron-right"></i>
+                    </div>
+                </a>
+            </div>
+            {% else %}
+            <div class="col-12">
+
+                <div class="daily-log-empty">
+                    
+                    <span>
+                        No Afterschool children registered yet.
+                    </span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <!--End: Afterschool -->
+
+
+
+</div>
+
+{% endblock %}

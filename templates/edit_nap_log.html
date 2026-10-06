@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{{ url_for(
+        'static',
+        filename='css/nap_log.css'
+    ) }}"
+/>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container py-4">
+
+
+    <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
+
+    <div class="nap-back-wrapper">
+
+        <a
+            href="{{ url_for(
+                'child_daily_log',
+                child_id=child.id,
+                date=selected_date.strftime('%Y-%m-%d')
+            ) }}"
+            class="nap-back-link text-decoration-none"
+        >
+
+            <i class="ti ti-arrow-left me-1"></i>
+
+        </a>
+
+
+        <div class="nap-header-content">
+
+            <h1>
+                Edit Nap Log
+            </h1>
+
+
+            <div class="nap-header-meta">
+
+                <span class="nap-child-name">
+                    {{ child.first_name }} {{ child.last_name }}
+                </span>
+
+                <span class="nap-meta-divider">
+                    •
+                </span>
+
+                <span>
+                    {{ selected_date.strftime('%B %d, %Y') }}
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- End: Page Header -->
+
+    <!-- Edit Nap Card -->
+    <div class="nap-card">
+
+        <div class="nap-card-body">
+
+            <!-- Edit Nap -->
+            <div class="nap-ready">
+                
+                <!-- Nap Icon -->
+                <div class="nap-icon-wrapper">
+                    <i class="ti ti-moon-stars"></i>
+                </div>
+
+                <!-- Title -->
+                <h2 class="nap-ready-title">
+                    Edit Nap
+                </h2>
+
+                <!-- Description -->
+                <p class="nap-description">
+                    Update the nap time for 
+                    {{ child.first_name }}.
+                </p>
+
+                <!-- Edit Form -->
+                <form 
+                    method="POST"
+                    action="{{ url_for(
+                        'edit_nap_log',
+                        child_id=child.id,
+                        log_id=nap_log.id
+                    )}}"
+                    class="nap-form">
+                        
+                    {{ form.hidden_tag() }}
+
+                    <!-- Start Time -->
+                    <div class="nap-edit-time-field">
+
+                        <label 
+                            for="{{ form.start_time.id }}"
+                            class="nap-field-label">
+                        
+                            Nap Start Time
+                        </label>
+
+                        {{ form.start_time(
+                            class="form-control nap-time"
+                        )}}
+                    </div>
+
+                    <!-- End Time -->
+                    <div class="nap-edit-time-field">
+
+                        <label 
+                            for="{{ form.end_time.id }}"
+                            class="nap-field-label">
+                            Nap End Time
+                        </label>
+
+                        {{ form.end_time(
+                            class="form-control nap-time-input"
+                        )}}
+                    </div>
+
+                    <!-- Action buttons -->
+                    <div class="nap-action nap-edit-actions">
+
+                        <!-- Cancel -->
+                        <a 
+                            href="{{ url_for(
+                                'child_daily_log',
+                                child_id=child.id,
+                                date=selected_date.strftime('%Y-%m-%d')
+                            )}}"
+                            class="nap-cancel-btn">
+                                <i class="ti ti-x"></i>
+                                <span>Cancel</span>
+                        </a>
+
+                        <!-- Save -->
+                        <button
+                            type="submit"
+                            class="nap-save-btn">
+
+                            <i class="ti ti-check"></i>
+                            <span>Save Changes</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Edit Nap Card -->
+    
+    
+            
+</div>
+
+{% endblock %}

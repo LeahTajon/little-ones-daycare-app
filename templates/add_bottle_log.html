@@ -1,0 +1,532 @@
+{% extends 'base.html' %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{{ url_for(
+        'static',
+        filename='css/bottle_log.css'
+    ) }}"
+>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid bottle-page">
+
+    <!-- Header -->
+    <div class="d-flex align-items-center gap-3 mb-4">
+        <a 
+            href="{{ url_for(
+                'child_daily_log',
+                child_id=child.id,
+                date=selected_date.strftime('%Y-%m-%d')
+            )}}"
+            class="text-decoration-none text-dark">
+                <i class="ti ti-arrow-left fs-4"></i>
+        </a>
+
+        <div>
+            <h1 class="h3 fw-bold mb-1">
+                Add Bottle Log
+            </h1>
+
+            <div class="text-muted small">
+                {{ child.first_name }}
+                {{ child.last_name }}
+
+                <span class="mx-1">•</span>
+
+                {{ selected_date.strftime('%B %d, %Y') }}
+            </div>
+        </div>
+    </div>
+    <!-- End: Header -->
+    
+    <!-- Form Card -->
+    <div class="row justify-content-center">
+
+        <div class="col-12">
+
+            <div class="card bottle-form-card border-0">
+
+                <!-- Card Header -->
+                <div class="bottle-card-header">
+
+                    <div class="bottle-header-icon">
+                        <i class="ti ti-baby-bottle"></i>
+                    </div>
+
+                    <div>
+                        <h2 class="h5 fw-bold mb-1">
+                            Bottle Feeding
+                        </h2>
+
+                        <p class="text-muted small mb-0">
+                            Record the bottle feeding details.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <div class="card-body p-4 p-lg-5">
+                    <form method="POST">
+                        {{ form.hidden_tag() }}
+
+                        <!-- Time -->
+                        <div class="bottle-section mb-4">
+                            <div class="bottle-section-title">
+
+                                <span class="bottle-section-icon">
+                                    <i class="ti ti-clock"></i>
+                                </span>
+
+                                <span>Time</span>
+
+                            </div>
+
+                            <!-- Time Options -->
+                            <div class="time-options">
+
+                                {% for value, label in form.time_option.choices %}
+                                
+                                    <label
+                                        class="time-option
+                                        {% if form.time_option.data == value %}
+                                            selected
+                                        {% endif %}
+                                        ">
+
+                                        <input 
+                                            type="radio"
+                                            name="{{ form.time_option.name }}"
+                                            value="{{ value }}"
+                                            class="d-none time-radio"
+                                            {% if form.time_option.data == value %}
+                                                checked
+                                            {% endif %}
+                                        >
+                                            {% if value == 'automatic' %}
+                                            
+                                                <div class="time-option-icon">
+                                                    <i class="ti ti-clock-play"></i>
+                                                </div>
+                                                
+                                                <div class="time-option-content">
+                                                    <div class="fw-bold">
+                                                        Automatic
+                                                    </div>
+
+                                                    <small>
+                                                        Use current time
+                                                    </small>
+                                                </div>
+                                            
+                                            {% else %}
+                                                
+                                                <div class="time-option-icon">
+                                                    <i class="ti ti-clock-edit"></i>
+                                                </div>
+
+                                                <div class="time-option-content">
+                                                    <div class="fw-bold">
+                                                        Manual
+                                                    </div>
+
+                                                    <small>
+                                                        Set custom time
+                                                    </small>
+                                                </div>
+
+                                            {% endif %}
+                                    </label>
+                                {% endfor %}
+                            </div>
+
+                            <!-- Automatic Time -->
+                            <div class="bottle-info-box mt-3" id="automaticTimeContainer">
+
+                                <div class="bottle-info-icon">
+                                    <i class="ti ti-info-circle"></i>
+                                </div>
+
+                                <div class="flex-grow-1">
+                                    Current time will be recorded automatically.
+                                </div>
+
+                                <div class="current-time" id="currentTimeDisplay">
+                                    {{ current_time }}
+                                </div>
+                            </div>
+
+                            <!-- Manual Time -->
+                            <div class="mt-3" id="manualTimeContainer" style="display: none;">
+
+                                <label 
+                                    for="{{ form.manual_time.id }}"
+                                    class="form-label fw-semibold">
+
+                                    Bottle Time
+                                </label>
+
+                                {{ form.manual_time(
+                                    class="form-control bottle-input",
+                                    id="manualTime"
+                                )}}
+
+                                {% if form.manual_time.errors %}
+                                    <div class="text-danger small mt-1">
+
+                                        {% for error in form.manual_time.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <!-- End: Time -->
+                        
+                        <!-- Bottle Type -->
+                        <div class="bottle-section mb-4">
+
+                            <div class="bottle-section-title">
+
+                                <span class="bottle-section-icon">
+                                    <i class="ti ti-baby-bottle"></i>
+                                </span>
+                                
+                                <span>Bottle Type</span>
+                            </div>
+
+                            <div class="bottle-type-grid">
+
+                                {% for value, label in form.bottle_type.choices %}
+
+                                    <label 
+                                        class="
+                                            bottle-type-option
+                                            bottle-type-{{ value }}
+                                            {% if form.bottle_type.data == value %}
+                                                selected
+                                            {% endif %}"
+                                        >
+                                            <input 
+                                                type="radio"
+                                                name="{{ form.bottle_type.name }}"
+                                                value="{{ value }}"
+                                                class="d-none bottle-radio"
+                                                {% if form.bottle_type.data == value %}
+                                                    checked
+                                                {% endif %}
+                                            >
+
+                                            <!-- Selected Check -->
+                                            <span class="bottle-type-check">
+                                                <i class="ti ti-check"></i>
+                                            </span>
+
+                                            <!-- Icon -->
+                                            <div class="bottle-option-icon">
+
+                                                {% if value == 'formula' %}
+                                                    <i class="ti ti-bottle"></i>
+                                                
+                                                {% elif value == 'milk' %}
+                                                    <i class="ti ti-milk"></i>
+                                                
+                                                {% elif value == 'breast_milk' %}
+                                                    <i class="ti ti-woman"></i>
+                                                
+                                                {% elif value == 'water' %}
+                                                    <i class="ti ti-droplet"></i>
+                                                
+                                                {% elif value == 'other' %}
+                                                    <i class="ti ti-dots"></i>
+                                                {% endif %}
+                                            </div>
+
+                                            <!-- Text -->
+                                            <div class="bottle-option-content">
+
+                                                <div class="fw-bold">
+                                                    {{ label }}
+                                                </div>
+
+                                                <small>
+                                                    {% if value == 'formula' %}
+                                                        Infant formula
+
+                                                    {% elif value == 'milk' %}
+                                                        Milk
+
+                                                    {% elif value == 'breast_milk' %}
+                                                        Breast milk
+                                                    
+                                                    {% elif value == 'water' %}
+                                                        Water
+                                                    
+                                                    {% elif value == 'other' %}
+                                                        Other type
+
+                                                    {% endif %}
+                                                </small>
+                                            </div>
+                                        </label>
+                                {% endfor %}
+                            </div>
+
+                            {% if form.bottle_type.errors %}
+
+                                <div class="text-danger small mt-2">
+
+                                    {% for error in form.bottle_type.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            <!-- Other Bottle -->
+                            <div class="mt-3" id="otherBottleContainer" style="display: none;">
+
+                                <label 
+                                    for="{{ form.other_bottle.id }}"
+                                    class="form-label fw-semibold"
+                                >
+                                    Other Bottle Type
+                                </label>
+
+                                {{ form.other_bottle(
+                                    class="form-control bottle-input",
+                                    placeholder="Enter bottle type..."
+                                )}}
+
+                                {% if form.other_bottle.errors %}
+                                    
+                                    <div class="text-danger small mt-1">
+                                        {% for error in form.other_bottle.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="bottle-info-box mt-3">
+
+                                <div class="bottle-info-icon">
+                                    <i class="ti ti-info-circle"></i>
+                                </div>
+
+                                <div>
+                                    If you select 
+                                    <strong>Other</strong>
+                                    please specify the bottle type.
+                                </div>
+                            </div>
+                        </div>
+                        <!--End: Bottle Type -->
+
+                        <!-- Amount -->
+                        
+                        <div class="bottle-section mb-4">
+                            <div class="bottle-section-title">
+
+                                <span class="bottle-section-icon">
+                                    <i class="ti ti-droplet"></i>
+                                </span>
+
+                                <span>Amount Offered</span>
+                            </div>
+
+                            <div class="input-group bottle-amount-group">
+
+                                <span class="input-group-text">
+                                    <i class="ti ti-droplet"></i>
+                                </span>
+
+                                {{ form.amount_offered(
+                                    class="form-control bottle-input",
+                                    placeholder="e.g. 4, 5.5",
+                                    min="0",
+                                    step="0.5"
+                                )}}
+
+                                <span class="input-group-text">
+                                    oz
+                                </span>
+                            </div>
+
+                            {% if form.amount_offered.errors %}
+
+                                <div class="text-danger small mt-1">
+                                    {% for error in form.amount_offered.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <!--End: Amount -->
+
+                        <!-- Notes -->
+                        
+                        <div class="bottle-section mb-4">
+                            <div class="bottle-section-title">
+
+                                <span class="bottle-section-icon">
+                                    <i class="ti ti-notes"></i>
+                                </span>
+
+                                <span>
+                                    Notes
+                                    <small>(Optional)</small>
+                                </span>
+                            </div>
+
+                            {{ form.notes(
+                                class="form-control bottle-input bottle-notes",
+                                rows="4",
+                                placeholder="Add any additional notes..."
+                            )}}
+                        </div>
+                        <!--End: Notes -->
+
+                        <!-- Buttons -->
+                        <div class="bottle-form-buttons">
+                            <a 
+                                href="{{ url_for(
+                                    'child_daily_log',
+                                    child_id=child.id,
+                                    date=selected_date.strftime('%Y-%m-%d')
+                                )}}"
+                                class="btn bottle-cancel-btn"
+                            >
+                                Cancel
+                            </a>
+
+                            {{ form.submit(
+                                class="btn bottle-save-btn"
+                            )}}
+                        </div>
+                        <!--End: Buttons -->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End: Form Card -->
+</div>
+
+<!-- JavaScript -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        /* Time Options */
+        const timeRadios = document.querySelectorAll(
+            '.time-radio'
+        );
+
+        const timeOptions = document.querySelectorAll(
+            '.time-option'
+        );
+
+        const automaticTimeContainer =
+            document.getElementById(
+                'automaticTimeContainer'
+            );
+        
+        const manualTimeContainer = 
+            document.getElementById(
+                'manualTimeContainer'
+            );
+        
+        function updateTimeOption() {
+
+            let selectedTime = null;
+
+            timeRadios.forEach(function (radio) {
+
+                if (radio.checked) {
+                    selectedTime = radio.value;
+                }
+            });
+
+            timeOptions.forEach(function (option) {
+                const radio =
+                    option.querySelector('.time-radio');
+
+                option.classList.toggle(
+                    'selected',
+                    radio.checked
+                );
+            });
+
+            if (selectedTime == 'manual') {
+
+                automaticTimeContainer.style.display = 'none';
+                manualTimeContainer.style.display = 'block';
+            } else {
+                automaticTimeContainer.style.display = 'flex';
+                manualTimeContainer.style.display = 'none';
+            }
+        }
+
+        timeRadios.forEach(function (radio) {
+
+            radio.addEventListener(
+                'change',
+                updateTimeOption
+            );
+        });
+
+        /* Bottle Type */
+        const bottleRadios = document.querySelectorAll(
+            '.bottle-radio'
+        );
+
+        const bottleOptions = document.querySelectorAll(
+            '.bottle-type-option'
+        );
+
+        const otherBottleContainer = document.getElementById(
+            'otherBottleContainer'
+        );
+
+        function updateBottleType() {
+
+            let selectedBottle = null;
+
+            bottleRadios.forEach(function (radio) {
+                if (radio.checked) {
+                    selectedBottle = radio.value;
+                }
+            });
+
+            bottleOptions.forEach(function (option) {
+
+                const radio = option.querySelector('.bottle-radio');
+
+                option.classList.toggle(
+                    'selected',
+                    radio.checked
+                );
+            });
+
+            if (selectedBottle === 'other') {
+
+                otherBottleContainer.style.display = 'block';
+            } else {
+                otherBottleContainer.style.display = 'none';
+            }
+        }
+
+        bottleRadios.forEach(function (radio) {
+            radio.addEventListener(
+                'change',
+                updateBottleType
+            );
+        });
+
+        /* Initial State */
+        updateTimeOption();
+        updateBottleType();
+    });
+</script>
+{% endblock%}

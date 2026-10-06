@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/reports.css') }}"> 
+{% endblock %}
+
+{% block content %}
+<div class="reports-page">
+
+    <!-- Page Header -->
+    <div class="reports-header">
+
+        <div>
+            <div class="page-eyebrow">
+                <i class="ti ti-file-analytics"></i>
+                Little Ones Reports
+            </div>
+
+            <h1>Reports</h1>
+            <p>Generate reports and view information about your daycare.</p>
+        </div>
+    </div>
+    <!--End: Page Header -->
+
+    <!-- Report Cards -->
+    <div class="reports-grid">
+
+        <!-- Student Directory -->
+        <div class="report-card">
+            <div class="report-icon">
+                <i class="ti ti-users"></i>
+            </div>
+
+            <div class="report-card-content">
+                <h3>Student Directory</h3>
+                <p>View a complete list of enrolled students with their basic information.</p>
+
+                <a 
+                    href="{{url_for('student_directory_preview')}}"
+                    class="report-button"
+                >
+                    <span>Generate Report</span>
+                    <i class="ti ti-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Students by Class -->
+        <div class="report-card">
+
+            <div class="report-icon">
+                <i class="ti ti-school"></i>
+            </div>
+
+            <div class="report-card-content">
+                <h3>Students by Class</h3>
+                <p>View students organized by their assigned classroom or program.</p>
+
+                <a 
+                    href="{{ url_for('students_by_class_preview')}}"
+                    class="report-button"
+                >
+                    <span>Generate Report</span>
+                    <i class="ti ti-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Enrollment Summary -->
+        <div class="report-card">
+
+            <div class="report-icon">
+                <i class="ti ti-chart-bar"></i>
+            </div>
+
+            <div class="report-card-content">
+                <h3>Enrollment Summary</h3>
+                <p>View enrollment totals and student breakdowns by class, gender, and program.
+                </p>
+
+                <a 
+                    href="{{ url_for(
+                        'enrollment_summary_preview'
+                    )}}"
+                    class="report-button">
+                    <span>Generate Report</span>
+                    <i class="ti ti-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Daily Log Report Card -->
+        <div class="report-card">
+        
+            <div class="report-icon daily-log-icon">
+                <i class="ti ti-notebook"></i>
+            </div>
+
+            <div class="report-card-content">
+                <h3>Daily Log Report</h3>
+                <p>
+                    View daily care, meals, naps, diaper,
+                potty, and activity records for all students.
+                </p>
+
+                <a 
+                    href="{{ url_for('daily_log_report')}}"
+                    class="report-button">
+
+                    <span>Select Date</span>
+                    <i class="ti ti-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Birthday Report Card -->
+        <div class="report-card">
+        
+            <div class="report-icon daily-log-icon">
+                <i class="ti ti-gift"></i>
+            </div>
+
+            <div class="report-card-content">
+                <h3>Birthdays</h3>
+                <p>
+                    View student birthdays by month.
+                </p>
+
+                <a 
+                    href="{{ url_for('birthday_report_preview')}}"
+                    class="report-button">
+
+                    <span>View Report</span>
+                    <i class="ti ti-arrow-right"></i>
+                </a>
+            </div>
+        </div>  
+
+        <!-- Birthday Report Card -->
+        <div class="report-card">
+        
+            <div class="report-icon daily-log-icon">
+                <i class="ti ti-friends"></i>
+            </div>
+
+            <div class="report-card-content">
+                <h3>Parent & Pickup Contacts</h3>
+                <p>
+                    View parent and authorized pickup contact information.
+                </p>
+
+                <a 
+                    href="{{ url_for('parent_contact_report_preview') }}"
+                    class="report-button">
+
+                    <span>View Report</span>
+                    <i class="ti ti-arrow-right"></i>
+                </a>
+            </div>
+        </div>  
+        
+        
+    </div>
+    <!--End: Report Cards -->
+
+    <!-- Coming Soon -->
+    <div class="reports-coming-soon">
+
+        <div class="coming-soon-icon">
+            <i class="ti ti-sparkles"></i>
+        </div>
+
+        <div>
+            <h3>More reports coming soon</h3>
+            <p>
+                More reports will be available here.
+            </p>
+        </div>
+    </div>
+    <!--End: Coming Soon -->
+     
+</div>
+{% endblock %}

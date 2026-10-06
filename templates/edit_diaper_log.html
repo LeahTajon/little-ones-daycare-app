@@ -1,0 +1,359 @@
+{% extends 'base.html'%}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{{ url_for(
+        'static',
+        filename='css/diaper_log.css'
+    ) }}"
+>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4 diaper-form-page">
+
+    <!-- Page Header -->
+    <div class="diaper-page-header d-flex align-items-center gap-3 mb-4">
+
+        <a 
+            href="{{ url_for( 
+                'child_daily_log', 
+                child_id=child.id, 
+                date=selected_date.strftime('%Y-%m-%d') 
+            ) }}"
+            class="diaper-back-link text-decoration-none">
+                <i class="ti ti-arrow-left fs-4"></i>
+        </a>
+
+        <div>
+            <h1 class="diaper-page-title">
+                Edit Diaper Log
+            </h1>
+
+            <div class="diaper-page-subtitle">
+                {{ child.first_name }}
+                {{ child.last_name }}
+
+                <span class="mx-1">•</span>
+
+                {{ selected_date.strftime('%B %d, %Y') }}
+            </div>
+        </div>
+    </div>
+    <!--End: Page Header -->
+
+    <!-- Form -->
+    <div class="row diaper-form-row">
+
+        <div class="col-12">
+            <div class="card border-0 diaper-form-card">
+
+                <!-- Card Header -->
+                <div class="diaper-card-header card-header border-0">
+
+                    <div class="diaper-card-heading">
+
+                        <div class="diaper-card-heading">
+                            <i class="ti ti-toilet-paper fs-4"></i>
+                        </div>
+
+                        <div>
+
+                            <h2 class="diaper-card-title">
+                               Edit Diaper Change
+                            </h2>
+
+                            <p class="diaper-card-description">
+                                Update diaper change information
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!--End: Card Header -->
+
+                <!-- Card Body -->
+                <div class="card-body diaper-card-body">
+                    <form method="POST">
+
+                        {{ form.hidden_tag() }}
+
+                        <!-- Diaper Type -->
+                        <div class="mb-4">
+
+                            <label class="form-label fw-semibold mb-3">
+                                Diaper Type
+                            </label>
+
+                            <div class="row g-3">
+
+                                {% for value, label in form.diaper_type.choices %}
+
+                                    <div class="col-12 col-sm-4">
+
+                                        <label 
+                                            for="diaper-{{ value }}"
+                                            class="diaper-option w-100"
+                                        >
+
+                                            <input 
+                                                type="radio"
+                                                name="{{ form.diaper_type.name }}"
+                                                id="diaper-{{ value }}"
+                                                value="{{ value }}"
+                                                {% if form.diaper_type.data == value %}
+                                                    checked
+                                                {% endif %}
+                                            >
+
+                                            <div class="diaper-option-card diaper-{{ value}}">
+
+                                                <div class="diaper-option-icon">
+
+                                                    {% if value == 'wet' %}
+                                                        <i class="ti ti-droplets"></i>
+
+                                                    {% elif value == 'dry' %} 
+                                                        <i class="ti ti-sun"></i>
+
+                                                    {% elif value == 'bm' %}
+                                                        <i class="ti ti-poo"></i>
+
+                                                    {% endif %}
+                                                </div>
+
+                                                <div class="diaper-option-title">
+                                                    {{ label }}
+                                                </div>
+
+                                                <div class="diaper-option-check">
+                                                    <i class="ti ti-check"></i>
+                                                </div>
+
+
+                                            </div>
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                            {% if form.diaper_type.errors %}
+
+                                <div class="text-danger small mt-2">
+                                    {{ form.diaper_type.errors[0] }}
+                                </div>
+
+                            {% endif %}
+                        </div>
+                        <!--End: Diaper Type -->
+
+                        <!-- Time -->
+                        <div class="mb-4">
+
+                            <label class="form-label fw-semibold mb-3">
+                                Time
+                            </label>
+
+                            <div class="row g-3">
+
+                                <!-- Automatic -->
+                                <div class="col-12 col-sm-6">
+                                    <label for="time-automatic" class="time-option w-100">
+
+                                        <input 
+                                            type="radio"
+                                            name="{{ form.time_mode.name }}"
+                                            id="time-automatic"
+                                            value="automatic"
+                                            {% if form.time_mode.data == 'automatic' %}
+                                                checked
+                                            {% endif %}
+                                        >
+
+                                        <div class="time-option-card">
+
+                                            <div class="time-option-icon">
+                                                <i class="ti ti-clock"></i>
+                                            </div>
+
+                                            <div class="time-option-content">
+                                                <div class="time-option-title">
+                                                    Automatic
+                                                </div>
+
+                                                <div class="time-option-description">
+                                                    Use current time
+                                                </div>
+                                            </div>
+
+                                            <div class="time-option-check">
+                                                <i class="ti ti-check"></i>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+
+                                <!-- Manual -->
+                                <div class="col-12 col-sm-6">
+
+                                    <label 
+                                        for="time-manual" 
+                                        class="time-option w-100">
+
+                                        <input 
+                                            type="radio"
+                                            name="{{ form.time_mode.name }}"
+                                            id="time-manual"
+                                            value="manual"
+                                            {% if form.time_mode.data == 'manual' %}
+                                                checked
+                                            {% endif %}
+                                        >
+
+                                        <div class="time-option-card">
+
+                                            <div class="time-option-icon">
+                                                <i class="ti ti-edit"></i>
+                                            </div>
+
+                                            <div class="time-option-content">
+
+                                                <div class="time-option-title">
+                                                    Manual
+                                                </div>
+
+                                                <div class="time-option-description">
+                                                    Enter the time
+                                                </div>
+
+                                            </div>
+
+                                            <div class="time-option-check">
+                                                <i class="ti ti-check"></i>
+                                            </div>
+
+
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <!--End: Time -->
+
+                        <!-- Manual Time Input -->
+                        <div 
+                            id="manual-time-field" 
+                            class="mb-4" 
+                        >
+                            {{ form.manual_time.label(
+                                class="form-label fw-semibold"
+                            )}}
+
+                            {{ form.manual_time(
+                                class="form-control form-control-lg",
+                                type="time"
+                            )}}
+
+                            <div class="form-text">
+                                Enter the time of the diaper change.
+                            </div>
+
+                            {% if form.manual_time.errors %}
+                                <div class="text-danger small mt-2">
+                                    {{ form.manual_time.errors[0] }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <!-- End: Manual Time Input -->
+
+                        <!-- Description -->
+                        <div class="mb-4">
+
+                            {{ form.diaper_desc.label(
+                                class="form-label fw-semibold"
+                            )}}
+
+                            {{ form.diaper_desc(
+                                class="form-control form-control-lg",
+                                placeholder="Optional description"
+                            )}}
+                        </div>
+                        <!--End: Description -->
+
+                        <!-- Notes -->
+                        <div class="mb-4">
+
+                            {{ form.notes.label(
+                                class="form-label fw-semibold"
+                            )}}
+
+                            {{ form.notes(
+                                class="form-control",
+                                rows="4",
+                                placeholder="Optional notes..."
+                            )}}
+                        </div>
+                        <!--End: Notes -->
+
+                        <!-- Buttons -->
+                        <div class="diaper-form-buttons row g-2 pt-2">
+
+                            <div class="col-5">
+
+                                <a 
+                                    href="{{ url_for(
+                                        'child_daily_log',
+                                        child_id=child.id,
+                                        date=selected_date.strftime('%Y-%m-%d')
+                                    )}}"
+                                    class="diaper-cancel-btn btn w-100">
+                                
+                                    <span>Cancel</span>
+                                </a>
+                            </div>
+
+                            <div class="col-7">
+                                <button
+                                    type="submit"
+                                    class="diaper-save-btn btn w-100">
+                                    Update Diaper Log
+                                </button>
+                            </div>
+                        </div>
+                        <!--End: Buttons -->
+                    </form>
+                </div>
+                <!--End: Card Body -->
+            </div>
+        </div>
+    </div>
+    <!--End: Form -->
+</div>
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function() {
+    
+        const automatic = document.getElementById('time-automatic'); 
+        const manual = document.getElementById('time-manual'); 
+        const manualTimeField = document.getElementById('manual-time-field');
+
+        function updateTimeField() {
+
+            if (manual.checked) {
+  
+                manualTimeField.style.display = 'block';
+
+            } else {
+                manualTimeField.style.display = 'none';
+            }
+        }
+        
+        automatic.addEventListener('change', updateTimeField);
+        manual.addEventListener('change', updateTimeField);
+
+        updateTimeField();
+        
+    });
+</script>
+{% endblock %}

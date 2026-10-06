@@ -1,0 +1,512 @@
+/* Page Container */
+.activity-page {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Form Card */
+.activity-form-card {
+    border-radius: 16px;
+    background: #fff;
+    overflow: hidden;
+}
+
+.activity-form-card .card-body {
+    background: #fff;
+}
+
+/* Form Labels */
+.activity-form-card .form-label {
+    display: block;
+    margin-bottom: 8px;
+    color: #334155;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* Activity Options */
+.activity-options {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+/* Individual Activity */
+.activity-option {
+    position: relative;
+    display: block;
+    margin: 0;
+    cursor: pointer;
+}
+
+/* Hide native checkbox */
+.activity-option input[type="checkbox"] {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+/* Activity card */
+.activity-option-content {
+    min-height: 58px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    padding: 12px 42px 12px 15px;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+
+    background: #f8fafc;
+    color: #475569;
+    
+    font-size: 0.9rem;
+    font-weight: 500;
+
+    transition:
+        background-color 0.18s ease,
+        border-color 0.18s ease,
+        color 0.18s ease,
+        box-shadow 0.18s ease,
+        transform 0.18s ease;
+}
+
+/* Activity icon */
+.activity-option-content > i {
+    width: 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    color: #64748b;
+
+    font-size: 21px;
+
+    transition:
+        color 0.18s ease,
+        transform 0.18s ease;
+}
+
+/* Hover */
+.activity-option:hover .activity-option-content {
+    border-color: #c7d2fe;
+
+    background: #f1f5f9;
+
+    color: #334155;
+
+    transform: translateY(-1px);
+}
+
+.activity-option:hover
+.activity-option-content > i {
+    color: #4f46e5;
+}
+
+
+/* Selected */
+.activity-option input[type="checkbox"]:checked
++ .activity-option-content {
+    border-color: #6366f1;
+    background: #eef2ff;
+    color: #4c40b8;
+
+    box-shadow: 
+        0 0 0 1px
+        rgba(99, 102, 241, 0.08);
+}
+
+/* Selected icon */
+.activity-option input[type="checkbox"]:checked
++ .activity-option-content > i {
+    color: #4f46e5;
+    transform: scale(1.05);
+}
+
+/* Check Mark */
+.activity-check {
+    position: absolute;
+
+    top: 50%;
+    right: 14px;
+
+    display: none;
+    transform: translateY(-50%);
+
+    color: #4f46e5;
+    font-size: 19px;
+}
+
+.activity-option input[type="checkbox"]:checked
+~ .activity-check {
+    display: block;
+}
+
+/* Other Activity */
+#otherActivityContainer {
+    padding: 14px;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+
+    background: #f8fafc;
+}
+
+#otherActivityContainer .form-label {
+    margin-bottom: 6px;
+}
+
+#otherActivity {
+    border-radius: 9px;
+}
+
+/* Time Options */
+.time-options {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+    
+    gap: 12px;
+}
+
+/* Time option */
+.time-option {
+    position: relative;
+    
+    display: block;
+    margin: 0;
+    cursor: pointer;
+}
+
+/* Hide radio */
+.time-option input[type="radio"] {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+/* Time Card */
+.time-option-content {
+    min-height: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    padding: 11px 15px;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 11px;
+
+    background: #f8fafc;
+    color: #475569;
+
+    font-size: 0.9rem;
+    font-weight: 500;
+
+    transition:
+        background-color 0.18s ease,
+        border-color 0.18s ease,
+        color 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+/* Time icon */
+.time-option-content i {
+    color: #64748b;
+
+    font-size: 20px;
+
+    transition: color 0.18s ease;
+}
+
+/* Hover */
+.time-option:hover .time-option-content {
+    border-color: #c7d2fe;
+    background: #f1f5f9;
+    color: #334155;
+}
+
+.time-option:hover .time-option-content i {
+    color: #4f46e5;
+}
+
+/* Selected */
+.time-option input[type="radio"]:checked
++ .time-option-content {
+    border-color: #6366f1;
+    background: #eef2ff;
+    color: #4f45e5;
+
+    box-shadow:
+        0 0 0 1px
+        rgba(99, 102, 241, 0.08);
+}
+
+.time-option input[type="radio"]:checked
++ .time-option-content i {
+    color: #4f46e5;
+}
+
+.automatic-time-display {
+    min-height: 48px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 10px 14px;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+
+    background: #f8fafc;
+    color: #64748b;
+
+    font-size: 0.9rem;
+}
+
+.automatic-time-display > i {
+    flex-shrink: 0;
+
+    color: #6366f1;
+    font-size: 19px;
+}
+
+.automatic-time-display strong {
+    color: #334155;
+    font-weight: 600;
+}
+
+/* Manual Time */
+#manualTimeContainer {
+    padding: 14px;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+
+    background: #f8fafc;
+}
+
+#manualTimeContainer .form-label {
+    width: 100%;
+    max-width: 220px;
+
+    min-height: 42px;
+
+    border-radius: 9px;
+}
+
+/* Form Controls */
+.activity-form-card .form-control {
+    border-color: #e2e8f0;
+    border-radius: 10px;
+
+    color: #334155;
+    background: #fff;
+
+    box-shadow: none;
+    font-size: 0.9rem;
+
+    transition:
+        border-color 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+.activity-form-card .form-control::placeholder {
+    color: #94a3b8;
+}
+
+.activity-form-card .form-control:hover {
+    border-color: #cbd5e1;
+}
+
+.activity-form-card .form-control:focus {
+    border-color: #818cf8;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(99, 102, 241, 0.10);
+}
+
+
+.activity-form-card textarea {
+    resize: vertical;
+
+    min-height: 80px;
+}
+
+/* Validation Errors */
+.activity-form-card .text-danger {
+    margin-top: 6px;
+
+    color: #dc2626 !important;
+
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+/* Form Buttons */
+.activity-form-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 10px;
+    padding: 4px;
+}
+
+.activity-form-buttons .btn {
+    min-width: 100px;
+
+    border-radius: 9px;
+
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Cancel */
+.activity-form-buttons .btn-light {
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    color: #475569;
+}
+
+/* Save */
+.activity-form-buttons .btn-primary {
+    border-color: #4f46e5;
+    background: #4f46e5;
+}
+
+.activity-form-buttons .btn-primary:hover {
+    border-color: #4338ca;
+
+    background: #4338ca;
+}
+
+
+/* Focus Accessibility */
+.activity-option input[type="checkbox"]:focus-visible
++ .activity-option-content {
+    
+    outline: 3px solid rgba(99, 102, 241, 0.20);
+    outline-offset: 2px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+
+    .activity-page {
+        max-width: 100%;
+    }
+
+
+    .activity-options {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media (max-width: 576px) {
+
+    .activity-page-title {
+        font-size: 1.3rem;
+    }
+
+
+    .activity-page-icon {
+        width: 44px;
+        height: 44px;
+
+        border-radius: 11px;
+    }
+
+
+    .activity-page-icon i {
+        font-size: 22px;
+    }
+
+
+    .activity-form-card .card-body {
+        padding: 20px !important;
+    }
+
+
+    .time-options {
+        grid-template-columns: 1fr;
+    }
+
+
+    .activity-option-content {
+        min-height: 54px;
+    }
+
+
+    #manualTimeContainer input[type="time"] {
+        max-width: 100%;
+    }
+
+
+    .activity-form-buttons {
+        justify-content: stretch;
+    }
+
+
+    .activity-form-buttons .btn {
+        flex: 1;
+        min-width: 0;
+    }
+
+}
+
+@media (max-width: 380px) {
+
+    .activity-page {
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+
+
+    .activity-page-title {
+        font-size: 1.2rem;
+    }
+
+
+    .activity-page-subtitle {
+        font-size: 0.85rem;
+    }
+
+
+    .activity-form-card .card-body {
+        padding: 16px !important;
+    }
+
+
+    .activity-option-content {
+        padding-left: 12px;
+        padding-right: 38px;
+    }
+
+}

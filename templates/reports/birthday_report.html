@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/reports.css') }}"
+>
+{% endblock %}
+
+{% block content %}
+
+<div class="reports-page">
+
+    <!-- Page Header -->
+    <div class="report-page-header">
+
+        <div class="report-header-left">
+
+            <a
+                href="{{ url_for('reports') }}"
+                class="report-back"
+            >
+                <i class="ti ti-arrow-left"></i>
+            </a>
+
+            <div>
+
+                <div class="page-eyebrow">
+                    <i class="ti ti-cake"></i>
+                    Birthday Reports
+                </div>
+
+                <h1>Birthday Report</h1>
+
+                <p>
+                    View student birthdays by month.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Month Selector -->
+    <div class="daily-report-selector">
+
+        <div class="daily-report-selector-icon">
+            <i class="ti ti-calendar-event"></i>
+        </div>
+
+        <div class="daily-report-selector-content">
+
+            <h2>Select Birthday Month</h2>
+
+            <p>
+                Choose the month you would like to view.
+            </p>
+
+
+            <form
+                action="{{ url_for('birthday_report_preview') }}"
+                method="get"
+                class="daily-report-date-form"
+            >
+
+                <div class="daily-report-date-field">
+
+                    <label for="month">
+                        Birthday Month
+                    </label>
+
+                    <select
+                        id="month"
+                        name="month"
+                        class="form-select"
+                    >
+
+                        {% for month_number in range(1, 13) %}
+
+                            <option
+                                value="{{ month_number }}"
+                                {% if selected_month == month_number %}
+                                    selected
+                                {% endif %}
+                            >
+                                {{ [
+                                    'January',
+                                    'February',
+                                    'March',
+                                    'April',
+                                    'May',
+                                    'June',
+                                    'July',
+                                    'August',
+                                    'September',
+                                    'October',
+                                    'November',
+                                    'December'
+                                ][month_number - 1] }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="report-action-button"
+                >
+                    <i class="ti ti-refresh"></i>
+                    View Report
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- PDF Preview -->
+    <div class="daily-report-preview-card">
+
+        <div class="daily-report-preview-header">
+
+            <div class="daily-report-preview-title">
+
+                <div class="daily-report-preview-icon">
+                    <i class="ti ti-file-type-pdf"></i>
+                </div>
+
+                <div>
+
+                    <strong>
+                        Birthday Report
+                    </strong>
+
+                    <span>
+                        {{ month_name }} Birthdays
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="report-preview-actions">
+
+                <a
+                    href="{{ pdf_url }}"
+                    class="report-action-button"
+                    target="_blank"
+                >
+                    <i class="ti ti-printer"></i>
+                    Print
+                </a>
+
+                <a
+                    href="{{ pdf_url }}"
+                    class="report-secondary-button"
+                    download
+                >
+                    <i class="ti ti-download"></i>
+                    Download
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="daily-report-preview-container">
+
+            <iframe
+                src="{{ pdf_url }}"
+                class="daily-report-preview-frame"
+                title="Birthday Report"
+            ></iframe>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

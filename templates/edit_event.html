@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block title %} Edit Event | Little Ones {% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/calendar.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="event-form-page">
+    <div class="event-form-header">
+
+        <a 
+            href="{{ url_for(
+                'calendar_view',
+                year=event.event_date.year,
+                month=event.event_date.month
+            )}}"
+            class="back-link">
+                <i class="ti ti-arrow-left"></i>
+                Back to Calendar
+        </a>
+
+        <h1>Edit Event</h1>
+
+        <p>
+            Update the details for this calendar event.
+        </p>
+    </div>
+
+    <div class="event-form-card">
+        <form method="POST">
+            {{ form.hidden_tag() }}
+
+            <div class="form-section">
+                <h3>Event Information</h3>
+
+                <div class="form-group">
+                    {{ form.title.label }}
+
+                    {{ form.title(
+                        class="form-control"
+                    )}}
+
+                    {% for error in form.title.errors %}
+                        <div class="form-error">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        {{ form.event_date.label }}
+                        {{ form.event_date(
+                            class="form-control"
+                        )}}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.event_type.label }}
+                        {{ form.event_type(
+                            class="form-select"
+                        )}}
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        {{ form.start_time.label }}
+                        {{ form.start_time(
+                            class="form-control"
+                        )}}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.end_time.label }}
+                        {{ form.end_time(
+                            class="form-control"
+                        )}}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    {{ form.description.label }}
+                    {{ form.description(
+                        class="form-control",
+                        rows="4"
+                    )}}
+                </div>
+            </div>
+
+            <div class="form-actions">
+
+                <a 
+                    href="{{ url_for(
+                        'calendar_view',
+                        year=event.event_date.year,
+                        month=event.event_date.month
+                    )}}"
+                    class="btn-cancel">
+                    Cancel
+                </a>
+
+                {{ form.submit(
+                    class="btn-save-event",
+                    value="Save Changes"
+                )}}
+            </div>
+        </form>
+
+        <!-- Delete -->
+        <div class="delete-event-section">
+
+            <form 
+                method="POST"
+                action="{{ url_for(
+                    'delete_event',
+                    event_id=event.id
+                )}}"
+                onsubmit="return confirm('Are you sure you want to delete this event?');"
+            >
+                {{ form.hidden_tag() }}
+
+                <button
+                    type="submit"
+                    class="btn-delete-event">
+                    
+                    <i class="ti ti-trash"></i>
+                    Delete Event
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

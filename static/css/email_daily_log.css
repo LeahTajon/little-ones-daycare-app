@@ -1,0 +1,868 @@
+/* ========================================
+   Email Daily Log Page
+======================================== */
+
+.email-daily-log-page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 30px 20px 50px;
+}
+
+
+/* ========================================
+   Page Header
+======================================== */
+
+.email-page-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.email-back-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f4f2ff;
+    color: #7c5cff;
+    text-decoration: none;
+
+    transition: all 0.2s ease;
+}
+
+.email-back-btn:hover {
+    background: #e9e5ff;
+    color: #6848e8;
+    transform: translateX(-2px);
+}
+
+.email-back-btn i {
+    font-size: 20px;
+}
+
+.email-page-title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: #2f3047;
+}
+
+.email-page-subtitle {
+    margin: 4px 0 0;
+    font-size: 14px;
+    color: #8a8da3;
+}
+
+
+/* ========================================
+   Main Card
+======================================== */
+
+.email-card {
+    background: #ffffff;
+    border: 1px solid #ececf4;
+    border-radius: 20px;
+    padding: 28px;
+
+    box-shadow: 0 8px 30px rgba(50, 45, 90, 0.06);
+}
+
+
+/* ========================================
+   Child Information
+======================================== */
+
+.email-child-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    padding-bottom: 24px;
+    margin-bottom: 24px;
+
+    border-bottom: 1px solid #eeeeF5;
+}
+
+.email-child-photo {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.email-child-photo-placeholder {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f1efff;
+    color: #7c5cff;
+
+    flex-shrink: 0;
+}
+
+.email-child-photo-placeholder i {
+    font-size: 28px;
+}
+
+.email-child-name {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #303147;
+}
+
+.email-child-date {
+    margin: 5px 0 0;
+    font-size: 13px;
+    color: #8b8da1;
+}
+
+
+/* ========================================
+   Form
+======================================== */
+
+.email-form-group {
+    margin-bottom: 22px;
+}
+
+.email-form-label {
+    display: block;
+    margin-bottom: 8px;
+
+    font-size: 14px;
+    font-weight: 600;
+    color: #414256;
+}
+
+.email-form-label i {
+    margin-right: 6px;
+    color: #7c5cff;
+}
+
+.email-form-control {
+    width: 100%;
+    height: 48px;
+
+    padding: 0 15px;
+
+    border: 1px solid #ddddea;
+    border-radius: 12px;
+
+    background: #ffffff;
+    color: #343548;
+
+    font-size: 14px;
+
+    outline: none;
+    transition: all 0.2s ease;
+
+    box-sizing: border-box;
+}
+
+.email-form-control::placeholder {
+    color: #aaaabd;
+}
+
+.email-form-control:focus {
+    border-color: #9b87ff;
+    box-shadow: 0 0 0 3px rgba(124, 92, 255, 0.10);
+}
+
+
+/* ========================================
+   Help Text
+======================================== */
+
+.email-help-text {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #999bae;
+}
+
+.email-help-text i {
+    margin-right: 4px;
+    color: #7c5cff;
+}
+
+
+/* ========================================
+   Alert
+======================================== */
+
+.email-alert {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 20px;
+    padding: 12px 14px;
+
+    border-radius: 12px;
+
+    background: #fff4f4;
+    color: #c14b4b;
+
+    font-size: 13px;
+}
+
+.email-alert i {
+    font-size: 17px;
+}
+
+
+/* ========================================
+   Action Buttons
+======================================== */
+
+.email-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+
+    padding-top: 22px;
+    margin-top: 8px;
+
+    border-top: 1px solid #eeeeF5;
+}
+
+.email-cancel-btn,
+.email-send-btn {
+    height: 44px;
+    padding: 0 18px;
+
+    border-radius: 11px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    text-decoration: none;
+    border: none;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.email-cancel-btn {
+    background: #f3f3f8;
+    color: #66697d;
+}
+
+.email-cancel-btn:hover {
+    background: #e9e9f0;
+    color: #454758;
+}
+
+.email-send-btn {
+    background: #7c5cff;
+    color: #ffffff;
+}
+
+.email-send-btn:hover {
+    background: #6c4ee8;
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 14px rgba(124, 92, 255, 0.22);
+}
+
+.email-send-btn i {
+    font-size: 17px;
+}
+
+.email-daily-log-page {
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 30px 24px 50px;
+}
+
+.email-daily-log-page .page-header {
+    margin-bottom: 24px;
+}
+
+.email-daily-log-page .page-header-left {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.email-daily-log-page .back-button {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 2px;
+
+    background: #f1efff;
+    color: #7c5cff;
+
+    border-radius: 12px;
+    text-decoration: none;
+
+    transition: all 0.2s ease;
+}
+
+.email-daily-log-page .back-button:hover {
+    background: #e6e1ff;
+    color: #6848e8;
+    transform: translateZ(-2px);
+}
+
+.email-daily-log-page .back-button i {
+    font-size: 20px;
+}
+
+.email-daily-log-page .page-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    margin-bottom: 5px;
+
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+
+    color: #7c5cff;
+}
+
+.email-daily-log-page .page-eyebrow i {
+    font-size: 15px;
+}
+
+.email-daily-log-page .page-header h1 {
+    margin: 0;
+
+    font-size: 26px;
+    font-weight: 700;
+
+    color: #303147;
+}
+
+.email-daily-log-page .page-header p {
+    margin: 5px 0 0;
+
+    font-size: 14px;
+    color: #8b8da1;
+}
+
+.email-card {
+    background: #fff;
+
+    border: 1px solid #e9e8f1;
+    border-radius: 20px;
+
+    padding: 28px;
+
+    box-shadow: 0 8px 30px rgba(50, 45, 90, 0.06);
+}
+
+.child-summary {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    padding-bottom: 24px;
+    margin-bottom: 26px;
+
+    border-bottom: 1px solid #eeeef5;
+}
+
+.child-avatar {
+    width: 64px;
+    height: 64px;
+    min-width: 64px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background: #f1efff;
+    color: #7c5cff;
+
+    border-radius: 16px;
+}
+
+.child-avatar img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.child-avatar i {
+    font-size: 28px;
+}
+
+.child-summary-info h2 {
+    margin: 0;
+
+    font-size: 18px;
+    font-weight: 700;
+
+    color: #303147;
+}
+
+.child-summary-info p {
+    margin: 5px 0 0;
+
+    font-size: 13px;
+    color: #8b8da1;
+}
+
+.form-section {
+    margin-bottom: 24px;
+}
+
+.form-section > label {
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    color: #3d3f52;
+}
+
+.selection-help {
+    margin: 0 0 14px;
+
+    font-size: 13px;
+    color: #8b8da1;
+}
+
+.parent-selection {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.parent-option {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    padding: 15px 16px;
+
+    background: #fafaff;
+
+    border: 1px solid #e4e3ed;
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.parent-option:hover {
+    background: #f8f6ff;
+    border-color: #b9aaff;
+}
+
+.parent-option input {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    opacity: 0;
+}
+
+.parent-check {
+    width: 21px;
+    height: 21px;
+    min-width: 21px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #fff;
+
+    border: 2px solid #d2d0dd;
+    border-radius: 6px;
+
+    transition: all 0.2s ease;
+}
+
+.parent-option input:checked + .parent-check {
+    background: #7c5cff;
+    border-color: #7c5cff;
+}
+
+
+.parent-option input:checked + .parent-check::after {
+    content: "✓";
+
+    font-size: 13px;
+    font-weight: 700;
+
+    color: #fff;
+}
+
+.parent-option:has(input:checked) {
+    background: #f7f4ff;
+    border-color: #a99aff;
+
+    box-shadow: 0 3px 10px rgba(124, 92, 255, 0.06);
+}
+
+.parent-option-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+
+    min-width: 0;
+}
+
+.parent-option-info strong {
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #343649;
+}
+
+.parent-option-info small {
+    font-size: 12px;
+    color: #8b8da1;
+
+    overflow-wrap: anywhere;
+}
+
+.no-parent-email {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+
+    padding: 15px;
+
+    background: #fff8f5;
+
+    border: 1px solid #f1ddd5;
+    border-radius: 13px;
+}
+
+.no-parent-email > i {
+    margin-top: 1px;
+
+    font-size: 21px;
+    color: #d47b5f;
+}
+
+.no-parent-email strong {
+    display: block;
+
+    margin-bottom: 3px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #5a4037;
+}
+
+.no-parent-email p {
+    margin: 0;
+
+    font-size: 12px;
+    line-height: 1.5;
+
+    color: #98796d;
+}
+
+.date-summary {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    padding: 15px 16px;
+
+    margin-bottom: 24px;
+
+    background: #f8f7fc;
+
+    border: 1px solid #ebeaf2;
+    border-radius: 14px;
+}
+
+.date-icon {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eeeaff;
+    color: #7c5cff;
+
+    border-radius: 11px;
+}
+
+.date-icon i {
+    font-size: 20px;
+}
+
+.date-label {
+    display: block;
+
+    margin-bottom: 3px;
+
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+
+    color: #9698aa;
+}
+
+.date-summary strong {
+    display: block;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #3c3e50;
+}
+
+.form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+
+    padding-top: 22px;
+
+    border-top: 1px solid #eeeef5;
+}
+
+.btn-cancel,
+.btn-send {
+    height: 44px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap:  7px;
+
+    padding: 0 18px;
+
+    border-radius: 11px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.btn-cancel {
+    background: #f2f2f7;
+    color: #686a7d;
+}
+
+.btn-cancel:hover {
+    background: #e8e8ef;
+    color: #4e5062;
+}
+
+.btn-send {
+    border: none;
+
+    background: #7c5cff;
+    color: #fff;
+
+    cursor: pointer;
+}
+
+.btn-send:hover {
+    background: #6c4ee8;
+    color: #fff;
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 5px 14px rgba(124, 92, 255, 0.22);
+}
+
+.btn-send i {
+    font-size: 17px;
+}
+
+.btn-send:disabled {
+    background: #d5d2df;
+    color: #fff;
+
+    cursor: not-allowed;
+
+    transform: none;
+    box-shadow: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ========================================
+   Responsive
+======================================== */
+
+@media (max-width: 576px) {
+
+    .email-daily-log-page {
+        padding: 20px 14px 40px;
+    }
+
+    .email-page-title {
+        font-size: 21px;
+    }
+
+    .email-page-subtitle {
+        font-size: 13px;
+    }
+
+    .email-card {
+        padding: 20px;
+        border-radius: 16px;
+    }
+
+    .email-child-photo,
+    .email-child-photo-placeholder {
+        width: 56px;
+        height: 56px;
+        border-radius: 14px;
+    }
+
+    .email-child-name {
+        font-size: 16px;
+    }
+
+    .email-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .email-cancel-btn,
+    .email-send-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .email-daily-log-page {
+        padding: 24px 18px 40px;
+    }
+
+    .email-card {
+        padding: 22px;
+    }
+
+}
+
+
+@media (max-width: 576px) {
+
+    .email-daily-log-page {
+        padding: 20px 14px 35px;
+    }
+
+    .email-daily-log-page .page-header h1 {
+        font-size: 22px;
+    }
+
+    .email-daily-log-page .page-header p {
+        font-size: 13px;
+    }
+
+    .email-card {
+        padding: 18px;
+        border-radius: 16px;
+    }
+
+    .child-summary {
+        gap: 12px;
+        padding-bottom: 20px;
+        margin-bottom: 22px;
+    }
+
+    .child-avatar {
+        width: 56px;
+        height: 56px;
+        min-width: 56px;
+        border-radius: 14px;
+    }
+
+    .child-avatar i {
+        font-size: 24px;
+    }
+
+    .child-summary-info h2 {
+        font-size: 16px;
+    }
+
+    .child-summary-info p {
+        font-size: 12px;
+    }
+
+    .parent-option {
+        padding: 13px;
+    }
+
+    .parent-option-info strong {
+        font-size: 13px;
+    }
+
+    .parent-option-info small {
+        font-size: 11px;
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .btn-cancel,
+    .btn-send {
+        width: 100%;
+    }
+
+}

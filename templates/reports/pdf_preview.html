@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/reports.css') }}"
+>
+{% endblock %}
+
+{% block content %}
+
+<div class="reports-page">
+
+    <!-- Page Header -->
+    <div class="report-page-header">
+
+        <div class="report-header-left">
+
+            <a
+                href="{{ url_for('reports') }}"
+                class="report-back"
+            >
+                <i class="ti ti-arrow-left"></i>
+            </a>
+
+            <div>
+
+                <div class="page-eyebrow">
+                    <i class="ti ti-file-description"></i>
+                    Report Preview
+                </div>
+
+                <h1>{{ title }}</h1>
+
+                <p>
+                    Preview your report before printing or downloading.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- Actions -->
+        <div class="report-preview-actions">
+
+            <a
+                href="{{ pdf_url }}"
+                class="report-action-button"
+                target="_blank"
+            >
+                <i class="ti ti-printer"></i>
+                Print
+            </a>
+
+            <a
+                href="{{ pdf_url }}"
+                class="report-secondary-button"
+                download
+            >
+                <i class="ti ti-download"></i>
+                Download
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- PDF Preview -->
+    <div class="pdf-preview-card">
+
+        <div class="pdf-preview-toolbar">
+
+            <div class="pdf-preview-title">
+
+                <div class="pdf-preview-icon">
+                    <i class="ti ti-file-type-pdf"></i>
+                </div>
+
+                <div>
+                    <strong>{{ title }}</strong>
+
+                    <span>
+                        PDF Report
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="pdf-preview-container">
+
+            <iframe
+                src="{{ pdf_url }}"
+                class="pdf-preview-frame"
+                title="{{ title }}"
+            ></iframe>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

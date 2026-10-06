@@ -1,0 +1,125 @@
+{% extends "base.html "%}
+
+{% block title %} Add Event | Little Ones {% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/calendar.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="event-form-page">
+
+    <div class="event-form-header">
+
+        <a 
+            href="{{ url_for('calendar_view') }}"
+            class="back-link">
+            <i class="ti ti-arrow-left"></i>
+            Back to Calendar
+        </a>
+
+        <h1>Add Event</h1>
+
+        <p>
+            Add an event to the Little Ones calendar.
+        </p>
+    </div>
+
+    <div class="event-form-card">
+        
+        <form method="POST">
+
+            {{ form.hidden_tag() }}
+
+            <!-- Event Name -->
+            <div class="form-section">
+                
+                <h3>Event Information</h3>
+
+                <div class="form-group">
+
+                    {{ form.title.label }}
+
+                    {{ form.title(
+                        class="form-control",
+                        placeholder="e.g. Halloween Party"
+                    ) }}
+
+                    {% for error in form.title.errors %}
+                        <div class="form-error">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        {{ form.event_date.label }}
+                        {{ form.event_date(
+                            class="form-control"
+                        )}}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.event_type.label }}
+                        {{ form.event_type(
+                            class="form-select"
+                        )}}
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        {{ form.start_time.label }}
+                        {{ form.start_time(
+                            class="form-control"
+                        )}}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.end_time.label }}
+                        {{ form.end_time(
+                            class="form-control"
+                        )}}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    {{ form.class_name.label }}
+                    {{ form.class_name(
+                        class="form-select"
+                    )}}
+                </div>
+
+                <div class="form-group">
+                    {{ form.description.label }}
+                    {{ form.description(
+                        class="form-control",
+                        rows=4,
+                        placeholder="Add any additional details..."
+                    )}}
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="form-actions">
+
+                <a 
+                    href="{{ url_for(
+                        'calendar_view'
+                    )}}"
+                    class="btn-cancel">
+
+                    Cancel
+                </a>
+
+                {{ form.submit(
+                    class="btn-save-event",
+                    value="Save Event"
+                )}}
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,701 @@
+/* Back Link */
+.nap-back-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    margin-bottom: 1.75rem;
+}
+
+.nap-back-link {
+    width: 38px;
+    height: 38px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #e3dced;
+    border-radius: 10px;
+
+    background: #faf8fc;
+    color: #8064a2;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.nap-back-link i { 
+    font-size: 1.15rem; 
+}
+
+.nap-back-link:hover { 
+    background: #f1ebf7; 
+    border-color: #d6c8e3; 
+    color: #654c82; 
+    transform: translateX(-2px); 
+}
+
+.nap-header-content { 
+    min-width: 0; 
+}
+
+.nap-header-content h1 { 
+    margin: 0 0 0.3rem; 
+    color: #4f3d63; 
+    font-size: 1.75rem; 
+    font-weight: 700; 
+    line-height: 1.2; 
+}
+
+.nap-header-meta { 
+    display: flex; 
+    align-items: center; 
+    flex-wrap: wrap; 
+    gap: 0.35rem; 
+    color: #91859d; 
+    font-size: 0.875rem; 
+    line-height: 1.4; 
+}
+
+.nap-child-name { 
+    color: #756681; 
+    font-weight: 500; 
+}
+
+.nap-meta-divider { 
+    color: #b5a8bf; 
+    margin: 0 0.15rem; 
+}
+
+.nap-header-meta span { 
+    color: #756681; 
+    font-weight: 500; 
+} 
+
+/* Nap Card */
+.nap-card {
+    width: 100%;
+    
+
+    background: #fff;
+
+    border: 1px solid #e5dfee;
+    border: 18px;
+
+    box-shadow: 0 6px 24px rgba(79, 61, 99, 0.06);
+    overflow: hidden;
+}
+
+.nap-card-body {
+    width: 100%;
+    padding: 3rem 2rem;
+}
+
+/* Nap Ready Content */
+.nap-ready {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
+}
+
+/* Nap Icon */
+.nap-icon-wrapper {
+    width: 76px;
+    height: 76px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 1.25rem;
+
+    border-radius: 50%;
+    
+    background: #f2ecf8;
+    border: 1px solid #e2d6ed;
+
+    color: #8064a2;
+}
+
+.nap-icon-wrapper i {
+    font-size: 2.4rem;
+}
+
+/* Nap Title */
+.nap-ready-title {
+    margin: 0 0 0.5rem;
+
+    color: #4f3d63;
+
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+/* Nap Description */
+.nap-description {
+    width: 100%;
+    max-width: 480px;
+
+    margin: 0 auto 1.75rem;
+
+    color: #8b8193;
+
+    font-size: 0.9rem;
+    line-height: 1.65;
+}
+
+/* Nap Time Selection */
+.nap-time-section {
+    width: 100%;
+    max-width: 620px;
+
+    margin: 0 auto 1.5rem;
+
+    text-align: left;
+}
+
+.nap-field-label {
+    display: block;
+
+    margin-bottom: 0.6rem;
+
+    color: #675875;
+
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+
+/* Time Options */
+.nap-time-options {
+    width: 100%;
+}
+
+.nap-time-option {
+    display: block;
+
+    width: 100%;
+    margin: 0;
+
+    cursor: pointer;
+}
+
+/* Hide the actual radio button */
+
+.nap-time-option input[type="radio"] {
+    position: absolute;
+
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Option Card */
+.nap-time-option-content {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+    min-height: 90px;
+    height: 90px;
+
+    padding: 0.9rem 1rem;
+
+    background: #faf8fc;
+
+    border: 1px solid #e3dced;
+    border-radius: 13px;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+/* Hover */
+
+.nap-time-option:hover .nap-time-option-content {
+    background: #f5f0f9;
+    border-color: #d5c7e2;
+
+    transform: translateY(-1px);
+}
+
+/* Option Icon */
+.nap-time-option-icon {
+    width: 42px;
+    height: 42px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-right: 0.75rem;
+    border-radius: 10px;
+
+    background: #f0e9f6;
+}
+
+.nap-time-option i {
+    font-size: 1.2rem;
+}
+
+/* Option Text */
+.nap-time-option-text {
+    min-width: 0;
+}
+
+.nap-time-option-title {
+    color: #554461;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    line-height: 1.3;
+}
+
+.nap-time-option-description {
+    margin-top: 0.2rem;
+
+    color: #95899d;
+
+    font-size: 0.75rem;
+
+    line-height: 1.4;
+}
+
+/* Edit Nap Time Fields */
+.nap-edit-time-field {
+    width: 100%;
+    margin-top: 20px;
+    text-align: left;
+}
+
+.nap-edit-time-field .nap-field-label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.nap-edit-time-field .nap-time-input {
+    display: block;
+    width: 100%;
+    min-height: 48px;
+}
+
+.nap-cancel-btn,
+.nap-save-btn {
+    min-height: 48px;
+    padding: 0 22px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+
+.nap-cancel-btn {
+    color: #64748b;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+}
+
+.nap-cancel-btn:hover {
+    color: #334155;
+    background: #f1f5f9;
+}
+
+.nap-save-btn {
+    color: #ffffff;
+    background: #2563eb;
+    border: 1px solid #2563eb;
+}
+
+.nap-save-btn:hover {
+    background: #1d4ed8;
+    border-color: #1d4ed8;
+    transform: translateY(-1px);
+}
+/* Check Icon */
+.nap-time-option-check {
+    width: 24px;
+    height: 24px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-left: auto;
+
+    border: 1px solid #d4c8df;
+    border-radius: 50%;
+
+    background: #fff;
+
+    color: transparent;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.nap-time-option-check i {
+    font-size: 0.85rem;
+}
+
+
+/* Selected Option */
+.nap-time-option input[type="radio"]:checked
++ .nap-time-option-content {
+
+    background: #f1eafa;
+
+    border-color: #bca8cf;
+
+    box-shadow:
+        0 3px 10px rgba(128, 100, 162, 0.08);
+}
+
+/* Selected icon */
+
+.nap-time-option input[type="radio"]:checked
++ .nap-time-option-content
+.nap-time-option-icon {
+
+    background: #e5d9ef;
+
+    color: #6f538e;
+}
+
+/* Selected check */
+
+.nap-time-option input[type="radio"]:checked
++ .nap-time-option-content
+.nap-time-option-check {
+
+    background: #8064a2;
+
+    border-color: #8064a2;
+
+    color: #ffffff;
+}
+
+/* Manual Time */
+.nap-manual-time {
+    display: none;
+
+    width: 100%;
+    max-width: 620px;
+
+    margin: 0 auto 1.5rem;
+
+    text-align: left;
+}
+
+/* Show manual time when selected */
+
+.nap-form:has(
+    input[name="time_mode"][value="manual"]:checked
+) .nap-manual-time {
+    display: block;
+}
+
+/* Time Input */
+.nap-time-input {
+    width: 100%;
+    height: 46px;
+
+    border: 1px solid #ded4e7;
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    color: #554461;
+
+    font-size: 0.9rem;
+
+    box-shadow: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+/* Focus */
+
+.nap-time-input:focus {
+    border-color: #a991bc;
+
+    box-shadow:
+        0 0 0 3px rgba(128, 100, 162, 0.10);
+}
+
+/* Form Action */
+.nap-action {
+    margin-top: 0.5rem;
+}
+
+/* Start Nap Button */
+.nap-start-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 0.5rem;
+
+    min-width: 180px;
+
+    padding: 0.75rem 1.4rem;
+
+    border: 1px solid #765a96;
+    border-radius: 11px;
+
+    background: #8064a2;
+    color: #ffffff;
+
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 4px 12px rgba(128, 100, 162, 0.18);
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+/* Hover */
+
+.nap-start-btn:hover {
+    background: #6f558d;
+
+    border-color: #644a82;
+
+    color: #ffffff;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 6px 16px rgba(128, 100, 162, 0.24);
+}
+
+/* Active */
+
+.nap-start-btn:active {
+    transform: translateY(0);
+}
+
+/* Nap in Progress */
+.nap-active {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* Active Nap Icon */
+.nap-active-icon {
+    background: #eee5f6;
+    border-color: #dccce9;
+    color: #765a96;
+}
+
+.nap-started-time {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 0 auto 1.75rem;
+    padding: 0.75rem 1.25rem;
+    border: 1px solid #e1d5ea;
+    border-radius: 12px;
+    background: #faf8fc;
+}
+
+.nap-started-label {
+    color: #8b7d95;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.nap-started-value {
+    color: #604977;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+/* End Nap Button */
+.nap-end-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
+    min-width: 180px;
+
+    padding: 0.75rem 1.4rem;
+
+    border: 1px solid #765a96;
+    border-radius: 11px;
+
+    background: #8064a2;
+    color: #ffffff;
+
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 4px 12px rgba(128, 100, 162, 0.18);
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.nap-end-btn:hover {
+    background: #6f558d;
+    border-color: #644a82;
+    color: #ffffff;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 6px 16px rgba(128, 100, 162, 0.24);
+}
+
+.nap-end-btn:active {
+    transform: translateY(0);
+}
+
+.nap-save-btn {
+    color: #ffffff;
+    background: #7c6ac8;
+    border: 1px solid #7c6ac8;
+}
+
+.nap-save-btn:hover {
+    background: #6f5db7;
+    border-color: #6f5db7;
+    transform: translateY(-1px);
+}
+
+@media (max-width: 576px) { 
+    .nap-back-wrapper { 
+        gap: 0.75rem; 
+        margin-bottom: 1.5rem; 
+    } 
+    
+    .nap-back-link { 
+        width: 36px; 
+        height: 36px; 
+    } 
+    
+    .nap-header-content h1 { 
+        font-size: 1.5rem; 
+    } 
+    
+    .nap-header-meta { 
+        font-size: 0.8rem; 
+    } 
+}
+
+@media (max-width: 767.98px) {
+
+    .nap-time-section {
+        max-width: 100%;
+    }
+
+    .nap-manual-time {
+        max-width: 100%;
+    }
+
+    .nap-time-option-content {
+        min-height: 70px;
+    }
+
+    .nap-start-btn {
+        width: 100%;
+        max-width: 280px;
+    }
+}
+
+
+@media (max-width: 575.98px) {
+
+    .nap-card-body {
+        padding: 2rem 1rem;
+    }
+
+    .nap-time-option-content {
+        padding: 0.8rem;
+    }
+
+    .nap-time-option-icon {
+        width: 38px;
+        height: 38px;
+
+        margin-right: 0.6rem;
+    }
+
+    .nap-time-option-title {
+        font-size: 0.85rem;
+    }
+
+    .nap-time-option-description {
+        font-size: 0.7rem;
+    }
+
+    .nap-time-option-check {
+        width: 22px;
+        height: 22px;
+    }
+}
+
+@media (max-width: 767.98px) {
+
+    .nap-end-btn {
+        width: 100%;
+        max-width: 280px;
+    }
+
+}
+
+
+@media (max-width: 575.98px) {
+
+    .nap-started-time {
+        padding: 0.7rem 1rem;
+    }
+
+}

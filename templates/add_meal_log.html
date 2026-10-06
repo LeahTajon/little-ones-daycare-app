@@ -1,0 +1,541 @@
+{% extends 'base.html' %}
+
+{% block extra_css %}
+
+<link
+    rel="stylesheet"
+    href="{{ url_for(
+        'static',
+        filename='css/meal_log.css'
+    ) }}"
+>
+
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid meal-page py-4">
+
+    <!-- Page Header -->
+    <div class="d-flex align-items-center gap-3 mb-4">
+
+        <a href="{{ url_for(
+                'child_daily_log',
+                child_id=child.id,
+                date=selected_date.strftime('%Y-%m-%d')
+            ) }}"
+            class="text-decoration-none text-dark">
+        
+            <i class="ti ti-arrow-left fs-4"></i>
+        </a>
+
+        <div>
+            <h1 class="h3 fw-bold mb-1">
+                Add Meal
+            </h1>
+
+            <div class="text-muted small">
+                {{ child.first_name }} {{ child.last_name }}
+                <span class="mx-1">•</span>
+                {{ selected_date.strftime('%B %d, %Y') }}
+            </div>
+        </div>
+    </div>
+    <!-- End: Page Header -->
+
+    <!-- Meal Form -->
+    <div class="meal-container">
+
+        <!-- Header -->
+        <div class="meal-card-header">
+
+            <div class="meal-header-icon">
+                <i class="ti ti-tools-kitchen-3"></i>
+            </div>
+
+            <div>
+                <h2>
+                    Meal Log
+                </h2>
+                <p>
+                    Record what {{ child.first_name }} ate.
+                </p>
+            </div>
+        </div>
+        <!--End: Header -->
+
+        <!-- Form -->
+        <div class="meal-form-wrapper">
+            
+
+            <form method="POST" class="meal-form">
+                {{ form.hidden_tag() }}
+                
+                <!-- Meal Type -->
+                <section class="meal-section">
+                    <div class="section-heading">
+                        <h3>Meal Type</h3>
+                        <p>What meal is this?</p>
+                    </div>
+
+                    <div class="meal-type-options">
+
+                        {% for value, label in form.meal_type.choices %}
+                            <label class="meal-type-option">
+
+                                <input 
+                                    type="radio"
+                                    name="{{ form.meal_type.name }}"
+                                    value="{{ value }}"
+                                    {% if form.meal_type.data == value %}
+                                        checked
+                                    {% endif %}
+                                    required
+                                >
+
+                                {% if value == 'breakfast' %}
+                                    <i class="ti ti-egg-fried"></i>
+                                
+                                {% elif value == 'lunch' %}
+                                    <i class="ti ti-soup"></i>
+
+                                {% elif value == 'snack' %}
+                                    <i class="ti ti-cookie"></i>
+
+                                {% endif %}
+
+                                <span>
+                                    {{ label }}
+                                </span>
+                            </label>
+                        {% endfor %}
+                    </div>
+                </section>
+                <!-- End: Meal Type -->
+
+                <!-- Food -->
+                <section class="meal-section">
+                    
+                    <div class="section-heading food-section-heading">
+
+                        <div>
+                            <h3>What did they eat?</h3>
+                            <p>Select everything that was offered.</p>
+                        </div>
+
+                        
+                    </div>
+
+                    <!-- Food Picker -->
+                    <div class="food-picker">
+
+                        <!-- Picker Header -->
+                        <div class="food-picker-header">
+
+                            <div class="food-picker-title">
+
+                                <div class="food-picker-icon">
+                                    <i class="ti ti-tools-kitchen"></i>
+                                </div>
+
+                                <div>
+                                    <strong>Food items</strong>
+                                    <small>Select all that apply</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Food Options -->
+                        <div class="food-options">
+
+                            {% for value, label in form.food.choices %}
+
+                                <label
+                                    class="food-option"
+                                    data-food-value="{{ value}} "
+                                >
+                                    <input 
+                                        type="checkbox"
+                                        name="{{ form.food.name }}"
+                                        value="{{ value }}"
+                                        {% if value in (form.food.data or []) %}
+                                            checked
+                                        {% endif %}
+                                    >
+
+                                    <span class="food-option-icon">
+
+                                        {% if value == 'rice' %}
+                                            <i class="ti ti-bowl"></i>
+                                        
+                                        {% elif value == 'pasta_noodles' %}
+                                            <i class="ti ti-bowl-chopsticks"></i>
+                                        
+                                        {% elif value == 'chicken_meat' %}
+                                            <i class="ti ti-meat"></i>
+
+                                        {% elif value == 'egg' %}
+                                            <i class="ti ti-egg"></i>
+
+                                        {% elif value == 'vegetables' %}
+                                            <i class="ti ti-carrot"></i>
+                                        
+                                        {% elif value == 'fruit' %}
+                                            <i class="ti ti-apple"></i>
+
+                                        {% elif value == 'bread' %}
+                                            <i class="ti ti-bread"></i>
+                                        
+                                        {% elif value == 'cheese_yogurt' %}
+                                            <i class="ti ti-cheese"></i>
+
+                                        {% elif value == 'crackers_cookies' %}
+                                            <i class="ti ti-cookie"></i>
+                                        
+                                        {% elif value == 'chips' %}
+                                            <i class="ti ti-paper-bag"></i>
+
+                                        {% elif value == 'cereal' %}
+                                            <i class="ti ti-bowl-spoon"></i>
+
+                                        {% elif value == 'juice_water' %}
+                                            <i class="ti ti-bubble-tea"></i>
+                                        {% else %}
+                                            <i class="ti ti-tools-kitchen-3"></i>
+                                        {% endif %}
+                                    </span>
+
+                                    <span class="food-label">
+                                        {{ label }}
+                                    </span>
+
+                                    <span class="food-check">
+                                        <i class="ti ti-check"></i>
+                                    </span>
+                                </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Other Food -->
+                    <div class="other-food-wrapper">
+
+                        <div class="other-food-heading">
+
+                            <div class="other-food-title">
+                                <span class="other-food-icon">
+                                    <i class="ti ti-plus"></i>
+                                </span>
+
+                                <div>
+                                    <label 
+                                        for="{{ form.other_food.id }}"
+                                        class="other-food-label">
+                                        Add another food
+                                    </label>
+
+                                    <small>
+                                        Use this if the food is not listed above.
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="other-food-input">
+                            <i class="ti ti-pencil"></i>
+
+                            {{ form.other_food(
+                                class='form-control',
+                                placeholder="Type another food..."
+                            )}}
+                        </div>
+                    </div>
+                </section>
+                <!--End: Food -->
+
+                <!-- Amount -->
+                <section class="meal-section">
+
+                    <div class="section-heading">
+
+                        <h3>Amount</h3>
+                        <p>How much did they eat?</p>
+
+                    </div>
+
+                    <div class="amount-options">
+
+                        {% for value, label in form.amount.choices %}
+                        
+                            <label class="amount-option">
+
+                                <input 
+                                    type="radio"
+                                    name="{{ form.amount.name }}"
+                                    value="{{ value }}"
+                                    {% if form.amount.data == value %}
+                                        checked
+                                    {% endif %}
+                                >
+
+                                <span>
+                                    {{ label }}
+                                </span>
+
+                            </label>
+                        {% endfor %}
+                    </div>
+                </section>
+                
+                <!--End: Amount -->
+
+                <!-- Time -->
+                <section class="meal-section">
+
+                    <div class="section-heading">
+                        <h3>Time</h3>
+                        <p>When was the meal given?</p>
+                    </div>
+
+                    <div class="time-options">
+
+                        {% for value, label in form.time_option.choices %}
+
+                            <label 
+                                class="time-option"
+                                data-time-option="{{ value }}"
+                            >
+
+                                <input 
+                                    type="radio"
+                                    name="{{ form.time_option.name }}"
+                                    value="{{ value}}"
+                                    {% if form.time_option.data == value %}
+                                        checked 
+                                    {% endif %}
+                                >
+
+                                <span class="time-option-content">
+
+                                    <span class="time-icon">
+
+                                        {% if value == 'automatic' %}
+                                            <i class="ti ti-clock"></i>
+                                        
+                                        {% elif value == 'manual' %}
+                                            <i class="ti ti-clock-edit"></i>
+
+                                        {% endif %}
+                                    </span>
+
+                                    <span class="time-text">
+
+                                        {% if value == 'automatic' %}
+                                        
+                                            <strong>Automatic</strong>
+                                            <small>Use the current time</small>
+                                        
+                                        {% elif value == 'manual' %}
+
+                                            <strong>Manual</strong>
+                                            <small>Choose the meal time</small>
+
+                                        {% endif %}
+                                    </span>
+
+                                    <span class="time-check">
+                                        <i class="ti ti-check"></i>
+                                    </span>
+
+                                </span>
+
+                            </label>
+                        {% endfor %}
+
+                        <!-- Manual Time Picker -->
+                        <div class="manual-time-wrapper" id="manualTimeWrapper">
+
+                            <label 
+                                for="{{ form.manual_time.id }}"
+                                class="manual-time-label">
+                                Meal Time
+                            </label>
+
+                            <div class="manual-time-input">
+                                <i class="ti ti-clock"></i>
+
+                                {{ form.manual_time(
+                                    class="form-control",
+                                    id="manualTimeInput"
+                                )}}
+                            
+                            </div>
+
+                            <small>
+                                Select the time using the time picker.
+                            </small>
+
+                            {% if form.manual_time.errors %}
+                                <div class="text-danger small mt-2">
+
+                                    {% for error in form.manual_time.errors %}
+                                        <div>{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            
+                        </div>
+
+                    </div>
+                </section>
+                <!-- End: Time -->
+
+                <!-- Notes -->
+                <section class="meal-section">
+
+                    <div class="section-heading">
+
+                        <h3>Notes</h3>
+                        <p>Add anything else you'd like to record.</p>
+                    </div>
+
+                    {{ form.notes(
+                        class="form-control meal-notes",
+                        rows="3",
+                        placeholder="Optional notes..."
+                    )}}
+                </section>
+                <!-- End: Notes -->
+
+                <!-- Action Buttons -->
+                <div class="meal-form-actions">
+
+                    <a 
+                        href="{{ url_for(
+                            'child_daily_log',
+                            child_id=child.id,
+                            date=selected_date.strftime('%Y-%m-%d')
+                        )}}"
+                        class="meal-cancel-btn">
+                            Cancel
+                    </a>
+
+                    {{ form.submit(
+                        class="meal-save-btn",
+                        value="Save Meal"
+                    )}}
+                </div>
+                <!--End: Action Buttons -->
+
+            </form>
+        </div>
+        <!--End: Form -->
+    </div>
+    <!--End: Meal Form -->
+</div>
+
+<script>
+    /* =========================================================
+       FOOD OPTIONS
+       ========================================================= */
+
+    const foodOptions = document.querySelectorAll(".food-option");
+    const foodSelectedCount = document.getElementById(
+        "foodSelectedCount"
+    );
+
+    function updateFoodState() {
+
+        let selectedCount = 0;
+
+        foodOptions.forEach(function (option) {
+
+            const checkbox = option.querySelector(
+                'input[type="checkbox"]'
+            );
+
+            if (!checkbox) return;
+
+            if (checkbox.checked) {
+
+                option.classList.add("selected");
+                selectedCount++;
+
+            } else {
+
+                option.classList.remove("selected");
+
+            }
+        });
+
+        if (foodSelectedCount) {
+
+            foodSelectedCount.textContent =
+                selectedCount === 1
+                    ? "1 selected"
+                    : `${selectedCount} selected`;
+
+        }
+    }
+
+    foodOptions.forEach(function (option) {
+
+        const checkbox = option.querySelector(
+            'input[type="checkbox"]'
+        );
+
+        if (!checkbox) return;
+
+        checkbox.addEventListener(
+            "change",
+            updateFoodState
+        );
+
+    });
+
+    updateFoodState();
+
+
+    /* =========================================================
+       MANUAL TIME PICKER
+       ========================================================= */
+
+    const timeOptions = document.querySelectorAll(
+        'input[name="{{ form.time_option.name }}"]'
+    );
+
+    const manualTimeWrapper = document.getElementById(
+        "manualTimeWrapper"
+    );
+
+    function updateManualTime() {
+
+        const selectedTime = document.querySelector(
+            'input[name="{{ form.time_option.name }}"]:checked'
+        );
+
+        if (!selectedTime) return;
+
+        if (selectedTime.value === "manual") {
+
+            manualTimeWrapper.classList.add("show");
+
+        } else {
+
+            manualTimeWrapper.classList.remove("show");
+
+        }
+    }
+
+    timeOptions.forEach(function (radio) {
+
+        radio.addEventListener(
+            "change",
+            updateManualTime
+        );
+
+    });
+
+    /* Set initial state */
+    updateManualTime();
+</script>
+{% endblock %}

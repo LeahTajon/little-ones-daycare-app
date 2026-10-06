@@ -1,0 +1,315 @@
+{% extends "base.html" %}
+
+{% block title %}Calendar | Little Ones{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/calendar.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="calendar-page">
+
+    <!-- Page Header -->
+    <div class="calendar-header">
+
+        <div>
+            <div class="page-eyebrow">
+                <i class="ti ti-calendar"></i>
+                Little Ones Calendar
+            </div>
+
+            <h1>Calendar</h1>
+
+            <p>
+                Keep track of birthdays, celebrations, school events,
+                and important daycare dates.
+            </p>
+        </div>
+
+        <a href="{{ url_for('add_event') }}" class="btn-add-event">
+            <i class="ti ti-plus"></i>
+            Add Event
+        </a>
+
+    </div>
+
+
+    <!-- Calendar Layout -->
+    <div class="calendar-layout">
+
+        <!-- Main Calendar -->
+        <div class="calendar-card">
+
+            <!-- Calendar Navigation -->
+            <div class="calendar-toolbar">
+
+                <div class="month-navigation">
+
+                    <a
+                        href="{{ url_for(
+                            'calendar_view',
+                            year=previous_year,
+                            month=previous_month
+                        ) }}"
+                        class="calendar-nav-btn"
+                    >
+                        <i class="ti ti-chevron-left"></i>
+                    </a>
+
+                    <h2>
+                        {{ current_month.strftime('%B %Y') }}
+                    </h2>
+
+                    <a
+                        href="{{ url_for(
+                            'calendar_view',
+                            year=next_year,
+                            month=next_month
+                        ) }}"
+                        class="calendar-nav-btn"
+                    >
+                        <i class="ti ti-chevron-right"></i>
+                    </a>
+
+                </div>
+
+                <a
+                    href="{{ url_for(
+                        'calendar_view',
+                        year=today.year,
+                        month=today.month
+                    ) }}"
+                    class="today-btn"
+                >
+                    Today
+                </a>
+
+            </div>
+
+
+            <!-- Weekday Header -->
+            <div class="calendar-weekdays">
+
+                <div>Sun</div>
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+
+            </div>
+
+
+            <!-- Calendar Grid -->
+            <div class="calendar-grid">
+
+                {% for week in month_days %}
+
+                    {% for day in week %}
+
+                        <div
+                            class="
+                                calendar-day
+                                {% if day.month != current_month.month %}
+                                    other-month
+                                {% endif %}
+                                {% if day == today %}
+                                    today
+                                {% endif %}
+                            "
+                        >
+
+                            <!-- Day Number -->
+                            <div class="day-number-row">
+
+                                <a
+                                    href="{{ url_for(
+                                        'add_event',
+                                        date=day.strftime('%Y-%m-%d')
+                                    ) }}"
+                                    class="day-number"
+                                >
+                                    {{ day.day }}
+                                </a>
+
+                            </div>
+
+
+                            <!-- Events -->
+                            <div class="day-events">
+
+                                {% for event in events_by_date.get(day, []) %}
+
+                                    <div
+                                        class="
+                                            calendar-event
+                                            event-{{ event.event_type or 'other' }}
+                                        "
+                                    >
+
+                                        <div class="event-title">
+                                            {{ event.title }}
+                                        </div>
+
+                                        {% if event.start_time %}
+                                            <div class="event-time">
+                                                {{ event.start_time.strftime('%I:%M %p').lstrip('0') }}
+                                            </div>
+                                        {% endif %}
+
+                                        <div class="event-actions">
+
+                                            <a
+                                                href="{{ url_for(
+                                                    'edit_event',
+                                                    event_id=event.id
+                                                ) }}"
+                                                title="Edit event"
+                                            >
+                                                <i class="ti ti-edit"></i>
+                                            </a>
+
+                                            <form
+                                                method="POST"
+                                                action="{{ url_for(
+                                                    'delete_event',
+                                                    event_id=event.id
+                                                ) }}"
+                                                onsubmit="return confirm('Delete this event?');"
+                                            >
+                                                <button
+                                                    type="submit"
+                                                    title="Delete event"
+                                                >
+                                                    <i class="ti ti-trash"></i>
+                                                </button>
+                                            </form>
+
+                                        </div>
+
+                                    </div>
+
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+
+        <!-- Upcoming Events -->
+        <div class="upcoming-card">
+
+            <div class="upcoming-header">
+
+                <div class="section-icon">
+                    <i class="ti ti-calendar-event"></i>
+                </div>
+
+                <div>
+                    <h3>Upcoming Events</h3>
+                    <p>What's coming up next</p>
+                </div>
+
+            </div>
+
+
+            <div class="upcoming-list">
+
+                {% if upcoming_events %}
+
+                    {% for event in upcoming_events %}
+
+                        <div class="upcoming-event">
+
+                            <div class="event-date-box">
+                                <span>
+                                    {{ event.event_date.strftime('%b') }}
+                                </span>
+
+                                <strong>
+                                    {{ event.event_date.day }}
+                                </strong>
+                            </div>
+
+
+                            <div class="upcoming-event-info">
+
+                                <h4>
+                                    {{ event.title }}
+                                </h4>
+
+                                {% if event.class_name %}
+                                    <span class="class-label">
+                                        {{ event.class_name.replace('all', 'All Classes') }}
+                                    </span>
+                                {% endif %}
+
+                                {% if event.start_time %}
+                                    <p>
+                                        <i class="ti ti-clock"></i>
+                                        {{ event.start_time.strftime('%I:%M %p').lstrip('0') }}
+                                    </p>
+                                {% endif %}
+
+                            </div>
+
+
+                            <a
+                                href="{{ url_for(
+                                    'edit_event',
+                                    event_id=event.id
+                                ) }}"
+                                class="upcoming-arrow"
+                            >
+                                <i class="ti ti-chevron-right"></i>
+                            </a>
+
+                        </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <div class="empty-events">
+
+                        <div class="empty-events-icon">
+                            <i class="ti ti-calendar-off"></i>
+                        </div>
+
+                        <h4>No upcoming events</h4>
+
+                        <p>
+                            Add an event to your daycare calendar.
+                        </p>
+
+                        <a
+                            href="{{ url_for('add_event') }}"
+                            class="btn-add-small"
+                        >
+                            <i class="ti ti-plus"></i>
+                            Add Event
+                        </a>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

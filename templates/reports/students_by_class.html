@@ -1,0 +1,249 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/reports.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="reports-page">
+
+    <!-- Page Header -->
+    <div class="report-page-header">
+        <div class="report-header-left">
+
+            <a 
+                href="{{ url_for(
+                    'reports'
+                )}}"
+                class="report-back">
+                    <i class="ti ti-arrow-left"></i>
+            </a>
+
+            <div>
+                <div class="page-eyebrow">
+                    <i class="ti ti-school"></i>
+                    Student Reports
+                </div>
+
+                <h1>Students by Class</h1>
+
+                <p>View registered students grouped by classroom.</p>
+            </div>
+        </div>
+
+        <!-- Print Report -->
+        <a 
+            href="{{ url_for('students_by_class_pdf')}}"
+            class="report-action-button"
+            target="_blank">
+            <i class="ti ti-file-type-pdf"></i>
+            Print Report
+        </a>
+    </div>
+    <!--End: Page Header -->
+
+    <!-- Summary -->
+    <div class="report-summary">
+        <div class="summary-card">
+
+            <div class="summary-icon">
+                <i class="ti ti-users"></i>
+            </div>
+
+            <div>
+                <span class="summary-label">
+                    Total Students
+                </span>
+                
+                <strong>
+                    {{ total_students }}
+                </strong>
+            </div>
+        </div>
+
+        <div class="summary-card">
+            <div class="summary-icon">
+                <i class="ti ti-school"></i>
+            </div>
+
+            <div>
+                <span class="summary-label">
+                    Classrooms
+                </span>
+
+                <strong>
+                    {{ classes|length }}
+                </strong>
+            </div>
+        </div>
+    </div>
+    <!--End: Summary -->
+
+    <!--Class Sections -->
+    <div class="class-report-list">
+        {% if classes %}
+            {% for class_name, students in classes.items() %}
+            <div class="report-table-card class-report-card">
+
+                <!-- Class Header -->
+                <div class="report-table-header">
+                    <div>
+                        <h2>{{ class_name }}</h2>
+                        <p>
+                            {{ students|length }}
+                            {% if students|length == 1 %}
+                                student 
+                            {% else %}
+                                student
+                            {% endif %}
+                        </p>
+                    </div>
+
+                    <div class="class-report-icon">
+                        <i class="ti ti-school"></i>
+                    </div>
+                </div>
+
+                <!-- Students Table -->
+                <div class="table-responsive">
+                    <table class="report-table">
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Age</th>
+                                <th>Gender</th>
+                                <th>Program</th>
+                                <th>Days Attending</th>
+                                <th>Enrolled</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for child in students %}
+                                <tr>
+                                    <!-- Student -->
+                                    <td>
+                                        <div class="student-cell">
+                                            {% if child.photo %}
+                                            <img 
+                                                src="{{ url_for(
+                                                    'static',
+                                                    filename='uploads/' + child.photo
+                                                )}}" 
+                                                alt="{{ child.first_name }} {{ child.last_name }}"
+                                                class="student-photo">
+                                            {% else %}
+                                                <div class="student-photo-placeholder">
+                                                    {{ child.first_name[0] }}{{ child.last_name[0] }}
+                                                </div>
+                                            {% endif %}
+
+                                            <div class="student-info">
+                                                <span class="student-name">
+                                                    {{ child.first_name }}
+                                                    {{ child.last_name }}
+                                                </span>
+
+                                                {% if child.date_of_birth %}
+                                                <span class="student-dob">
+                                                    DOB:
+                                                    {{ child.date_of_birth.strftime('%b %d, %Y') }}
+                                                </span>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <!-- Age -->
+                                    <td>
+                                        {% if child.date_of_birth %}
+                                        
+                                            {{ today.year - child.date_of_birth.year -
+                                            ((today.month, today.day) <
+                                            (child.date_of_birth.month, child.date_of_birth.day)) }}
+                                        
+                                        {% else %}
+                                            <span class="muted-value">
+                                                --
+                                            </span>
+                                        {% endif %}
+                                    </td>
+
+                                    <!-- Gender -->
+                                    <td>
+                                        {% if child.gender == 'female' %}
+                                            <span class="gender-badge female">
+                                                <i class="ti ti-gender-female"></i>
+                                                Female
+                                            </span>
+                                        {% elif child.gender == 'male' %}
+                                            <span class="gender-badge male">
+                                                <i class="ti ti-gender-male"></i>
+                                                Male
+                                            </span>
+                                        {% else %}
+                                            <span class="muted-value">
+                                                --
+                                            </span>
+                                        {% endif %}
+                                    </td>
+
+                                    <!-- Program -->
+                                    <td>
+                                        {% if child.program_type %}
+                                            {{ child.program_type }}
+                                        {% else %}
+                                            <span class="muted-value">
+                                                --
+                                            </span>
+                                        {% endif %}
+                                    </td>
+
+                                    <!-- Days -->
+                                    <td>
+                                        {% if child.days_attending %}
+                                            {{ child.days_attending }}
+                                        {% else %}
+                                            <span class="muted-value">
+                                                --
+                                            </span>
+                                        {% endif %}
+                                    </td>
+
+                                    <!-- Enrolled -->
+                                    <td>
+                                        {% if child.enrolled_date %}
+                                          {{ child.enrolled_date.strftime('%b %d, %Y') }} 
+                                        {% else %}
+                                            <span class="muted-value">
+                                                --
+                                            </span> 
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% endfor %}
+
+        {% else %}
+            <!-- Empty State -->
+            <div class="report-table-card">
+                <div class="report-empty-state">
+
+                    <div class="empty-icon">
+                        <i class="ti ti-users-off"></i>
+                    </div>
+
+                    <h3>No students found</h3>
+                    <p>There are currently no students registered in Little Ones.</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <!--End: Class Sections -->
+    
+</div>
+{% endblock %}

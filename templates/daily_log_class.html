@@ -1,0 +1,404 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ selected_class }} | Daily Log | Little Ones
+{% endblock %}
+
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/daily_log.css') }}"
+>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="daily-log-page">
+
+
+    <!-- ========================================= -->
+    <!-- PAGE HEADER -->
+    <!-- ========================================= -->
+
+    <div class="row align-items-center g-3 mb-4">
+
+        <!-- Header Content -->
+        <div class="col-12 col-md">
+
+            <!-- Back Button -->
+            <a
+                href="{{ url_for(
+                    'daily_log',
+                    date=selected_date.strftime('%Y-%m-%d')
+                ) }}"
+                class="daily-log-back"
+            >
+                <i class="ti ti-arrow-left"></i>
+                Back to Daily Log
+            </a>
+
+
+            <!-- Page Title -->
+            <h1 class="daily-log-title mb-1 mt-3">
+                {{ selected_class }} Class
+            </h1>
+
+
+            
+
+        </div>
+
+
+        <!-- Date -->
+        <div class="col-12 col-md-auto">
+
+            <div class="daily-log-date">
+
+                <i class="ti ti-calendar-week"></i>
+
+                <div>
+
+                    <span>
+                        Date
+                    </span>
+
+                    <strong>
+                        {{ selected_date.strftime('%b %d, %Y') }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================= -->
+    <!-- CLASS SUMMARY -->
+    <!-- ========================================= -->
+
+    <div class="daily-log-class-summary">
+
+        <!-- Class Information -->
+        <div class="d-flex align-items-center gap-3">
+
+            <div class="daily-log-class-icon">
+
+                {% if selected_class == 'Infant' %}
+
+                    <i class="ti ti-baby-bottle"></i>
+
+                {% elif selected_class == 'Toddler' %}
+
+                    <i class="ti ti-walk"></i>
+
+                {% elif selected_class == 'Pre-K' %}
+
+                    <i class="ti ti-puzzle"></i>
+
+                {% elif selected_class == 'Afterschool' %}
+
+                    <i class="ti ti-school"></i>
+
+                {% endif %}
+
+            </div>
+
+
+            <div>
+
+                <h2 class="daily-log-section-title mb-1">
+                    {{ selected_class }} Summary
+                </h2>
+
+                <p class="daily-log-section-subtitle mb-0">
+
+                    {% if children.total == 1 %}
+                        1 child
+                    {% else %}
+                        {{ children.total }} children
+                    {% endif %}
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- Information Message -->
+        <div class="daily-log-class-message">
+
+            <i class="ti ti-info-circle"></i>
+
+            <span>
+                Tap a child to view or add today's log.
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================= -->
+    <!-- CHILDREN -->
+    <!-- ========================================= -->
+
+    {% if children.items %}
+
+    <div class="row g-3 daily-log-children-grid">
+
+        {% for child in children.items %}
+
+        <div class="col-12 col-md-6 col-xl-4">
+
+            <a
+                href="{{ url_for(
+                    'child_daily_log',
+                    child_id=child.id,
+                    date=selected_date.strftime('%Y-%m-%d')
+                ) }}"
+                class="daily-log-child-card"
+            >
+
+                <!-- Photo -->
+                <div class="daily-log-child-photo">
+
+                    {% if child.photo %}
+
+                    <img
+                        src="{{ url_for(
+                            'static',
+                            filename='uploads/' + child.photo
+                        ) }}"
+                        alt="{{ child.first_name }} {{ child.last_name }}"
+                    >
+
+                    {% else %}
+
+                    <i class="ti ti-user"></i>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- Child Information -->
+                <div class="daily-log-child-info">
+
+                    <h3>
+                        {{ child.first_name }} {{ child.last_name }}
+                    </h3>
+
+                    <p>
+                        {{ child.age_display }}
+                    </p>
+
+
+                    <!-- Allergy -->
+                    {% if child.allergies %}
+
+                    <span
+                        class="allergy-badge"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="{{ child.allergies }}"
+                    >
+                        <i class="ti ti-alert-triangle"></i>
+                        Allergy
+                    </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- Arrow -->
+                <div class="daily-log-child-arrow">
+
+                    <i class="ti ti-chevron-right"></i>
+
+                </div>
+
+            </a>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    <!-- ========================================= -->
+    <!-- PAGINATION -->
+    <!-- ========================================= -->
+
+    <div class="daily-log-pagination-wrapper">
+
+
+        <!-- Pagination -->
+        <nav aria-label="Daily log pagination">
+
+            <ul class="pagination daily-log-pagination">
+
+
+                <!-- Previous -->
+                <li
+                    class="page-item
+                    {% if not children.has_prev %}disabled{% endif %}"
+                >
+
+                    {% if children.has_prev %}
+
+                    <a
+                        class="page-link"
+                        href="{{ url_for(
+                            'daily_log_class',
+                            class=selected_class,
+                            date=selected_date.strftime('%Y-%m-%d'),
+                            page=children.prev_num
+                        ) }}"
+                        aria-label="Previous page"
+                    >
+                        <i class="ti ti-arrow-left"></i>
+                    </a>
+
+                    {% else %}
+
+                    <span class="page-link">
+                        <i class="ti ti-arrow-left"></i>
+                    </span>
+
+                    {% endif %}
+
+                </li>
+
+
+                <!-- Page Numbers -->
+                {% for page_num in children.iter_pages(
+                    left_edge=1,
+                    right_edge=1,
+                    left_current=1,
+                    right_current=1
+                ) %}
+
+                    {% if page_num %}
+
+                    <li
+                        class="page-item
+                        {% if page_num == children.page %}active{% endif %}"
+                    >
+
+                        <a
+                            class="page-link"
+                            href="{{ url_for(
+                                'daily_log_class',
+                                class=selected_class,
+                                date=selected_date.strftime('%Y-%m-%d'),
+                                page=page_num
+                            ) }}"
+                        >
+                            {{ page_num }}
+                        </a>
+
+                    </li>
+
+                    {% else %}
+
+                    <li class="page-item disabled">
+
+                        <span class="page-link">
+                            …
+                        </span>
+
+                    </li>
+
+                    {% endif %}
+
+                {% endfor %}
+
+
+                <!-- Next -->
+                <li
+                    class="page-item
+                    {% if not children.has_next %}disabled{% endif %}"
+                >
+
+                    {% if children.has_next %}
+
+                    <a
+                        class="page-link"
+                        href="{{ url_for(
+                            'daily_log_class',
+                            class=selected_class,
+                            date=selected_date.strftime('%Y-%m-%d'),
+                            page=children.next_num
+                        ) }}"
+                        aria-label="Next page"
+                    >
+                        <i class="ti ti-arrow-right"></i>
+                    </a>
+
+                    {% else %}
+
+                    <span class="page-link">
+                        <i class="ti ti-arrow-right"></i>
+                    </span>
+
+                    {% endif %}
+
+                </li>
+
+            </ul>
+
+        </nav>
+
+
+        <!-- Showing Text -->
+        <p class="daily-log-pagination-info">
+
+            Showing
+            {{ children.first }}
+            to
+            {{ children.last }}
+            of
+            {{ children.total }}
+            {% if children.total == 1 %}
+                child
+            {% else %}
+                children
+            {% endif %}
+
+        </p>
+
+    </div>
+
+
+    {% else %}
+
+
+    <!-- ========================================= -->
+    <!-- EMPTY STATE -->
+    <!-- ========================================= -->
+
+    <div class="daily-log-empty">
+
+        <i class="ti ti-users"></i>
+
+        <span>
+            No children registered in this class yet.
+        </span>
+
+    </div>
+
+    {% endif %}
+
+
+</div>
+
+{% endblock %}
+

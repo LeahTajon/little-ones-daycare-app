@@ -1,0 +1,372 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-page">
+
+    <!-- Page Header -->
+    <div class="dashboard-header">
+
+        <div>
+            <div class="page-eyebrow">
+                <i class="ti ti-layout-dashboard"></i>
+                Little Ones
+            </div>
+
+            <h1>Dashboard</h1>
+
+            <p>
+                Welcome back! Here's an overview of your daycare.
+            </p>
+
+            <div class="dashboard-date">
+                <i class="ti ti-calendar"></i>
+                {{ today.strftime('%B %d, %Y') if today else '' }}
+            </div>
+        </div>
+
+        <!-- Statistics -->
+        <div class="stats-grid">
+
+            <!-- Total Children -->
+            <div class="stat-card">
+
+                <div class="stat-icon stat-icon-teal">
+                    <i class="ti ti-users"></i>
+                </div>
+
+                <div class="stat-content">
+                    <span class="stat-label">Total Children</span>
+                    <strong>{{ total_children }}</strong>
+                </div>
+            </div>
+
+            <!-- Infant -->
+            <div class="stat-card">
+
+                <div class="stat-icon stat-icon-blue">
+                    <i class="ti ti-baby-carriage"></i>
+                </div>
+
+                <div class="stat-content">
+                    <span class="stat-label">Infant</span>
+                    <strong>{{ infant_count }}</strong>
+                </div>
+            </div>
+
+            <!-- Toddler -->
+            <div class="stat-card">
+                <div class="stat-icon stat-icon-purple">
+                    <i class="ti ti-balloon"></i>
+                </div>
+
+                <div class="stat-content">
+                    <span class="stat-label">Toddlers</span>
+                    <strong>{{ toddler_count }}</strong>
+                </div>
+            </div>
+
+            <!-- Preschool -->
+            <div class="stat-card">
+                <div class="stat-icon stat-icon-orange">
+                    <i class="ti ti-school"></i>
+                </div>
+
+                <div class="stat-content">
+                    <span class="stat-label">Preschool</span>
+                    <strong>{{ prek_count }}</strong>
+                </div>
+            </div>
+
+            <!-- Afterschool -->
+            <div class="stat-card">
+                <div class="stat-icon stat-icon-yellow">
+                    <i class="ti ti-backpack"></i>
+                </div>
+
+                <div class="stat-content">
+                    <span class="stat-label">Afterschool</span>
+                    <strong>{{ afterschool_count }}</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <section class="dashboard-section">
+            <div class="section-heading">
+                <div>
+                    <h2>Quick Actions</h2>
+                    <p>Common tasks and shortcuts</p>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <a href="{{ url_for('add_child')}}" class="quick-action-card">
+                    <div class="quick-action-icon">
+                        <i class="ti ti-user-plus"></i>
+                    </div>
+
+                    <div>
+                        <h3>Add Child</h3>
+                        <p>Register a new child</p>
+                    </div>
+
+                    <i class="ti ti-chevron-right quick-action-arrow"></i>
+                </a>
+
+                <a href="{{ url_for('daily_log')}} " class="quick-action-card">
+                    <div class="quick-action-icon">
+                        <i class="ti ti-notebook"></i>
+                    </div>
+
+                    <div>
+                        <h3>Daily Log</h3>
+                        <p>View today's classroom logs</p>
+                    </div>
+                    <i class="ti ti-chevron-right quick-action-arrow"></i>
+                </a>
+
+                <a href="{{ url_for('calendar_view')}}" class="quick-action-card">
+                    <div class="quick-action-icon">
+                        <i class="ti ti-calendar-event"></i>
+                    </div>
+
+                    <div>
+                        <h3>Calendar</h3>
+                        <p>View events and activities</p>
+                    </div>
+
+                    <i class="ti ti-chevron-right quick-action-arrow"></i>
+                </a>
+
+                <a href="{{ url_for('reports')}}" class="quick-action-card">
+                    <div class="quick-action-icon">
+                        <i class="ti ti-file-report"></i>
+                    </div>
+
+                    <div>
+                        <h3>Reports</h3>
+                        <p>View registered children</p>
+                    </div>
+
+                    <i class="ti ti-chevron-right quick-action-arrow"></i>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- Classroom Overview -->
+        <section class="dashboard-section">
+            
+            <div class="section-heading">
+                <div>
+                    <h2>Classroom Overview</h2>
+                    <p>Children currently registered in each classroom</p>
+                </div>
+
+                <a href="{{ url_for('children')}}" class="section-link">
+                    View All
+                    <i class="ti ti-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="classroom-grid">
+
+                <!-- Infant -->
+                <a href="{{ url_for('children', class_name='Infant')}}" class="classroom-card">
+
+                    <div class="classroom-icon classroom-icon-infant">
+                        <i class="ti ti-baby-carriage"></i>
+                    </div>
+
+                    <div class="classroom-info">
+                        <h3>Infant</h3>
+                        <p>Youngest learners</p>
+                    </div>
+
+                    <div class="classroom-count">
+                        <strong>{{infant_count}}</strong>
+                        <span>children</span>
+                    </div>
+                </a>
+
+                <!-- Toddler -->
+                <a href="{{url_for('children', class_name='Toddler')}}" class="classroom-card">
+                    <div class="classroom-icon classroom-icon-toddler">
+                        <i class="ti ti-balloon"></i>
+                    </div>
+
+                    <div class="classroom-info">
+                        <h3>Toddler</h3>
+                        <p>Growing & exploring</p>
+                    </div>
+
+                    <div class="classroom-count">
+                        <strong>{{ toddler_count}}</strong>
+                        <span>children</span>
+                    </div>
+                </a>
+
+                <!-- Preschool -->
+                <a href="{{ url_for('children', class_name='Preschool')}}" class="classroom-card">
+
+                    <div class="classroom-icon classroom-icon-preschool">
+                        <i class="ti ti-school"></i>
+                    </div>
+
+                    <div class="classroom-info">
+                        <h3>Preschool</h3>
+                        <p>Learning & growing</p>
+                    </div>
+
+                    <div class="classroom-count">
+                        <strong>{{ prek_count }}</strong>
+                        <span>children</span>
+                    </div>
+                </a>
+
+                <!-- Afterschool -->
+                <a href="{{ url_for('children', class_name='Afterschool')}}" class="classroom-card">
+
+                    <div class="classroom-icon classroom-icon-afterschool">
+                        <i class="ti ti-backpack"></i>
+                    </div>
+
+                    <div class="classroom-info">
+                        <h3>Afterschool</h3>
+                        <p>After-school care</p>
+                    </div>
+
+                    <div class="classroom-count">
+                        <strong>{{ afterschool_count }}</strong>
+                        <span>children</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Bottom Dashboard -->
+        <div class="dashboard-columns">
+
+            <!-- Upcoming Birthdays -->
+            <section class="dashboard-panel">
+                <div class="panel-header">
+                    <div>
+                        <h2>Upcoming Birthdays</h2>
+                        <p>Coming up soon</p>
+                    </div>
+
+                    <i class="ti ti-cake panel-header-icon"></i>
+                </div>
+
+                {% if upcoming_birthdays %}
+                    <div class="birthday-list">
+
+                        {% for item in upcoming_birthdays %}
+                            <div class="birthday-item">
+                                <div class="birthday-avatar">
+
+                                    {% if item.child.photo %}
+                                        <img 
+                                            src="{{ url_for(
+                                                'static',
+                                                filename='uploads/' + item.child.photo
+                                            )}}" 
+                                            alt="{{ item.child.first_name }}">
+                                    
+                                    {% else %}
+                                        {{ item.child.first_name[0]}}
+
+                                    {% endif %}
+                                </div>
+
+                                <div class="birthday-info">
+                                    <strong>
+                                        {{ item.child.first_name }}
+                                        {{ item.child.last_name }}
+                                    </strong>
+
+                                    <span>
+                                        {{ item.birthday.strftime('%B %d') }}
+                                    </span>
+                                </div>
+
+                                <div class="birthday-age">
+                                    {{ item.birthday.year - item.child.date_of_birth.year }}
+
+                                    <span>yrs</span>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="dashboard-empty">
+                        <i class="ti ti-cake-off"></i>
+                        <p>No upcoming birthdays.</p>
+                    </div>
+                {% endif %}
+            </section>
+
+            <!-- Calendar Events -->
+            <section class="dashboard-panel">
+                <div class="panel-header">
+
+                    <div>
+                        <h2>Calendar of Events</h2>
+                        <p>Upcoming events</p>
+                    </div>
+
+                    <a href="{{ url_for('calendar_view')}}" class="panel-link">
+                        View Calendar
+                        <i class="ti ti-arrow-right"></i>
+                    </a>
+                </div>
+
+                {% if upcoming_events %}
+
+                    <div class="event-list">
+                        {% for event in upcoming_events %}
+                            <div class="event-item">
+                                <div class="event-date">
+                                    <strong>
+                                        {{ event.event_date.strftime('%d') }}
+                                    </strong>
+
+                                    <span>
+                                        {{ event.event_date.strftime('%b') }}
+                                    </span>
+                                </div>
+
+                                <div class="event-info">
+                                    <strong>{{ event.title }}</strong>
+                                    <span>
+                                        {% if event.start_time %}
+                                            {{ event.start_time.strftime('%I:%M %p')}}
+                                        {% endif %}
+
+                                        {% if event.class_name and event.class_name != 'all' %}
+                                        · {{ event.class_name }}
+                                        {% endif %}
+
+                                    </span>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                
+                {% else %}
+                    <div class="dashboard-empty">
+                        <i class="ti ti-calendar-off"></i>
+                        <p>No upcoming events.</p>
+                    </div>
+                {% endif %}
+            </section>
+        </div>
+
+    </div>
+    <!--End: Page Header -->
+</div>
+{% endblock %}

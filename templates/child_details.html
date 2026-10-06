@@ -1,0 +1,641 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="child-details-page">
+    <!-- Header -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+
+        <div class="child-details-header">
+
+            <a href="{{ url_for('children') }}" class="back-link">
+
+                <i data-lucide="chevron-left"></i>
+                Back to Children
+            </a>
+
+            <h1 class="fw-bold mb-1">
+            Child Details
+            </h1>
+
+            <p class="text-muted mb-0">
+                View complete information about the child.
+            </p>
+        </div>
+
+        <div class="d-flex flex-column flex-sm-row gap-2">
+
+            <!-- Generate PDF-->
+            <a 
+                href="{{ url_for('child_profile_pdf', child_id=child.id) }}"
+                class="pdf-child-btn"
+                target="_blank">
+                
+                <i data-lucide="file-text"></i>
+                Generate PDF
+            </a>
+
+            <!-- Edit Button -->
+            <a 
+                href="{{ url_for('edit_child', child_id=child.id) }}"
+                class="edit-child-btn">
+
+                <i data-lucide="pencil"></i>
+                Edit Child 
+            </a>
+           
+        </div>
+    </div>
+    <!--End: Header -->
+
+    <!-- Child Profile -->
+    <div class="child-profile-card">
+
+        <div class="row align-items-center g-4">
+
+            <!-- Child Photo -->
+            <div class="col-12 col-md-auto">
+
+                <div class="child-photo-wrapper">
+                    {% if child.photo %}
+                        <img 
+                            src="{{ url_for('static', filename='uploads/' + child.photo) }}" 
+                            alt="{{ child.first_name }} {{ child.last_name }}"
+                            class="child-profile-photo"
+                        >
+                    {% else %}
+                        <div    class="child-profile-placeholder">
+                            <span>
+                                {{ child.first_name[0]|capitalize }}
+                            </span>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Child Information -->
+            <div class="col-12 col-md">
+                <div class="child-profile-info">
+                    <h2>
+                            {{ child.first_name|capitalize }} {{ child.last_name|capitalize}}
+                    </h2>
+
+                    <!-- Badges -->
+                    <div class="child-profile-badges">
+
+                        <!-- Gender -->
+                        <span class="
+                                gender-badge
+                                {% if child.gender=='male'%}
+                                gender-male
+                                {% else %}
+                                gender-female
+                                {% endif %}
+                                ">
+                            {% if child.gender == 'male' %}
+                                <i data-lucide="mars"></i>
+                            {% else %}
+                                <i data-lucide="venus"></i>
+                            {% endif %}
+
+                            {{ child.gender|capitalize }}
+                        </span>
+
+                        <!-- Class -->
+                        <span class="class-badge">
+                            <i data-lucide="star"></i>
+                            {{ child.class_name }}
+                        </span>
+                    </div>
+
+                    <!-- Age / Birthday -->
+                    <div class="child-profile-age">
+                        <i data-lucide="calendar-days"></i>
+                        <span>
+                            {{ child.age_display }}
+                            {% if child.date_of_birth %}
+                             · {{ child.date_of_birth.strftime('%b %d, %Y') }}
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End: Child Profile -->
+
+    <!-- Parents Information -->
+    <div class="details-card">
+
+        <!-- Section Header -->
+        <div class="details-card-header">
+
+            <div class="details-section-icon">
+                <i data-lucide="users"></i>
+            </div>
+
+            <div>
+                <h3>Parents</h3>
+                <p>Parent and guardian contact information</p>
+            </div>
+        </div>
+
+        <!-- Parents -->
+        <div class="row g-3">
+
+            {% for parent in child.parents %}
+                <div class="col-12 col-md-6">
+                    <div class="parent-card">
+
+                        <!-- Parent Icon -->
+                        <div class="parent-avatar">
+                           <i data-lucide="user-round"></i>
+                        </div>
+
+                        <!-- Parent Information -->
+                        <div class="parent-info">
+
+                            <span class="parent-role">
+                                {{ parent.role }}
+                            </span>
+
+                            <h4>
+                                {{ parent.full_name|title }}
+                            </h4>
+
+                            {% if parent.phone_number %}
+                            
+                            <div class="parent-contact">
+                                <i data-lucide="phone"></i>
+
+                                <span>
+                                    ({{ parent.phone_number[:3] }}) 
+                                    {{ parent.phone_number[3:6] }}-{{ parent.phone_number[6:] }}
+                                </span>
+                            </div>
+                            {% endif %}
+
+                            {% if parent.email %}
+                            <div class="parent-contact">
+                                <i data-lucide="mail"></i>
+                                <span>{{ parent.email }}</span>
+                            </div>
+                            {% endif %}
+
+                            {% if parent.occupation %}
+                            
+                            <div class="parent-contact">
+                                <i data-lucide="briefcase"></i>
+                                <span>{{ parent.occupation|capitalize }}</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <!-- No Parents -->
+                <div class="col-12">
+
+                    <div class="empty-detail">
+                        <i data-lucide="users"></i>
+
+                        <span>
+                            No parent information available.
+                        </span>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <!--End: Parents Information -->
+
+    <!-- Authorized Pickup -->
+    <div class="details-card">
+
+        <!-- Section Header -->
+        <div class="details-card-header">
+
+            <div class="details-section-icon pickup-section-icon">
+                <i data-lucide="car"></i>
+            </div>
+
+            <div>
+                <h3>Authorized Pickup</h3>
+                <p>People authorized to pick up this child</p>
+            </div>
+        </div>
+
+        <!-- Pickup List -->
+        <div class="row g-3">
+            {% for pickup in child.pickups %}
+            <div class="col-12 col-md-6">
+                <div class="parent-card pickup-card">
+
+                    <!-- Pickup Icon -->
+                    <div class="parent-avatar pickup-avatar">
+                        <i data-lucide="user-check"></i>
+                    </div>
+
+                    <!-- Pickup Information -->
+                    <div class="parent-info">
+                        {% if pickup.relationship %}
+                        <span class="parent-role">
+                            {{ pickup.relationship }}
+                        </span>
+                        {% endif %}
+
+                        <h4>
+                            {{ pickup.full_name}}
+                        </h4>
+
+                        {% if pickup.phone %}
+                        <div class="parent-contact">
+                            <i data-lucide="phone"></i>
+                            <span>
+                                ({{pickup.phone[:3]}}) 
+                                {{ pickup.phone[3:6] }}-{{ pickup.phone[6:] }}
+                            </span>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% else %}
+                <!-- Empty State -->
+                <div class="col-12">
+
+                    <div class="empty-detail">
+                        <i data-lucide="user-round-x"></i>
+                        <span>
+                            No authorized pickup information available.
+                        </span>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <!--End: Authorized Pickup -->
+
+    <!-- Address -->
+    <div class="details-card">
+
+        <!-- Section Header -->
+        <div class="details-card-header">
+            
+            <div class="details-section-icon">
+                <i data-lucide="map-pin"></i>
+            </div>
+            
+            <div>
+                <h3>Address</h3>
+                <p>Child's home address</p>
+            </div>
+        </div>
+
+        <!-- Address information -->
+        <div class="row g-3">
+            
+            <!-- Street -->
+            <div class="col-12">
+                <div class="enrollment-item">
+                    <span class="enrollment-label">
+                        Street Address
+                    </span>
+
+                    <span class="enrollment-value">
+                        {{ child.street or '--'}}
+                    </span>
+                </div>
+            </div>
+
+            <!-- City -->
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="enrollment-item">
+                    <span class="enrollment-label">
+                        City
+                    </span>
+                    <span class="enrollment-value">
+                        {{ child.city or '--'}}
+                    </span>
+                </div>
+            </div>
+
+            <!-- State -->
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="enrollment-item">
+                    <span class="enrollment-label">
+                        State
+                    </span>
+                    <span class="enrollment-value">
+                        {{ child.state or '--'}}
+                    </span>
+                </div>
+            </div>
+
+            <!-- ZIP Code -->
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="enrollment-item">
+                    <span class="enrollment-label">
+                        ZIP Code
+                    </span>
+                    <span class="enrollment-value">
+                        {{ child.zipcode or '--'}}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End: Address -->
+
+    <!-- Program & Enrollment -->
+    <div class="details-card">
+
+        <!-- Section Header -->
+        <div class="details-card-header">
+
+            <div class="details-section-icon enrollment-section-icon">
+                <i data-lucide="calendar-check"></i>
+            </div>
+
+            <div>
+                <h3>Program & Enrollment</h3>
+                <p>Program and enrollment information</p>
+            </div>
+        </div>
+
+        <!-- Program Information -->
+        <div class="row g-3">
+            
+            <!-- Program -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="enrollment-item">
+                    <span class="enrollment-label">
+                        Program
+                    </span>
+                    <span class="enrollment-value">
+                        {{ child.program_type or '--' }}
+                    </span>
+                </div>
+            </div>
+
+            <!-- Class -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="enrollment-item">
+                    <span class="enrollment-label">
+                    Class
+                    </span>
+                    <span class="enrollment-value">
+                    {{ child.class_name or '--'}}
+                    </span>
+                </div>
+            </div>
+
+            <!-- Enrolled Date -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="enrollment-item">
+                    <span class="enrollment-label">
+                        Enrolled Date
+                    </span>
+                    <span class="enrollment-value">
+                        {% if child.enrolled_date %}
+                            {{ child.enrolled_date.strftime('%b %d, %Y') }}
+                        {% else %}
+                            --
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+
+            <!-- Start Date -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="enrollment-item">
+                    <span class="enrollment-label">
+                        Start Date
+                    </span>
+                    <span class="enrollment-value">
+                        {% if child.start_date %}
+                            {{ child.start_date.strftime('%b %d, %Y') }}
+                        {% else %}
+                            --
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+
+            <!-- Days Attending -->
+            <div class="col-12">
+                <div class="enrollment-item">
+                    <span class="enrollment-label">
+                        Days Attending
+                    </span>
+                    {% if child.days_attending %}
+                        <div class="days-list">
+                            {% for day in child.days_attending.split(',')%}
+                            <span class="day-chip">
+                                {{ day.strip() }}
+                            </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <span class="enrollment-value">
+                            --
+                        </span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End: Program & Enrollment -->
+
+    <!-- Medical Information -->
+    <div class="details-card">
+
+        <!-- Section Header -->
+        <div class="details-card-header">
+
+            <div class="details-section-icon medical-section-icon">
+                <i data-lucide="heart-pulse"></i>
+            </div>
+
+            <div>
+                <h3>Medical Information</h3>
+                <p>Health and medical information</p>
+            </div>
+        </div>
+
+        <!-- Medical Information -->
+        <div class="row g-3">
+
+            <!-- Allergies -->
+            <div class="col-12 col-md-6">
+                <div class="medical-item">
+                    <div class="medical-item-header">
+
+                        <div class="medical-item-icon allergy-icon">
+                            <i data-lucide="triangle-alert"></i>
+                        </div>
+                        <span>Allergies</span>
+                    </div>
+
+                    {% if child.allergies %}
+                        <p class="medical-value">
+                            {{ child.allergies }}
+                        </p>
+                    {% else %}
+                        <p class="medical-empty">
+                            No known allergies
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Medical Notes -->
+            <div class="col-12 col-md-6">
+                <div class="medical-item">
+                    <div class="medical-item-header">
+                        <div class="medical-item-icon">
+                            <i data-lucide="stethoscope"></i>
+                        </div>
+                        <span>
+                            Medical Notes
+                        </span>
+                    </div>
+
+                    {% if child.medical_notes %}
+                        <p class="medical-value">
+                            {{ child.medical_notes|capitalize }}
+                        </p>
+                    {% else %}
+                        <p class="medical-empty">
+                            No medical notes available
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Additional Notes -->
+            <div class="col-12">
+                <div class="medical-item">
+                    <div class="medical-item-header">
+                        <div class="medical-item-icon notes-icon">
+                            <i data-lucide="notebook-pen"></i>
+                        </div>
+                        <span>Additional Notes</span>
+                    </div>
+
+                    {% if child.notes %}
+                        <p class="medical-value">
+                            {{ child.notes|capitalize }}
+                        </p>
+                    {% else %}
+                        <p class="medical-empty">
+                            No additional notes
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End: Medical Information -->
+
+    <!-- Child Actions -->
+    <div class="child-details-actions">
+
+        <div class="child-details-actions-content">
+
+            <div>
+                <h4>Child Record</h4>
+                <p>Manage this child's information and records.</p>
+            </div>
+
+            <button
+                type="button"
+                class="delete-child-btn"
+                data-bs-toggle="modal"
+                data-bs-target="#deleteChildModal">
+            
+                <i data-lucide="trash-2"></i>
+                Delete Child
+            </button>
+        </div>
+    </div>
+    <!--End: Child Actions -->
+
+    <!-- Delete Confirmation Modal -->
+    <div 
+        class="modal fade" 
+        id="deleteChildModal"
+        tabindex="-1"
+        aria-labelledby="deleteChildModalLabel"
+        aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow rounded-4">
+                <div class="modal-body text-center p-4">
+
+                    <!-- Icon -->
+                    <div class="mb-3">
+                        <div 
+                            class="d-inline-flex align-items-center justify-content-center rounded-circle bg-danger bg-opacity-10"
+                            style="width: 70px; height: 70px;">
+
+                            <i
+                                data-lucide="trash-2"
+                                class="text-danger"
+                                style="width: 32px; height: 32px;">
+                            </i>
+                        </div>
+                    </div>
+
+                    <!-- Title -->
+                    <h4 
+                        class="fw-bold mb-2"
+                        id="deleteChildModalLabel">
+                        Delete Child?
+                    </h4>
+
+                    <!-- Message -->
+                    <p class="text-muted mb-4">
+                        Are you sure you want to delete?
+
+                        <strong>
+                            {{ child.first_name }} {{ child.last_name }}
+                        </strong>?
+                        <br>
+                        This action cannot be undone.
+                    </p>
+
+                    <!-- buttons -->
+                    <div class="d-flex justify-content-center gap-2">
+                        <button
+                            type="button"
+                            class="btn btn-light border px-4"
+                            data-bs-dismiss="modal">
+                            
+                            Cancel
+                        </button>
+
+                        <form 
+                            action="{{ url_for('delete_child', child_id=child.id) }}"
+                            method="POST"
+                        >
+                            <button
+                                type="submit"
+                                class="btn btn-danger px-4"
+                            >
+                                <i data-lucide="trash-2"></i>
+                                Yes, delete
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--End: Delete Confirmation Modal -->
+    
+    
+    
+</div>
+    
+{% endblock %}

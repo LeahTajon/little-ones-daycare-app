@@ -1,0 +1,258 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/email_daily_log.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="email-daily-log-page">
+
+    <!-- ========================================
+         Page Header
+    ========================================= -->
+    <div class="page-header">
+
+        <div class="page-header-left">
+
+            <a href="{{ url_for(
+                'child_daily_log',
+                child_id=child.id,
+                date=selected_date.strftime('%Y-%m-%d')
+            ) }}"
+               class="back-button">
+
+                <i class="ti ti-arrow-left"></i>
+
+            </a>
+
+            <div>
+
+                <div class="page-eyebrow">
+                    <i class="ti ti-mail"></i>
+                    Daily Log
+                </div>
+
+                <h1>Email Daily Log</h1>
+
+                <p>
+                    Send {{ child.first_name }}'s daily log
+                    to a parent or guardian.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================
+         Email Card
+    ========================================= -->
+    <div class="email-card">
+
+
+        <!-- ====================================
+             Child Summary
+        ===================================== -->
+        <div class="child-summary">
+
+            <div class="child-avatar">
+
+                {% if child.photo %}
+
+                    <img
+                        src="{{ url_for(
+                            'static',
+                            filename='uploads/' + child.photo
+                        ) }}"
+                        alt="{{ child.first_name }} {{ child.last_name }}"
+                    >
+
+                {% else %}
+
+                    <i class="ti ti-user"></i>
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="child-summary-info">
+
+                <h2>
+                    {{ child.first_name }}
+                    {{ child.last_name }}
+                </h2>
+
+                <p>
+                    Daily Log for
+                    {{ selected_date.strftime('%B %d, %Y') }}
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ====================================
+             Email Form
+        ===================================== -->
+        <form method="POST">
+
+
+            <!-- Parent Selection -->
+            <div class="form-section">
+
+                <label>
+                    Send Daily Log To
+                </label>
+
+                <p class="selection-help">
+                    Select one or both parents / guardians.
+                </p>
+
+
+                {% if parent_emails %}
+
+                    <div class="parent-selection">
+
+                        {% for parent in parent_emails %}
+
+                            <label class="parent-option">
+
+                                <input
+                                    type="checkbox"
+                                    name="emails"
+                                    value="{{ parent.email }}"
+                                    {% if parent.email in selected_emails %}
+                                        checked
+                                    {% endif %}
+                                >
+
+                                <span class="parent-check"></span>
+
+
+                                <span class="parent-option-info">
+
+                                    <strong>
+                                        {{ parent.full_name }}
+                                    </strong>
+
+                                    <small>
+
+                                        {% if parent.role %}
+                                            {{ parent.role }}
+                                            ·
+                                        {% endif %}
+
+                                        {{ parent.email }}
+
+                                    </small>
+
+                                </span>
+
+                            </label>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                {% else %}
+
+
+                    <!-- No Email -->
+                    <div class="no-parent-email">
+
+                        <i class="ti ti-mail-off"></i>
+
+                        <div>
+
+                            <strong>
+                                No parent email found
+                            </strong>
+
+                            <p>
+                                There are no parent or guardian
+                                email addresses available for this child.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- ====================================
+                 Daily Log Date
+            ===================================== -->
+            <div class="date-summary">
+
+                <div class="date-icon">
+
+                    <i class="ti ti-calendar"></i>
+
+                </div>
+
+                <div>
+
+                    <span class="date-label">
+                        Daily Log Date
+                    </span>
+
+                    <strong>
+                        {{ selected_date.strftime('%B %d, %Y') }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- ====================================
+                 Actions
+            ===================================== -->
+            <div class="form-actions">
+
+                <a href="{{ url_for(
+                    'child_daily_log',
+                    child_id=child.id,
+                    date=selected_date.strftime('%Y-%m-%d')
+                ) }}"
+                   class="btn-cancel">
+
+                    Cancel
+
+                </a>
+
+
+                <button
+                    type="submit"
+                    class="btn-send"
+                    {% if not parent_emails %}
+                        disabled
+                    {% endif %}
+                >
+
+                    <i class="ti ti-send"></i>
+
+                    Send Daily Log
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

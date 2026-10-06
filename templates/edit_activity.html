@@ -1,0 +1,385 @@
+{% extends "base.html" %} {% block extra_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for(
+        'static',
+        filename='css/activity_log.css'
+    ) }}"
+/>
+{% endblock %} 
+
+{% block content %}
+
+<div class="container py-4">
+  <!-- =====================================================
+         PAGE
+    ====================================================== -->
+  <div class="activity-page">
+    <!-- Header -->
+    <div class="d-flex align-items-center gap-3 mb-4">
+      <a
+        href="{{ url_for(
+                    'child_daily_log',
+                    child_id=child.id,
+                    date=selected_date.strftime('%Y-%m-%d')
+                ) }}"
+        class="text-decoration-none text-dark"
+      >
+        <i class="ti ti-arrow-left fs-4"></i>
+      </a>
+
+      <div>
+        <h1 class="h3 fw-bold mb-1">Edit Activity Log</h1>
+
+        <div class="text-muted small">
+          {{ child.first_name }} {{ child.last_name }}
+
+          <span class="mx-1">•</span>
+
+          {{ selected_date.strftime('%B %d, %Y') }}
+        </div>
+      </div>
+    </div>
+
+    <!-- =================================================
+             FORM CARD
+        ================================================== -->
+    <div class="card border-0 shadow-sm activity-form-card">
+      <div class="card-body p-4">
+        <form method="POST">
+          {{ form.hidden_tag() }}
+
+          <!-- =================================================
+                         ACTIVITIES
+                    ================================================== -->
+
+          <div class="mb-4">
+            <label class="form-label fw-semibold"> Activities </label>
+
+            <div class="text-muted small mb-3">
+              Select an activity.
+            </div>
+
+            <div class="activity-options">
+              {% for value, label in form.activity.choices %}
+
+              <label class="activity-option" for="activity-{{ value }}">
+                <input
+                  type="checkbox"
+                  name="{{ form.activity.name }}"
+                  value="{{ value }}"
+                  id="activity-{{ value }}"
+                  {% if value in (form.activity.data or []) %}
+                  checked
+                  {% endif %}
+                />
+
+                <span class="activity-option-content">
+                  {% if value == 'art' %}
+                  <i class="ti ti-palette"></i>
+
+                  {% elif value == 'assembly' %}
+                  <i class="ti ti-flag"></i>
+
+                  {% elif value == 'worksheets' %}
+                  <i class="ti ti-news"></i>
+
+                  {% elif value == 'music' %}
+                  <i class="ti ti-music"></i>
+
+                  {% elif value == 'reading' %}
+                  <i class="ti ti-book"></i>
+
+                  {% elif value == 'outdoor_play' %}
+                  <i class="ti ti-sun"></i>
+
+                  {% elif value == 'indoor_play' %}
+                  <i class="ti ti-blocks"></i>
+
+                  {% elif value == 'sensory_play' %}
+                  <i class="ti ti-hand-stop"></i>
+
+                  {% elif value == 'gross_motor' %}
+                  <i class="ti ti-run"></i>
+
+                  {% elif value == 'fine_motor' %}
+                  <i class="ti ti-hand-click"></i>
+
+                  {% elif value == 'free_play' %}
+                  <i class="ti ti-tic-tac"></i>
+
+                  {% else %}
+
+                  <i class="ti ti-dots"></i>
+
+                  {% endif %}
+
+                  <span> {{ label }} </span>
+                </span>
+
+                <i class="ti ti-check activity-check"></i>
+              </label>
+
+              {% endfor %}
+            </div>
+
+            <!-- =============================================
+                             ACTIVITY ERRORS
+                        ============================================== -->
+
+            {% if form.activity.errors %} {% for error in form.activity.errors
+            %}
+
+            <div class="text-danger small mt-2">{{ error }}</div>
+
+            {% endfor %} {% endif %}
+          </div>
+
+          <!-- =================================================
+                         OTHER ACTIVITY
+                    ================================================== -->
+
+          <div class="mb-4" id="otherActivityContainer" style="display: none">
+            {{ form.other_activity.label( class="form-label fw-semibold" ) }} {{
+            form.other_activity( class="form-control", id="otherActivity",
+            placeholder="Enter activity" ) }} {% if form.other_activity.errors
+            %} {% for error in form.other_activity.errors %}
+
+            <div class="text-danger small mt-2">{{ error }}</div>
+
+            {% endfor %} {% endif %}
+          </div>
+
+          <!-- =================================================
+                         TIME
+                    ================================================== -->
+
+          <div class="mb-4">
+            <label class="form-label fw-semibold"> Time </label>
+
+            <!-- Time Options -->
+
+            <div class="time-options mb-3">
+              <!-- Automatic -->
+
+              <label class="time-option" for="time-automatic">
+                <input
+                  type="radio"
+                  name="{{ form.time_option.name }}"
+                  value="automatic"
+                  id="time-automatic"
+                  {% if form.time_option.data == 'automatic' or not form.time_option.data %}
+                    checked
+                {% endif %}
+                />
+
+                <span class="time-option-content">
+                  <i class="ti ti-clock"></i>
+
+                  <span> Automatic </span>
+                </span>
+              </label>
+
+              <!-- Manual -->
+
+              <label class="time-option" for="time-manual">
+                <input
+                  type="radio"
+                  name="{{ form.time_option.name }}"
+                  value="manual"
+                  id="time-manual"
+                  {% if form.time_option.data == 'manual' %}
+                     checked
+                  {% endif %}
+                />
+
+                <span class="time-option-content">
+                  <i class="ti ti-clock-edit"></i>
+
+                  <span> Manual </span>
+                </span>
+              </label>
+            </div>
+
+            <!-- =============================================
+                             AUTOMATIC TIME
+                        ============================================== -->
+
+            <div id="automaticTimeDisplay" class="automatic-time-display">
+              <i class="ti ti-clock"></i>
+
+              <span>
+                Current time:
+                <strong id="currentTime"> --:-- -- </strong>
+              </span>
+            </div>
+
+            <!-- =============================================
+                             MANUAL TIME
+                        ============================================== -->
+
+            <div id="manualTimeContainer" style="display: none">
+              {{ form.manual_time.label( class="form-label fw-semibold" ) }} {{
+              form.manual_time( class="form-control", type="time" ) }} {% if
+              form.manual_time.errors %} {% for error in form.manual_time.errors
+              %}
+
+              <div class="text-danger small mt-2">{{ error }}</div>
+
+              {% endfor %} {% endif %}
+            </div>
+          </div>
+
+          <!-- =================================================
+                         NOTES
+                    ================================================== -->
+
+          <div class="mb-4">
+            {{ form.notes.label( class="form-label fw-semibold" ) }} 
+            {{ form.notes( 
+                class="form-control", 
+                rows="2", 
+                placeholder="Add any additional notes..." ) 
+            }} 
+                {% if form.notes.errors %} 
+                    {% for error in form.notes.errors %}
+
+                    <div class="text-danger small mt-2">
+                        {{ error }}
+                    </div>
+
+                    {% endfor %} 
+                {% endif %}
+          </div>
+
+          <!-- =================================================
+                         BUTTONS
+                    ================================================== -->
+
+          <div class="activity-form-buttons">
+            <a
+              href="{{ url_for(
+                                'child_daily_log',
+                                child_id=child.id,
+                                date=selected_date.strftime('%Y-%m-%d')
+                            ) }}"
+              class="btn btn-light"
+            >
+              Cancel
+            </a>
+
+            <button
+              type="submit"
+              class="btn btn-primary">
+              Update Activity Log
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================== -->
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    /* =====================================================
+       OTHER ACTIVITY
+    ====================================================== */
+
+    const otherCheckbox = document.getElementById("activity-other");
+
+    const otherContainer = document.getElementById("otherActivityContainer");
+
+    function toggleOtherActivity() {
+      if (!otherCheckbox || !otherContainer) {
+        return;
+      }
+
+      if (otherCheckbox.checked) {
+        otherContainer.style.display = "block";
+      } else {
+        otherContainer.style.display = "none";
+      }
+    }
+
+    if (otherCheckbox) {
+      otherCheckbox.addEventListener("change", toggleOtherActivity);
+
+      toggleOtherActivity();
+    }
+
+    /* =====================================================
+       TIME OPTIONS
+    ====================================================== */
+
+    const timeOptions = document.querySelectorAll('input[name="time_option"]');
+
+    const manualTimeContainer = document.getElementById("manualTimeContainer");
+
+    const automaticTimeDisplay = document.getElementById(
+      "automaticTimeDisplay",
+    );
+
+    function toggleTimeOption() {
+      const selected = document.querySelector(
+        'input[name="time_option"]:checked',
+      );
+
+      if (!selected) {
+        return;
+      }
+
+      if (selected.value === "manual") {
+        manualTimeContainer.style.display = "block";
+
+        automaticTimeDisplay.style.display = "none";
+      } else {
+        manualTimeContainer.style.display = "none";
+
+        automaticTimeDisplay.style.display = "flex";
+      }
+    }
+
+    timeOptions.forEach(function (option) {
+      option.addEventListener("change", toggleTimeOption);
+    });
+
+    toggleTimeOption();
+
+    /* =====================================================
+       AUTOMATIC CURRENT TIME
+    ====================================================== */
+
+    const currentTime = document.getElementById("currentTime");
+
+    function updateCurrentTime() {
+      if (!currentTime) {
+        return;
+      }
+
+      const now = new Date();
+
+      let hours = now.getHours();
+
+      const minutes = String(now.getMinutes()).padStart(2, "0");
+
+      const period = hours >= 12 ? "PM" : "AM";
+
+      hours = hours % 12;
+
+      hours = hours || 12;
+
+      currentTime.textContent = `${hours}:${minutes} ${period}`;
+    }
+
+    updateCurrentTime();
+
+    setInterval(updateCurrentTime, 1000);
+  });
+</script>
+
+{% endblock %}

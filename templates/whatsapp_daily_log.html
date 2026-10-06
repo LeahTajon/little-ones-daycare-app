@@ -1,0 +1,269 @@
+{% extends "base.html" %}
+
+{% block title %}WhatsApp Daily Log{% endblock %}
+
+{% block extra_css %}
+
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/whatsapp_daily_log.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="whatsapp-daily-log-page">
+
+
+<div class="whatsapp-log-container">
+
+    <!-- Back Link -->
+    <a 
+        href="{{ url_for(
+            'child_daily_log',
+            child_id=child.id,
+            date=selected_date.strftime('%Y-%m-%d')
+        )}}"
+        class="whatsapp-back-link">
+    
+        <i class="ti ti-arrow-left"></i>
+        <span>Back to Daily Log</span>
+    </a>
+
+    <!-- Main Card -->
+    <div class="whatsapp-log-card">
+
+        <!-- Header -->
+        <div class="whatsapp-log-header">
+
+            <div class="whatsapp-header-icon">
+                <i class="ti ti-brand-whatsapp"></i>
+            </div>
+
+            <div class="whatsapp-header-content">
+
+                <h1>
+                    Share Daily Log
+                </h1>
+
+                <p>
+                    Send {{ child.first_name }} {{ child.last_name }}'s
+                    daily log via WhatsApp.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- Date / Child Info -->
+        <div class="whatsapp-log-info">
+
+            <div class="info-item">
+
+                <i class="ti ti-user"></i>
+
+                <div>
+                    <span>Child</span>
+                    <strong>
+                        {{ child.first_name }} {{ child.last_name }}
+                    </strong>
+                </div>
+
+            </div>
+
+            <div class="info-item">
+
+                <i class="ti ti-calendar"></i>
+
+                <div>
+                    <span>Date</span>
+                    <strong>
+                        {{ selected_date.strftime('%B %d, %Y') }}
+                    </strong>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Recipient -->
+        <div class="recipient-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <h2>Select Recipient</h2>
+
+                    <p>
+                        Choose the parent who will receive the daily log.
+                    </p>
+                </div>
+
+            </div>
+
+            {% set parents_with_phone = child.parents
+                | selectattr('phone_number')
+                | list
+            %}
+
+            {% if parents_with_phone %}
+
+                <div class="parent-list">
+
+                    {% for parent in parents_with_phone %}
+
+                        <label class="parent-option">
+
+                            <input
+                                type="radio"
+                                name="parent"
+                                value="{{ parent.phone_number }}"
+                                {% if loop.first %}checked{% endif %}
+                            >
+
+                            <span class="parent-card">
+
+                                <span class="parent-radio"></span>
+
+                                <span class="parent-icon">
+                                    <i class="ti ti-user"></i>
+                                </span>
+
+                                <span class="parent-details">
+
+                                    <span class="parent-name">
+                                        {{ parent.full_name }}
+                                    </span>
+
+                                    <span class="parent-role">
+                                        {{ parent.role }}
+                                    </span>
+
+                                    <span class="parent-phone">
+                                        <i class="ti ti-phone"></i>
+                                        {{ parent.phone_number }}
+                                    </span>
+
+                                </span>
+
+                            </span>
+
+                        </label>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="no-phone-alert">
+
+                    <div class="alert-icon">
+                        <i class="ti ti-alert-circle"></i>
+                    </div>
+
+                    <div>
+                        <strong>No phone number available</strong>
+
+                        <p>
+                            No parent phone numbers are saved for this child.
+                        </p>
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- Actions -->
+        <div class="whatsapp-actions">
+
+            {% if parents_with_phone %}
+
+                <button
+                    type="button"
+                    class="whatsapp-btn whatsapp-primary-btn"
+                    onclick="openWhatsApp()"
+                >
+                    <i class="ti ti-brand-whatsapp"></i>
+                    <span>Open WhatsApp</span>
+                </button>
+
+            {% endif %}
+
+
+            <a
+                href="{{ url_for(
+                    'daily_log_pdf',
+                    child_id=child.id,
+                    date=selected_date.strftime('%Y-%m-%d')
+                ) }}"
+                class="whatsapp-btn whatsapp-pdf-btn"
+                target="_blank"
+            >
+                <i class="ti ti-file-type-pdf"></i>
+                <span>Download PDF</span>
+            </a>
+
+
+            <a
+                href="{{ url_for(
+                    'child_daily_log',
+                    child_id=child.id,
+                    date=selected_date.strftime('%Y-%m-%d')
+                ) }}"
+                class="whatsapp-btn whatsapp-cancel-btn"
+            >
+                Cancel
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</div>
+
+<script>
+
+function openWhatsApp() {
+
+    const selectedParent = document.querySelector(
+        'input[name="parent"]:checked'
+    );
+
+    if (!selectedParent) {
+        alert('Please select a parent.');
+        return;
+    }
+
+    const phone = selectedParent.value;
+
+    const message =
+        `Hello,
+
+Please find the daily log for {{ child.first_name }} {{ child.last_name }}
+for {{ selected_date.strftime('%B %d, %Y') }}.
+
+Thank you,
+Little Ones Too Daycare`;
+
+    const whatsappUrl =
+        'https://wa.me/' +
+        phone.replace(/\D/g, '') +
+        '?text=' +
+        encodeURIComponent(message);
+
+    window.open(
+        whatsappUrl,
+        '_blank'
+    );
+}
+
+</script>
+
+{% endblock %}

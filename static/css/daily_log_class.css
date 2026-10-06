@@ -1,0 +1,14 @@
+/* Back Button */
+.daily-log-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    color: #64748b;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    text-decoration: none;
+    transition: color 0.2s ease;
+}

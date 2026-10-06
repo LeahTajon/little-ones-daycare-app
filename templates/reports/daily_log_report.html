@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/reports.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="reports-page">
+
+    <!-- Page Header -->
+    <div class="report-page-header">
+
+        <div class="report-header-left">
+
+            <a 
+                href="{{ url_for('reports') }}"
+                class="report-back"
+            >
+                <i class="ti ti-arrow-left"></i>
+            </a>
+
+            <div>
+
+                <div class="page-eyebrow">
+                    <i class="ti ti-notebook"></i>
+                    Daily Reports
+                </div>
+
+                <h1>Daily Log Report</h1>
+
+                <p>
+                    View daily care records for all students.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- End: Page Header -->
+
+
+    <!-- Date Selector -->
+    <div class="daily-report-selector">
+
+        <div class="daily-report-selector-icon">
+            <i class="ti ti-calendar-event"></i>
+        </div>
+
+        <div class="daily-report-selector-content">
+
+            <h2>Select Report Date</h2>
+
+            <p>
+                Choose the date you would like to view
+                in the Daily Log Report.
+            </p>
+
+            <form
+                action="{{ url_for('daily_log_report') }}"
+                method="get"
+                class="daily-report-date-form"
+            >
+
+                <div class="daily-report-date-field">
+
+                    <label for="date">
+                        Report Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="date"
+                        name="date"
+                        value="{{ selected_date.strftime('%Y-%m-%d') }}"
+                        required
+                    >
+
+                </div>
+
+                <!-- Classroom -->
+                <div class="daily-report-class-field">
+                    <label for="class_name">
+                        Class Type
+                    </label>
+
+                    <select name="class_name" id="class_name">
+                        <option 
+                            value="all"
+                            {% if selected_class == 'all' %}
+                                selected
+                            {% endif %}
+                            >
+                            All Classes
+                        </option>
+
+                        {% for class_name in classes %}
+                            <option 
+                                value="{{ class_name }}"
+                                {% if selected_class == class_name %}
+                                    selected
+                                {% endif %}
+                                >
+                                {{ class_name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <button
+                    type="submit"
+                    class="report-action-button"
+                >
+                    <i class="ti ti-refresh"></i>
+                    View Report
+                </button>
+
+            </form>
+        </div>
+        
+    </div>
+    
+    <!-- End: Date Selector -->
+
+
+    <!-- PDF Preview -->
+    <div class="daily-report-preview-card">
+
+        <div class="daily-report-preview-header">
+
+            <div class="daily-report-preview-title">
+
+                <div class="daily-report-preview-icon">
+                    <i class="ti ti-file-type-pdf"></i>
+                </div>
+
+                <div>
+
+                    <strong>
+                        Daily Log Report
+                    </strong>
+
+                    <span>
+                        {{ selected_date.strftime('%B %d, %Y') }}
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="report-preview-actions">
+
+                <a
+                    href="{{ pdf_url }}"
+                    class="report-action-button"
+                    target="_blank"
+                >
+                    <i class="ti ti-printer"></i>
+                    Print
+                </a>
+
+                <a
+                    href="{{ pdf_url }}"
+                    class="report-secondary-button"
+                    download
+                >
+                    <i class="ti ti-download"></i>
+                    Download
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="daily-report-preview-container">
+
+            <iframe
+                src="{{ pdf_url }}"
+                class="daily-report-preview-frame"
+                title="Daily Log Report"
+            ></iframe>
+
+        </div>
+
+    </div>
+    <!-- End: PDF Preview -->
+
+</div>
+
+{% endblock %}

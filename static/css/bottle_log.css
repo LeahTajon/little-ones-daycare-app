@@ -1,0 +1,615 @@
+/* Bottle Log Page */
+.bottle-page {
+    width: 100%;
+    color: #334155;
+}
+
+/* Form Card */
+.bottle-form-card {
+    width: 100%;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+/* Card Header */
+.bottle-card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    width: 100%;
+    padding: 1.5rem 2rem;
+
+    background: #eff8ff;
+    border-bottom: 1px solid #dbeafe;
+}
+
+.bottle-header-icon {
+    width: 52px;
+    height: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: #dbeafe;
+    color: #2563eb;
+
+    font-size: 1.6rem;
+}
+
+/* Card Body */
+.bottle-form-card .card-body {
+    width: 100%;
+}
+
+/* Sections */
+.bottle-section {
+    width: 100%;
+}
+
+.bottle-section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+
+    margin-bottom: 1rem;
+
+    font-size: 0.95rem;
+    font-weight: 700;
+
+    color: #334155;
+}
+
+.bottle-section-title small {
+    font-weight: 500;
+    color: #94a3b8;
+}
+
+.bottle-section-icon {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: #eff6ff;
+    border: 1px solid #dbeafe;
+
+    color: #3b82f6;
+
+    font-size: 1.15rem;
+}
+
+/* Time Options */
+.time-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+
+    width: 100%;
+}
+
+.time-option {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+
+    width: 100%;
+    min-width: 0;
+
+    padding: 1rem;
+
+    border: 2px solid #dbeafe;
+    border-radius: 14px;
+
+    background: #f8fbff;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.time-option:hover {
+    background: #eff6ff;
+    border-color: #93c5fd;
+    transform: translateY(-1px);
+}
+
+.time-option.selected {
+    background: #dbeafe;
+    border-color: #3b82fe;
+}
+
+.time-option.selected {
+    background: #dbeafe;
+    border-color: #3b82f6;
+
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.12);
+}
+
+/* Time Icon */
+.time-option-icon {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: #fff;
+    border: 1px solid #bfdbfe;
+
+    color: #3b82f6;
+
+    font-size: 1.3rem;
+
+    transition: all 0.2s ease;
+}
+
+.time-option.selected .time-option-icon {
+    background: #3b82f6;
+    border-color: #3b82f6;
+    color: #fff;
+}
+
+/* Time Text */
+.time-option-content {
+    min-width: 0;
+    line-height: 1.25;
+}
+
+.time-option-content .fw-bold {
+    color: #334155;
+}
+
+.time-option-content small {
+    display: block;
+    margin-top: 3px;
+    color: #64748b;
+}
+
+/* Information Box */
+.bottle-info-box {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    width: 100%;
+
+    padding: 0.85rem 1rem;
+
+    border-radius: 12px;
+
+    background: #f0f9ff;
+    border: 1px solid #bae6fd;
+
+    color: #475569;
+    font-size: 0.85rem;
+}
+
+.bottle-info-icon {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: #e0f2fe;
+    color: #0284c7;
+
+    font-size: 1rem;
+}
+
+.current-time {
+    margin-left: auto;
+
+    padding: 0.35rem 0.7rem;
+
+    border-radius: 8px;
+
+    background: #dbeafe;
+    color: #2563eb;
+
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+/* Bottle Type Grid */
+.bottle-type-grid { 
+    display: flex;
+    align-items: stretch;
+    gap: 0.85rem;
+    width: 100%;
+}
+
+/* Bottle Type Option */
+.bottle-type-option { 
+   position: relative;
+
+   flex: 1 1 0;
+   min-width: 0;
+
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+
+   gap: 0.65rem;
+
+   padding: 1.25rem 0.75rem;
+
+   background: #fff;
+   border: 1.5px solid #e2e8f0;
+   border-radius: 14px;
+
+   color: #475569;
+
+   cursor: pointer;
+   text-align: center;
+
+   transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
+}
+
+/* Hover */
+.bottle-type-option:hover {
+    background: #f8fbff;
+    border-color: #93c5fd;
+    transform: translateY(-1px);
+}
+
+
+/* Selected */
+.bottle-type-option.selected {
+    background: #eff6ff;
+    border-color: #3b82f6;
+
+    color: #1d4ed8;
+
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.12);
+}
+
+.bottle-option-icon {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+
+    color: #64748b;
+
+    font-size: 1.3rem;
+
+    transition:
+        background-color 0.18s ease,
+        border-color 0.18s ease,
+        color 0.18s ease;
+}
+
+/* Selected icon */
+.bottle-type-option.selected .bottle-option-icon {
+    background: #dbeafe;
+    border-color: #93c5fd;
+    color: #2563eb;
+}
+
+.bottle-option-content {
+    width: 100%;
+    min-width: 0;
+
+    text-align: center;
+}
+
+.bottle-option-content .fw-bold {
+    line-height: 1.2;
+    white-space: normal;
+    color: #334155;
+}
+
+.bottle-type-option.selected
+.bottle-option-content .fw-bold {
+    color: #1d4ed8;
+}
+
+
+.bottle-option-content small {
+    display: block;
+    margin-top: 4px;
+    color: #64748b;
+    font-size: 0.78rem;
+    line-height: 1.25;
+}
+
+/* Selected Checkmark */
+.bottle-type-check {
+    position: absolute;
+
+    top: 8px;
+    right: 8px;
+
+    width: 22px;
+    height: 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #3b82f6;
+    color: #fff;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    opacity: 0;
+    transform: scale(0.7);
+
+    transition:
+        opacity 0.18s ease,
+        transform 0.18s ease;
+}
+
+/* Show check when selected */
+.bottle-type-option.selected .bottle-type-check {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Bottle Option Icon */
+.bottle-option-icon {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+    border: 1px solid;
+    
+    font-size: 1.3rem;
+    
+    transition: all 0.2s ease;
+}
+
+/* Bottle Option Text */
+.bottle-option-context {
+    min-width: 0;
+}
+
+.bottle-option-content .fw-bold {
+    line-height: 1.2;
+}
+
+.bottle-option-content small {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #64748b;
+    font-size: 0.78rem;
+}
+
+/* Inputs */
+.bottle-input {
+    width: 100%;
+    min-height: 46px;
+
+    border: 1.5px solid #dbeafe;
+    border-radius: 10px;
+
+    background: #f8fbff;
+
+    color: #334155;
+
+    box-shadow: none;
+    
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.bottle-input:focus {
+    background: #fff;
+    border-color: #60a5fa;
+
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.15);
+    outline: none;
+}
+
+.bottle-input::placeholder {
+    color: #94a3b8;
+}
+
+#manualTimeContainer .form-label, #otherBottleContainer .form-label { 
+    color: #475569; 
+    font-size: 0.88rem; 
+}
+
+.bottle-amount-group {
+    width: 100%;
+    overflow: hidden;
+
+    border-radius: 10px;
+}
+
+.bottle-amount-group .input-group-text {
+    min-height: 46px;
+
+    background: #eff6ff;
+    border: 1.5px solid #dbeafe;
+
+    color: #3b82f6;
+    font-weight: 600;
+}
+
+.bottle-amount-group .form-control {
+    min-width: 0;
+
+    border-left: 0;
+    border-right: 0;
+
+    border-radius: 0;
+}
+
+.bottle-amount-group .form-control:focus { 
+    box-shadow: none; 
+}
+
+/* Notes */
+.bottle-notes {
+    width: 100%;
+    min-height: 110px;
+
+    resize: vertical;
+}
+
+/* Buttons */
+.bottle-form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    gap: 0.75rem;
+    width: 100%;
+
+    padding-top: 0.5rem;
+}
+
+/* Cancel Button */
+.bottle-cancel-btn {
+    min-width: 110px;
+
+    border: 1.5px solid #dbeafe;
+
+    background: #f8fafc;
+    color: #64748b;
+
+    border-radius: 10px;
+
+    font-weight: 600;
+
+    transition: all 0.2s ease;
+}
+
+.bottle-cancel-btn:hover { 
+    background: #f1f5f9; 
+    border-color: #cbd5e1; 
+    color: #475569; 
+}
+
+/* Save Button */
+.bottle-save-btn {
+    min-width: 150px;
+
+    border: 1.5px solid #3b82f6;
+    
+    background: #3b82f6;
+    color: #fff;
+
+    border-radius: 10px;
+    font-weight: 600;
+
+    transition: all 0.2s ease;
+}
+
+.bottle-save-btn:hover {
+    background: #2563eb;
+    border-color: #2563eb;
+    color: #fff;
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 5px 12px rgba(37, 99, 235, 0.2);
+}
+
+/* =========================================================
+   RESPONSIVE — TABLET
+========================================================= */
+
+@media (max-width: 991.98px) {
+
+    .bottle-type-grid {
+        flex-wrap: wrap;
+    }
+
+    .bottle-type-option {
+        flex: 1 1 calc(33.333% - 0.85rem);
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+========================================================= */
+
+@media (max-width: 767.98px) {
+
+    .bottle-type-grid {
+        flex-wrap: wrap;
+    }
+
+    .bottle-type-option {
+        flex: 1 1 calc(50% - 0.85rem);
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .bottle-type-grid {
+        flex-direction: column;
+    }
+
+    .bottle-type-option {
+        flex: 1 1 auto;
+
+        flex-direction: row;
+
+        justify-content: flex-start;
+
+        text-align: left;
+
+        padding: 0.9rem 1rem;
+    }
+
+    .bottle-option-content {
+        text-align: left;
+    }
+}

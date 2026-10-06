@@ -1,0 +1,303 @@
+{% extends 'base.html' %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{{ url_for(
+        'static',
+        filename='css/health_check.css'
+    ) }}"
+>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4 health-check-page">
+
+    <!-- Page Header -->
+    <div class="health-page-header">
+
+        <div class="health-page-header-left">
+
+            <a 
+                href="{{ url_for(
+                    'child_daily_log',
+                    child_id=child.id,
+                    date=selected_date.strftime('%Y-%m-%d')
+                )}}"
+                class="health-back-btn"
+                aria-label="Back to daily log"
+            >
+                <i class="ti ti-arrow-left"></i>
+            </a>
+
+            <div>
+                <div class="health-page-eyebrow">
+                    DAILY LOG
+                </div>
+
+                <h1 class="health-page-title">
+                    Daily Health Check
+                </h1>
+
+                <div class="health-page-meta">
+
+                    <span>
+                        {{ child.first_name }} {{ child.last_name }}
+                    </span>
+
+                    <span class="health-meta-dot">•</span>
+
+                    <span>
+                        {{ selected_date.strftime('%B %d, %Y') }}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Child Summary -->
+    <div class="health-child-card">
+
+        <div class="health-child-profile">
+            
+            <div class="health-child-photo">
+                {% if child.photo %}
+                    <img 
+                        src="{{ url_for(
+                            'static',
+                            filename='uploads/' + child.photo
+                        )}}" 
+                        alt="{{ child.first_name }} {{ child.last_name }}">
+                {% else %}
+                    <span>
+                        {{ child.first_name[0] }}
+                    </span>
+                {% endif %}
+            </div>
+
+            <div class="health-child-profile-info">
+                <h2>
+                    {{ child.first_name }} {{ child.last_name }}
+                </h2>
+
+                <div class="health-child-meta">
+                    <span>
+                        {{ child.age_display }}
+                    </span>
+
+                    <span>•</span>
+
+                    <span>
+                        {{ child.class_name or child.determine_class() }}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Health Information -->
+        <div class="health-child-info">
+
+            <div class="health-info-item">
+                
+                <div class="health-info-icon health-info-icon-allergy">
+                    <i class="ti ti-alert-triangle"></i>
+                </div>
+
+                <div>
+                    <div class="health-info-label">
+                        Allergies
+                    </div>
+
+                    <div class="health-info-value
+                        {% if child.allergies %}
+                            health-info-alert
+                        {% endif %}
+                    ">
+                        {{ child.allergies or 'None recorded' }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="health-info-item">
+
+                <div class="health-info-icon health-info-icon-medical">
+                    <i class="ti ti-heartbeat"></i>
+                </div>
+
+                <div>
+                    <div class="health-info-label">
+                        Medical Notes
+                    </div>
+
+                    <div class="health-info-value">
+                        {{ child.medical_notes or 'None recorded' }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Health Check Card -->
+    <div class="health-form-card">
+
+        <!-- Header -->
+        <div class="health-form-header">
+
+            <div class="health-form-icon">
+                <i class="ti ti-heartbeat"></i>
+            </div>
+
+            <div>
+                <h2>
+                    Health Check 
+                </h2>
+
+                <p>
+                    Record the child's health condition for today.
+                </p>
+            </div>
+        </div>
+
+        <!-- Form -->
+        <div class="health-form-body">
+
+            <form method="POST">
+                
+
+                <!-- Temperature -->
+                <div class="health-form-section">
+                    <div class="health-section-heading">
+
+                        <div class="health-section-icon">
+                            <i class="ti ti-temperature"></i>
+                        </div>
+
+                        <div>
+                            <label 
+                                for="temperature"
+                                class="health-section-title">
+                                Temperature
+                            </label>
+
+                            <p class="health-section-description">
+                                Record the child's temperature if taken.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="health-temperature-input">
+                        <div class="health-input-icon">
+                            <i class="ti ti-temperature"></i>
+                        </div>
+
+                        <input 
+                            type="number"
+                            step="0.1"
+                            min="90"
+                            max="110"
+                            class="form-control"
+                            id="temperature"
+                            name="temperature"
+                            placeholder="98.6">
+
+                        <span class="health-input-unit">
+                            °F
+                        </span>
+                    </div>
+
+                    <div class="health-input-help">
+                        Leave blank if temperature was not taken.
+                    </div>
+                </div>
+
+                <!-- Symptoms -->
+                <div class="health-form-section">
+
+                    <div class="health-section-heading">
+                        
+                        <div class="health-section-icon">
+                            <i class="ti ti-stethoscope"></i>
+                        </div>
+
+                        <div>
+                            <label 
+                                for="symptoms"
+                                class="health-section-title">
+
+                                Symptoms
+                            </label>
+
+                            <p class="health-section-description">
+                                Note any symptoms or signs observed.
+                            </p>
+                        </div>
+                    </div>
+
+                    <textarea 
+                        name="symptoms" 
+                        id="symptoms"
+                        class="form-control health-textarea"
+                        rows="4"
+                        placeholder="Describe any symptoms...">
+                    </textarea>
+                </div>
+
+                <!-- Notes -->
+                <div class="health-form-section">
+
+                    <div class="health-section-heading">
+
+                        <div class="health-section-icon">
+                            <i class="ti ti-notes"></i>
+                        </div>
+
+                        <div>
+                            <label 
+                                for="notes"
+                                class="health-section-title">
+                                Notes
+                            </label>
+
+                            <p class="health-section-description">
+                                Add any additional observations or notes.
+                            </p>
+                        </div>
+                    </div>
+
+                    <textarea 
+                        name="notes" 
+                        id="notes"
+                        class="form-control health-textarea"
+                        rows="4"
+                        placeholder="Add any additional notes...">
+                    </textarea>
+                </div>
+
+                <!-- Actions -->
+                <div class="health-form-actions">
+                    <a 
+                        href="{{ url_for(
+                            'child_daily_log',
+                            child_id=child.id,
+                            date=selected_date.strftime('%Y-%m-%d')
+                        )}}"
+                        class="health-cancel-btn">
+                            
+                        <i class="ti ti-x"></i>
+                        <span>Cancel</span>
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="health-save-btn">
+
+                        <i class="ti ti-check"></i>
+                        <span>Save Health Check</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+</div>
+{% endblock %}

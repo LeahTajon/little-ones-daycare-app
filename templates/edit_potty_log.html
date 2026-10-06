@@ -1,0 +1,329 @@
+{% extends 'base.html' %} {% block extra_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/potty_log.css') }}"
+/>
+{% endblock %} {% block content %}
+
+<div class="container-fluid py-4">
+  <!-- Header -->
+  <div class="d-flex align-items-center gap-3 mb-4">
+    <a
+      href="{{ url_for(
+                'child_daily_log',
+                child_id=child.id
+            )}}"
+      class="text-decoration-none text-dark"
+    >
+      <i class="ti ti-arrow-left fs-4"></i>
+    </a>
+
+    <div>
+      <h1 class="h3 fw-bold mb-1">Edit Potty Log</h1>
+      <div class="text-muted small">
+        {{ child.first_name }} {{ child.last_name }}
+
+        <span class="mx-1">•</span>
+        {{ selected_date.strftime('%B %d, %Y') }}
+      </div>
+    </div>
+  </div>
+  <!-- End: Header -->
+
+  <!-- Potty Form -->
+  <div class="potty-form-card">
+    <form method="POST">
+      {{ form.hidden_tag() }}
+
+      <!-- Potty Status -->
+      <div class="potty-section">
+        <label class="potty-label"> Potty Status </label>
+
+        <div class="row g-3 potty-options potty-status-options">
+          {% for value, label in form.potty_status.choices %}
+          <div class="col-12 col-sm-6 col-lg-4">
+            <input
+              type="radio"
+              name="potty_status"
+              value="{{ value }}"
+              id="potty-status-{{ value }}"
+              {% if form.potty_status.data == value %}
+              checked
+              {% endif %}
+            />
+
+            <label for="potty-status-{{ value }}" class="potty-option">
+              <span class="potty-option-icon">
+                {% if value == 'wet' %}
+                <i class="ti ti-droplet"></i>
+
+                {% elif value == 'bm' %}
+                <i class="ti ti-poo"></i>
+
+                {% elif value == 'wet_bm' %}
+                <i class="ti ti-toilet-paper"></i>
+
+                {% endif %}
+              </span>
+
+              <span class="potty-option-text"> {{label}} </span>
+            </label>
+          </div>
+          {% endfor %}
+        </div>
+
+        {% if form.potty_status.errors %}
+        <div class="text-danger small mt-2">
+          {{ form.potty_status.errors[0] }}
+        </div>
+        {% endif %}
+      </div>
+      <!--End: Potty Status -->
+
+      <!-- Time -->
+      <div class="potty-section">
+        <label class="potty-label"> Time </label>
+
+        <div class="potty-options potty-time-options">
+          <!-- Automatic -->
+          <div class="potty-time-option">
+            <input
+              type="radio"
+              name="time_mode"
+              value="automatic"
+              id="time-automatic"
+              {% if form.time_mode.data == "automatic" or not form.time_mode.data %}
+              checked
+              {% endif %}
+            />
+
+            <label for="time-automatic" class="potty-time-card">
+              <span class="potty-option-icon">
+                <i class="ti ti-clock"></i>
+              </span>
+
+              <span class="potty-time-content">
+                <span class="potty-time-title"> Automatic </span>
+
+                <span class="potty-time-text">
+                  Use the current time when this log is saved.
+                </span>
+              </span>
+
+              <span class="potty-time-check">
+                <i class="ti ti-check"></i>
+              </span>
+            </label>
+          </div>
+
+          <!-- Manual -->
+          <div class="potty-time-option">
+            <input
+              type="radio"
+              name="time_mode"
+              value="manual"
+              id="time-manual"
+              {% if form.time_mode.data == "manual" %}
+              checked
+              {% endif %}
+            />
+
+            <label for="time-manual" class="potty-time-card">
+              <span class="potty-option-icon">
+                <i class="ti ti-edit"></i>
+              </span>
+
+              <span class="potty-time-content">
+                <span class="potty-time-title"> Manual </span>
+
+                <span class="potty-time-text">
+                  Enter the actual time of the potty event.
+                </span>
+              </span>
+
+              <span class="potty-time-check">
+                <i class="ti ti-check"></i>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Manual Time Input -->
+        <div
+          class="potty-manual-time"
+          id="potty-manual-time"
+          {% if form.time_mode.data != "manual" %}
+          style="display: none"
+          {% endif %}
+        >
+          <label for="{{ form.manual_time.id }}" class="potty-label">
+            Enter Time
+          </label>
+
+          {{ form.manual_time( class="form-control potty-time-input" )}} {% if
+          form.manual_time.errors %}
+          <div class="text-danger small mt-2">
+            {{ form.manual_time.errors[0] }}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      <!--End: Time -->
+
+      <!-- Potty Method -->
+      <div class="potty-section">
+        <label class="potty-label"> Potty Method </label>
+
+        <div class="row g-3 potty-options potty-method-options">
+          {% for value, label in form.potty_method.choices %}
+
+          <div class="col-12 col-sm-6 col-lg-3">
+            <input
+              type="radio"
+              name="potty_method"
+              value="{{ value }}"
+              id="potty-method-{{ value }}"
+              {% if form.potty_method.data == value %}
+              checked
+              {% endif %}
+            />
+
+            <label for="potty-method-{{ value }}" class="potty-option">
+              <span class="potty-option-icon">
+                {% if value == 'toilet' %}
+                <i class="ph ph-toilet"></i>
+                {% elif value == 'training_potty' %}
+                <i class="ph ph-armchair"></i>
+                {% elif value == 'diaper' %}
+                <i class="ti ti-diaper"></i>
+                {% elif value == 'pull_up' %}
+                <i class="ti ti-accessible"></i>
+                {% endif %}
+              </span>
+
+              <span class="potty-option-text"> {{ label }} </span>
+            </label>
+          </div>
+          {% endfor %}
+        </div>
+        {% if form.potty_method.errors %}
+        <div class="text-danger small mt-2">
+          {{ form.potty_method.errors[0] }}
+        </div>
+        {% endif %}
+      </div>
+      <!--End: Potty Method -->
+
+      <!-- Potty Training Progress -->
+      <div class="potty-section">
+        <label class="potty-label"> Potty Training Progress </label>
+
+        <div class="row g-3 potty-options potty-progress-options">
+          {% for value, label in form.potty_progress.choices %}
+
+          <div class="col-12 col-sm-6 col-lg-4">
+            <input
+              type="radio"
+              name="potty_progress"
+              value="{{ value }}"
+              id="potty-progress-{{ value }}"
+              {% if form.potty_progress.data == value %}
+              checked
+              {% endif %}
+            />
+
+            <label for="potty-progress-{{ value }}" class="potty-option">
+              <span class="potty-option-icon">
+                {% if value == 'independent' %}
+                <i class="ti ti-user-check"></i>
+
+                {% elif value == 'assistance' %}
+                <i class="ti ti-hand-stop"></i>
+
+                {% elif value == 'sat' %}
+                <i class="ph ph-toilet"></i>
+
+                {% elif value == 'no_result' %}
+                <i class="ti ti-clock"></i>
+
+                {% elif value == 'refused' %}
+                <i class="ti ti-mood-sad"></i>
+
+                {% elif value == 'accident' %}
+                <i class="ti ti-alert-triangle"></i>
+                {% endif %}
+              </span>
+
+              <span class="potty-option-text"> {{ label }} </span>
+            </label>
+          </div>
+          {% endfor %}
+        </div>
+
+        {% if form.potty_progress.errors %}
+        <div class="text-danger small mt-2">
+          {{ form.potty_progress.errors[0] }}
+        </div>
+        {% endif %}
+      </div>
+      <!--End: Potty Training Progress -->
+
+      <!-- Notes -->
+      <div class="potty-section">
+        <label for="{{ form.notes.id }}" class="potty-label">
+          Notes
+          <span class="potty-optional"> (Optional) </span>
+        </label>
+
+        {{ form.notes( class="form-control potty-notes", rows="4",
+        placeholder="Add a note about the child's potty experience..." )}}
+      </div>
+      <!--End: Notes -->
+
+      <!-- Actions -->
+      <div class="potty-actions">
+        <a
+          href="{{ url_for(
+                        'daily_log', 
+                        child_id=child.id,
+                        date=selected_date.strftime('%Y-%m-%d')) 
+                    }}"
+          class="btn btn-potty-cancel"
+        >
+          Cancel
+        </a>
+
+        <button type="submit" class="btn btn-potty-save">
+          Update Potty Log
+        </button>
+      </div>
+      <!--End: Actions -->
+    </form>
+  </div>
+  <!--End: Potty Form -->
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const automaticOption = document.getElementById("time-automatic");
+    const manualOption = document.getElementById("time-manual");
+    const manualTime = document.getElementById("potty-manual-time");
+
+    function updateTimeMode() {
+      if (manualOption.checked) {
+        manualTime.style.display = "block";
+      } else {
+        manualTime.style.display = "none";
+      }
+    }
+
+    automaticOption.addEventListener("change", updateTimeMode);
+
+    manualOption.addEventListener("change", updateTimeMode);
+
+    // Set initial state
+    updateTimeMode();
+  });
+</script>
+
+{% endblock %}

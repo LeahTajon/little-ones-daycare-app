@@ -1,0 +1,748 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid px-0">
+
+    <!-- Page Header -->
+     <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+
+        <div>
+            {% if edit %}
+            <h2 class="fw-bold mb-1">Edit Child</h2>
+            <p class="text-muted mb-0">
+                Update this child's information
+            </p>
+            {% else %}
+            <h2 class="fw-bold mb-1">Add New Child</h2>
+            <p class="text-muted mb-0">
+                Complete the application information below.
+            </p>
+            {% endif%}
+        </div>
+
+        <a 
+            href="{{ url_for('index')}}"
+            class="btn btn-light border mt-2 mt-md-0">
+
+            <i data-lucide="arrow-left"></i>
+            Back
+
+        </a>
+     
+    </div>
+
+    <!-- Form -->
+    <form method="POST" enctype="multipart/form-data">
+        
+        {{ form.hidden_tag() }}
+
+        <!-- Child Information -->
+        <div class="card border-0 shadow-sm rounded-4 mb-4">
+
+            <!-- Child Information Heading-->
+             <div class="card-body p-4">
+                <div class="section-heading mb-4">
+                    <div class="section-icon">
+                        <i data-lucide="baby"></i>
+                    </div>
+
+                    <div>
+                        <h5 class="fw-bold mb-1">
+                            Child Information
+                        </h5>
+
+                        <p class="text-muted small mb-0">
+                            Basic information about the child.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Child Info Fields -->
+                <div class="row g-3">
+
+                    <!-- First Name -->
+                    <div class="col-md-6">
+                        {{ form.first_name.label(class='form-label fw-semibold') }}
+                        {{ form.first_name(class='form-control form-control-md', placeholder='Enter first name') }}
+
+                        {% for error in form.first_name.errors %}
+                            <div class="text-danger small mt-1">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <!-- Last Name -->
+                    <div class="col-md-6">
+                        {{ form.last_name.label(class='form-label fw-semibold') }}
+                        {{ form.last_name(class='form-control form-control-md', placeholder='Enter last name') }}
+
+                        {% for error in form.last_name.errors %}
+                            <div class="text-danger small mt-1">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Date of Birth -->
+                    <div class="col-md-12">
+
+                        {{ form.date_of_birth.label(class='form-label fw-semibold') }}
+                        {{ form.date_of_birth(class='form-control form-control-md') }}
+
+                        {% for error in form.date_of_birth.errors %}
+                            <div class="text-danger small mt-1">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    
+
+                    <!-- Gender -->
+                    <div class="col-md-12">
+                        <label class="form-label fw-semibold">Gender</label>
+
+                        <div class="row g-3">
+                            {% for subfield in form.gender %}
+                            <div class="col-6">
+                                <label class="gender-card w-100">
+                                    {{ subfield(class='gender-radio') }}
+
+                                    <div class="gender-content">
+
+                                        {% if subfield.label.text == 'Male' %}
+                                        <div class="gender-avatar boy">
+                                            <i data-lucide="baby"></i>
+                                        </div>
+                                        {% else %}
+                                        <div class="gender-avatar girl">
+                                            <i data-lucide="baby"></i>
+                                        </div>
+                                        {% endif %}
+
+                                        <span class="gender-text">{{ subfield.label.text }}</span>
+                                    </div>
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Address -->
+                    <div class="col-12 mt-3">
+                        <label class="form-label fw-semibold mb-3">
+                            Address
+                        </label>
+
+                        <div class="row g-3">
+
+                            <!-- Street -->
+                            <div class="col-12">
+                                {{ form.street.label(class='form-label') }}
+                                {{ form.street(
+                                    class='form-control',
+                                    placeholder='Street address'
+                                ) }}
+
+                                {% for error in form.street.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                            <!-- City -->
+                            <div class="col-md-5">
+                                {{ form.city.label(class='form-label') }}
+                                {{ form.city(
+                                    class='form-control',
+                                    placeholder='City'
+                                )}}
+
+                                {% for error in form.city.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                            <!-- State -->
+                            <div class="col-md-4">
+                                {{ form.state.label(class='form-label') }}
+                                {{ form.state(
+                                    class='form-control',
+                                    placehold='State'
+                                )}}
+
+                                {% for error in form.state.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                            <!-- ZIP -->
+                            <div class="col-md-3">
+                                {{ form.zipcode.label(class='form-label') }}
+                                {{ form.zipcode(
+                                    class='form-control',
+                                    placeholder='ZIP Code'
+                                )}}
+
+                                {% for error in form.zipcode.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 
+                    <div class="col-12">
+                        <label class="form-label fw-semibold mb-3">Class Type</label>
+
+                        <div class="row g-3">
+                            {% for subfield in form.class_name %}
+                            <div class="col-6 col-lg-3">
+                                <label class="option-card class-card w-100">
+                                    {{ subfield(class='option-radio') }}
+                                    <div class="option-check">
+                                        <i data-lucide="check"></i>
+                                    </div>
+
+                                    {% if subfield.data == "infant" %}
+                                        <div class="option-avatar avatar-infant">
+                                            <i data-lucide="baby"></i>
+                                        </div>
+                                    
+                                    {% elif subfield.data == "toddler" %}
+                                        <div class="option-avatar avatar-toddler">
+                                            <i data-lucide="flower"></i>
+                                        </div>
+                                    
+                                    {% elif subfield.data == "pre-k" %}
+                                        <div class="option-avatar avatar-prek">
+                                            <i data-lucide="star"></i>
+                                        </div>
+                                    
+                                    {% else %}
+                                        <div class="option-avatar avatar-school">
+                                            <i data-lucide="book-open"></i>
+                                        </div>
+                                    {% endif %}
+
+                                    <div class="option-title">{{ subfield.label.text }}</div>
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    -->
+
+                    <!-- Program -->
+                    <div class="col-12">
+                        <label class="form-label fw-semibold mb-3">Program Type</label> 
+                        
+                        <div class="row g-3">
+                            {% for subfield in form.program_type %}
+                            <div class="col-12 col-md-6">
+
+                                <label class="option-card program-card w-100">
+                                    {{ subfield(class='option-radio') }}
+                                    <div class="option-check">
+                                        <i data-lucide="check"></i>
+                                    </div>
+
+                                    <div class="program-content">
+                                        {% if subfield.data == 'Full Day' %}
+                                            <div class="option-avatar avatar-full">
+                                                <i data-lucide="sun"></i>
+                                            </div>
+                                        {% elif subfield.data == 'Half Day - Morning' %}
+                                            <div class="option-avatar avatar-morning">
+                                                <i data-lucide="sunrise"></i>
+                                            </div>
+                                        {% elif subfield.data == 'Half Day - Afternoon' %}
+                                            <div class="option-avatar avatar-afternoon">
+                                                <i data-lucide="sunset"></i>
+                                            </div>
+                                        {% else %}
+                                            <div class="option-avatar avatar-after">
+                                                <i data-lucide="clock-3"></i>
+                                            </div>
+                                        {% endif %}
+
+                                        <div>
+                                            <div class="option-title">
+                                                {{ subfield.label.text }}
+                                            </div>
+
+                                            <div class="option-subtitle">
+                                                {% if subfield.data == 'Full Day' %}
+                                                    7:00 AM - 5:30 PM
+                                                {% elif subfield.data == 'Half Day - Morning' %}
+                                                    7:00 AM - 11:30 AM
+                                                {% elif subfield.data == 'Half Day - Afternoon' %}
+                                                    12:30 PM - 5:00 PM
+                                                {% else %}
+                                                    After regular school hours
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <!-- End: Program -->
+
+                </div>
+                <!-- End: Child Info Fields --> 
+                
+             </div>
+            <!-- End: Child Information Heading-->
+
+        </div>
+        <!-- End: Child Information -->
+
+        <!-- Enrollment & Schedule -->
+        <div class="card border-0 shadow-sm rounded-4 mb-4">
+
+            <!-- Schedule Card -->
+            <div class="card-body p-4">
+
+                <div class="section-heading mb-4">
+                    
+                    <div class="section-icon">
+                        <i data-lucide="calendar-days"></i>
+                    </div>
+
+                    <div>
+                        <h5 class="fw-bold mb-1">
+                            Enrollment & Schedule
+                        </h5>
+                        
+                        <p class="text-muted small mb-0">
+                            Select the child's enrollment dates and attendance days.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Enrollment & Schedule Fields -->
+                <div class="row g-3">
+
+                    <!-- Enrolled Date -->
+                    <div class="col-md-6">
+
+                        {{ form.enrolled_date.label(class='form-label fw-semibold mb-4') }}
+                        {{ form.enrolled_date(class='form-control form-control-md') }}
+                    </div>
+
+                    <!-- Start Date -->
+                    <div class="col-md-6">
+
+                        {{ form.start_date.label(class='form-label fw-semibold mb-4') }}
+                        {{ form.start_date(class='form-control form-control-md') }}
+                    </div>
+
+                    <!-- Attending -->
+                    <div class="col-md-12 mt-4">
+                        
+                        <label class="form-label fw-semibold mb-4">Days Attending</label>
+
+                            <div class="select-all-days mb-4">
+                                <button 
+                                    class="select-all-button"
+                                    id="selectAllDays"
+                                    type="button">
+
+                                    <i data-lucide="circle-check-big"></i>
+                                    Select All
+                                
+                                </button>
+                            </div>
+
+                            <div class="days-picker">
+                            {% for value, label in form.days_attending.choices %}
+                                
+                                <label class="day-option">
+                                    <input 
+                                        type="checkbox"
+                                        name="days_attending"
+                                        value="{{ value }}"
+                                        {% if value in (form.days_attending.data or []) %}
+                                            checked
+                                        {% endif %}>
+                                    
+                                    <span class="day-button">
+                                        <span class="checkmark">✓</span>
+                                        <span class="day-name">{{ label[:3] }}</span>
+                                    </span>
+                                </label>
+                            {% endfor %}
+                            </div>
+
+                            <div class="days-footer">
+                                <span class="selected-days-text" id="selectedDaysText">
+                                    No days selected
+                                </span>
+                                <button
+                                    type="button"
+                                    id="clearDays"
+                                    class="clear-days-button">
+                                    <i data-lucide="trash-2"></i>  
+                                    Clear All
+                                </button>
+                            </div>
+                    </div>
+                    <!-- End: Attending -->
+                     
+                </div>
+            </div>
+            <!-- End: Schedule Card -->
+        </div>
+        <!-- End: Enrollment & Schedule -->
+
+        <!-- Parents -->
+        <div class="card border-0 shadow-sm rounded-4 mb-4">
+
+            <!-- Parent Card -->
+            <div class="card-body p-4">
+                <div class="section-heading mb-4">
+                    <div class="section-icon">
+                        <i data-lucide="users"></i>
+                    </div>
+
+                    <div>
+                        <h5 class="fw-bold mb-1">Parent Information</h5>
+                        <p class="text-muted small mb-0">Parent or guardian contact information</p>
+                    </div>
+                </div>
+
+                <!-- Father -->
+                 <div class="parent-section mb-4">
+                    <h6 class="fw-bold mb-3">
+                        Father
+                    </h6>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            {{ form.father_name.label(class='form-label') }}
+                            {{ form.father_name(class='form-control') }}
+                        </div>
+
+                        <div class="col-md-6">
+                            {{ form.father_occupation.label(class='form-label') }}
+                            {{ form.father_occupation(class='form-control')}}
+                        </div>
+
+                        <div class="col-md-6">
+                            {{ form.father_phone.label(class='form-label') }}
+                            {{ form.father_phone(class='form-control') }}
+                        </div>
+
+                        <div class="col-md-6">
+                            {{ form.father_email.label(class='form-label') }}
+                            {{ form.father_email(class='form-control') }}
+                        </div>
+                    </div>
+                </div>
+                <!-- End: Father --> 
+
+                <!-- Mother -->
+                <div class="parent-section">
+                    <h6 class="fw-bold mb-3">
+                        Mother
+                    </h6>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            {{ form.mother_name.label(class='form-label') }}
+                            {{ form.mother_name(class='form-control') }}
+                        </div>
+
+                        <div class="col-md-6">
+                            {{ form.mother_occupation.label(class='form-label') }}
+                            {{ form.mother_occupation(class='form-control') }}
+                        </div>
+
+                        <div class="col-md-6">
+                            {{ form.mother_phone.label(class='form-label') }}
+                            {{ form.mother_phone(class='form-control') }}
+                        </div>
+
+                        <div class="col-md-6">
+                            {{ form.mother_email.label(class='form-label') }}
+                            {{ form.mother_email(class='form-control') }}
+                        </div>
+                    </div>
+                </div>
+                <!-- End: Mother --> 
+            </div>
+            <!-- End: Parent Card -->
+        </div>
+        <!-- End: Parents -->
+
+        <!-- Authorized Pickups -->
+        <div class="card border-0 shadow-sm rounded-4 mb-4">
+
+            <!-- Authorized Pickup Card -->
+            <div class="card-body p-4">
+
+                <div class="section-heading mb-4">
+                    <div class="section-icon">
+                        <i data-lucide="car"></i>
+                    </div>
+
+                    <div>
+                        <h5 class="fw-bold mb-1">
+                            Authorized Pickup Persons
+                        </h5>
+                        <p class="text-muted small mb-0">
+                            People authorized to pick up this child.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Authorized Pickup Fields -->
+                <div class="row g-3">
+
+                    <!-- Pickup 1 -->
+                    <div class="col-lg-4">
+                        <div class="pickup-card">
+                            <span class="pickup-number">1</span>
+                            <h6 class="fw-bold">Authorized person</h6>
+
+                            {{ form.pickup1_name(class='form-control mb-2', placeholder='Name') }}
+                            {{ form.pickup1_relationship(class='form-control mb-2', placeholder='Relationship to child') }}
+                            {{ form.pickup1_phone(class='form-control', placeholder='Phone Number')}}
+                        </div>
+                    </div>
+
+                    <!-- Pickup 2 -->
+                    <div class="col-lg-4">
+                        <div class="pickup-card">
+                            <span class="pickup-number">2</span>
+                            <h6 class="fw-bold">Authorized Person</h6>
+
+                            {{ form.pickup2_name(class='form-control mb-2', placeholder='Name') }}
+                            {{ form.pickup2_relationship(class='form-control mb-2', placeholder='Relationship to child') }}
+                            {{ form.pickup2_phone(class='form-control', placeholder='Phone Number')}}
+                        </div>
+                    </div>
+
+                    <!-- Pickup 3 -->
+                    <div class="col-lg-4">
+                        <div class="pickup-card">
+                            <span class="pickup-number">3</span>
+                            <h6 class="fw-bold">Authorized Person</h6>
+
+                            {{ form.pickup3_name(class='form-control mb-2', placeholder='Name') }}
+                            {{ form.pickup3_relationship(class='form-control mb-2', placeholder='Relationship to child') }}
+                            {{ form.pickup3_phone(class='form-control', placeholder='Phone Number')}}
+                        </div>
+                    </div>
+                </div>
+                <!-- End: Authorized Pickup Fields -->
+            </div>
+            <!-- End: Authorized Pickup Card -->
+        </div>
+        <!-- End: Authorized Pickups -->
+
+        <!-- Photo & Medical -->
+        <div class="row g-4 mb-4">
+             
+            <!-- Medical -->
+            <div class="col-lg-12">
+                <div class="card border-0 shadow-sm rounded-4 h-100">
+                    <div class="card-body p-4">
+
+                        <div class="section-heading mb-4">
+                            <div class="section-icon">
+                                <i data-lucide="heart-pulse"></i>
+                            </div>
+
+                            <div>
+                                <h5 class="fw-bold mb-1">
+                                    Medical Information
+                                </h5>
+                                <p class="text-muted small mb-0">
+                                    Important health information.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Allergies -->
+                        <div class="mb-3">
+                            {{ form.allergies.label(class='form-label fw-semibold') }}
+                            {{ form.allergies(class='form-control') }}
+                        </div>
+
+                        <!-- Medical Notes -->
+                        <div class='mb-3'>
+                            {{ form.medical_notes.label(class='form-label fw-semibold') }}
+                            {{ form.medical_notes(class='form-control')}}
+                        </div>
+
+                        <!-- Additional Notes -->
+                        <div>
+                            {{ form.notes.label(class='form-label fw-semibold') }}
+                            {{ form.notes(class='form-control')}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End: Medical -->
+            
+            <!-- Upload Photo -->
+            <div class="col-lg-12">
+                <div class="card border-0 shadow-sm rounded-4 h-100">
+                    <div class="card-body p-4">
+                        <div class="section-heading mb-4">
+
+                            <div class="section-icon">
+                                <i data-lucide="camera"></i>
+                            </div>
+
+                            <div>
+                                <h5 class="fw-bold mb-1">Child Photo</h5>
+                                <p class="text-muted small mb-0">
+                                    Upload a recent photo of the child
+                                </p>
+                            </div>
+                        </div>
+
+                        <label class="upload-box w-100">
+
+                            {{ form.photo(class='d-none', id='photo-input') }}
+
+                            <div class="upload-content">
+
+                                <!-- Photo Preview -->
+                                <img 
+                                    id="photo-preview"
+                                    class="preview-image
+                                    {% if not edit or not child.photo %}
+                                    d-none
+                                    {% endif %}"
+                                    src="{% if edit and child.photo %}
+                                            {{ url_for('static', filename='uploads/' + child.photo) }}
+                                        {% endif %}" 
+                                    alt="Photo Preview">
+                                
+                                <!-- Upload Placeholder -->
+                                <div
+                                    id="upload-placeholder"
+                                    {% if edit and child.photo %}
+                                    class="d-none"
+                                    {% endif %}
+                                >
+
+                                    <div class="upload-icon">
+                                        <i data-lucide="cloud-upload"></i>
+                                    </div>
+
+                                    <h6 class="mb-1">
+                                        Click to upload a photo
+                                    </h6>
+
+                                    <p class="mb-0 small text-muted">
+                                        JPG, JPEF, PNG or WEBP
+                                    </p>
+
+                                </div>
+
+                                <!-- Selected File Info -->
+                                <div
+                                    id="file-info"
+                                    class="{% if edit and child.photo %}mt-3{% else %}d-none mt-3{% endif %}">
+                                    <div class="d-flex align-items-center justify-content-center gap-2 flex-column text-success">
+                                        <i data-lucide="check-circle-2"></i>
+                                        <span class="fw-semibold">
+                                            Photo Selected
+                                        </span>
+                                        <div class="small text-muted mt-1" id="file-name"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <!-- End: Upload Photo -->
+
+        </div>
+        <!-- End: Photo & Medical -->
+
+        <!-- Actions -->
+        <div class="d-flex flex-column flex-sm-row justify-content-end gap-2 mb-5">
+            <a 
+                href="
+                    {% if edit %}
+                        {{ url_for('child_details', child_id=child.id) }}
+                    {% else %}
+                        {{ url_for('children') }}
+                    {% endif %}" 
+                class="btn cancel-btn"
+            >
+                Cancel
+            </a>
+
+            {{ form.submit(
+                value='Save Changes' if edit else 'Add Child',
+                class='btn btn-primary px-4'
+            ) }}
+        </div>
+        <!-- End: Actions -->
+         
+    </form>
+</div>
+
+<!-- 
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        <div class="fancy-overlay" id="successModal">
+
+            <div class="fancy-modal">
+
+                
+                <div class="confetti c1"></div>
+                <div class="confetti c2"></div>
+                <div class="confetti c3"></div>
+                <div class="confetti c4"></div>
+                <div class="confetti c5"></div>
+                <div class="confetti c6"></div>
+
+               
+                <div class="check-wrap">
+                    <div class="check-circle">
+                        <i data-lucide="check"></i>
+                    </div>
+                </div>
+
+                <h2 class="fancy-title">Success!</h2>
+                
+                <p class="fancy-message">
+                    {{ message }}
+                </p>
+
+                <div class="divider-heart"> 
+                    <span>❤</span> 
+                </div>
+
+                <button class="fancy-btn" onclick="closeModal()">
+                    Close 
+                    <i data-lucide="arrow-right"></i>
+                </button>
+
+            </div>
+        </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+-->
+{% endblock %}
