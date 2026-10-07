@@ -948,6 +948,36 @@ def create_daily_log_pdf(file_path, daily_log):
                 )
             )
 
+        potty_logs = sorted(
+            daily_log.potty_logs or [],
+            key=lambda x: x.time or datetime.min,
+        )
+
+        if potty_logs:
+            data = [["Time", "Status", "Method", "Progress", "Notes"]]
+
+            for potty in potty_logs:
+                data.append(
+                    [
+                        format_datetime(potty.time),
+                        display_choice(potty.potty_status),
+                        display_choice(potty.potty_method),
+                        display_choice(potty.potty_progress),
+                        format_text(potty.notes),
+                    ]
+                )
+
+            cards.append(
+                create_log_card(
+                    "Potty",
+                    "potty",
+                    data,
+                    [38, 45, 48, 62, 59],
+                    CARD_BG,
+                    ICON,
+                )
+            )
+
         naps = sorted(
             daily_log.nap_logs or [],
             key=lambda x: x.start_time or time.min,

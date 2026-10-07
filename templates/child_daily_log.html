@@ -805,13 +805,18 @@
                     Progress:
                     <strong class="text-dark">
                       {% if item.log.potty_progress == 'independent' %}
-                      Independent {% elif item.log.potty_progress ==
-                      'assistance' %} Used With Assistance {% elif
-                      item.log.potty_progress == 'sat' %} Sat on Potty {% elif
-                      item.log.potty_progress == 'no_result' %} Tried - No
-                      Result {% elif item.log.potty_progress == 'refused' %}
-                      Refused {% elif item.log.potty_progress == 'accident' %}
-                      Had an Accident {% endif %}
+                      Independent 
+                      {% elif item.log.potty_progress == 'assistance' %} 
+                      Used With Assistance 
+                      {% elif item.log.potty_progress == 'sat' %}
+                       Sat on Potty 
+                      {% elif item.log.potty_progress == 'no_result' %} 
+                       Tried - No Result 
+                      {% elif item.log.potty_progress == 'refused' %}
+                      Refused 
+                      {% elif item.log.potty_progress == 'accident' %}
+                      Had an Accident 
+                      {% endif %}
                     </strong>
                   </div>
                   {% endif%}

@@ -39,7 +39,7 @@ app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_USERNAME')
 
 mail = Mail(app)
 
-app.config['SECRET_KEY'] = 'dev-secret-key-change-this-later'
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///littleones.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -3522,11 +3522,6 @@ def parent_contact_report_preview():
         selected_student=student_id,
         pdf_url=pdf_url
     )
-
-
-
-
-
 
 
 
