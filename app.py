@@ -2635,13 +2635,6 @@ def email_daily_log(child_id):
     if not daily_log:
         return "No daily log found for this date.", 404
 
-    # Get parent emails
-    parent_emails = [
-        parent.email
-        for parent in child.parents
-        if parent.email
-    ]
-
     # Get parents who have an email address
     parent_emails = [
         parent
@@ -2651,15 +2644,14 @@ def email_daily_log(child_id):
 
     # Send Email
     if request.method == 'POST':
-
-        # Get selected parent emails
+        
         selected_emails = request.form.getlist('emails')
 
         if not selected_emails:
             flash(
-                'Please select at least one parent or guardian.',
+                "Please select at least one parent or guardian.",
                 'warning'
-                )
+            )
 
             return render_template(
                 'email_daily_log.html',
@@ -2672,28 +2664,30 @@ def email_daily_log(child_id):
         # Create PDF
         file_path = os.path.join(
             app.root_path,
-            'daily_log_report.pdf'
+            f'daily_log_{child.id}_{selected_date}.pdf'
         )
 
         create_daily_log_pdf(
             file_path,
-            daily_log 
+            daily_log
         )
 
-        # Create email
+        # Create Email
         msg = Message(
             subject=f'Daily Log - {child.first_name} {child.last_name}',
             recipients=selected_emails
         )
 
         msg.body = f"""
+
         Hello,
 
-        Please find attached the daily log for {child.first_name} {child.last_name} for {selected_date.strftime('%B %d, %Y')}.
+        Please find attached the daily log for 
+        {child.first_name} {child.last_name}
+        for {selected_date.strftime('%B %d, %Y')}.
 
         Thank you,
         Little Ones Too Daycare
-        
         """
 
         # Attach PDF
@@ -2705,12 +2699,18 @@ def email_daily_log(child_id):
                 pdf_file.read()
             )
 
-        # Send email
+        # Send Email
         mail.send(msg)
+
+        # Clean up generated PDF
+        try:
+            os.remove(file_path)
+        except OSError:
+            pass
 
         flash(
             'Daily log sent successfully!',
-            'success'
+            'succes'
         )
 
         return redirect(
@@ -2721,6 +2721,7 @@ def email_daily_log(child_id):
             )
         )
 
+    # Display Email Page
     return render_template(
         'email_daily_log.html',
         child=child,
@@ -2728,16 +2729,7 @@ def email_daily_log(child_id):
         parent_emails=parent_emails,
         selected_emails=[]
     )
-    
 
-    # Display Email Page
-    return render_template(
-        'email_daily_log.html',
-        child=child,
-        selected_date=selected_date,
-        parent_emails=parent_emails,
-        default_email=default_email
-    )
 
 # WhatsApp Route
 @app.route('/daily-log/<int:child_id>/whatsapp')
