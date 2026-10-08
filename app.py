@@ -2678,6 +2678,24 @@ def email_daily_log(child_id):
                 selected_emails=[]
             )
 
+        # ----------------------------------------
+        # Determine actual email recipient
+        # ----------------------------------------
+
+        if DEMO_MODE:
+
+            if not DEMO_EMAIL:
+                return (
+                    "Demo email address is not configured.",
+                    500
+                )
+
+            actual_recipients = [DEMO_EMAIL]
+
+        else:
+
+            actual_recipients = selected_emails
+
         file_path = None
 
         try:
@@ -2708,7 +2726,7 @@ def email_daily_log(child_id):
 
             params = {
                 "from": "onboarding@resend.dev",
-                "to": selected_emails,
+                "to": actual_recipients,
                 "subject": (
                     f'Daily Log - '
                     f'{child.first_name} {child.last_name}'
@@ -2733,7 +2751,9 @@ def email_daily_log(child_id):
                 "attachments": [
                     {
                         "filename": "daily_log.pdf",
-                        "content": base64.b64encode(pdf_data).decode('utf-8')
+                        "content": base64.b64encode(
+                            pdf_data
+                        ).decode('utf-8')
                     }
                 ]
             }
@@ -2749,10 +2769,24 @@ def email_daily_log(child_id):
                 email
             )
 
-            flash(
-                'Daily log sent successfully!',
-                'success'
-            )
+            # ----------------------------------------
+            # Demo Mode Message
+            # ----------------------------------------
+
+            if DEMO_MODE:
+
+                flash(
+                    "Demo email sent successfully! "
+                    "The message was sent to the showcase email address.",
+                    'success'
+                )
+
+            else:
+
+                flash(
+                    'Daily log sent successfully!',
+                    'success'
+                )
 
             return redirect(
                 url_for(
@@ -2773,14 +2807,6 @@ def email_daily_log(child_id):
             <h2>Email Error</h2>
             <pre>{e}</pre>
             """, 500
-
-            return render_template(
-                'email_daily_log.html',
-                child=child,
-                selected_date=selected_date,
-                parent_emails=parent_emails,
-                selected_emails=selected_emails
-            )
 
         finally:
 
@@ -2804,6 +2830,8 @@ def email_daily_log(child_id):
         parent_emails=parent_emails,
         selected_emails=[]
     )
+
+
 
 # WhatsApp Route
 @app.route('/daily-log/<int:child_id>/whatsapp')
