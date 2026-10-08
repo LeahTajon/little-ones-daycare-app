@@ -1,5 +1,6 @@
 import os
 import calendar
+import resend
 
 from flask import Flask, render_template, request, redirect, url_for, flash, send_file
 from flask_wtf.csrf import generate_csrf
@@ -40,6 +41,8 @@ app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_USERNAME')
 mail = Mail(app)
 
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+
+resend.api_key = os.getenv('RESEND_API_KEY')
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///littleones.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -2619,6 +2622,7 @@ def email_daily_log(child_id):
                 date_string,
                 '%Y-%m-%d'
             ).date()
+
         except ValueError:
             selected_date = date.today()
 
@@ -2648,7 +2652,7 @@ def email_daily_log(child_id):
 
         if not selected_emails:
             flash(
-                'Please select at least one parent or guardian.',
+                "Please select at least one parent or guardian.",
                 'warning'
             )
 
@@ -2663,7 +2667,10 @@ def email_daily_log(child_id):
         file_path = None
 
         try:
+            # ----------------------------------------
             # Create PDF
+            # ----------------------------------------
+
             file_path = os.path.join(
                 app.root_path,
                 f'daily_log_{child.id}_{selected_date}.pdf'
@@ -2674,35 +2681,59 @@ def email_daily_log(child_id):
                 daily_log
             )
 
-            # Create Email
-            msg = Message(
-                subject=f'Daily Log - {child.first_name} {child.last_name}',
-                recipients=selected_emails
-            )
+            # ----------------------------------------
+            # Read PDF
+            # ----------------------------------------
 
-            msg.body = f"""
-            Hello,
-
-            Please find attached the daily log for
-            {child.first_name} {child.last_name}
-            for {selected_date.strftime('%B %d, %Y')}.
-
-            Thank you,
-            Little Ones Too Daycare 
-            """
-
-            # Attach PDF
             with open(file_path, 'rb') as pdf_file:
                 pdf_data = pdf_file.read()
 
-            msg.attach(
-                'daily_log.pdf',
-                'application/pdf',
-                pdf_data
-            )
+            # ----------------------------------------
+            # Create Resend Email
+            # ----------------------------------------
 
-            # Send Email
-            mail.send(msg)
+            params = {
+                "from": "onboarding@resend.dev",
+                "to": selected_emails,
+                "subject": (
+                    f'Daily Log - '
+                    f'{child.first_name} {child.last_name}'
+                ),
+                "html": f"""
+                    <p>Hello,</p>
+
+                    <p>
+                        Please find attached the daily log for
+                        <strong>
+                            {child.first_name} {child.last_name}
+                        </strong>
+                        for
+                        {selected_date.strftime('%B %d, %Y')}.
+                    </p>
+
+                    <p>
+                        Thank you,<br>
+                        Little Ones Too Daycare
+                    </p>
+                """,
+                "attachments": [
+                    {
+                        "filename": "daily_log.pdf",
+                        "content": pdf_data
+                    }
+                ]
+            }
+
+            # ----------------------------------------
+            # Send Email through Resend
+            # ----------------------------------------
+
+            email = resend.Emails.send(params)
+
+            app.logger.info(
+                "Daily log email sent successfully: %s",
+                email
+            )
 
             flash(
                 'Daily log sent successfully!',
@@ -2719,9 +2750,8 @@ def email_daily_log(child_id):
 
         except Exception as e:
 
-            # Show the actual error in Render logs
             app.logger.exception(
-                "Error sending daily log email: %s",
+                "Error sending daily log email through Resend: %s",
                 e
             )
 
@@ -2740,12 +2770,17 @@ def email_daily_log(child_id):
 
         finally:
 
-            # Clean up PDF
+            # ----------------------------------------
+            # Delete temporary PDF
+            # ----------------------------------------
+
             if file_path and os.path.exists(file_path):
+
                 try:
                     os.remove(file_path)
+
                 except OSError:
-                    pass 
+                    pass
 
     # Display Email Page
     return render_template(
