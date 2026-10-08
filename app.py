@@ -1,6 +1,7 @@
 import os
 import calendar
 import resend
+import base64
 
 from flask import Flask, render_template, request, redirect, url_for, flash, send_file
 from flask_wtf.csrf import generate_csrf
@@ -2719,7 +2720,7 @@ def email_daily_log(child_id):
                 "attachments": [
                     {
                         "filename": "daily_log.pdf",
-                        "content": pdf_data
+                        "content": base64.b64encode(pdf_data).decode('utf-8')
                     }
                 ]
             }
@@ -2751,14 +2752,14 @@ def email_daily_log(child_id):
         except Exception as e:
 
             app.logger.exception(
-                "Error sending daily log email through Resend: %s",
+                "RESEND EMAIL ERROR: %s",
                 e
             )
 
-            flash(
-                'Unable to send the daily log email. Please try again.',
-                'danger'
-            )
+            return f"""
+            <h2>Email Error</h2>
+            <pre>{e}</pre>
+            """, 500
 
             return render_template(
                 'email_daily_log.html',
