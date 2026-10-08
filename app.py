@@ -58,15 +58,14 @@ os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 DEMO_MODE = os.getenv('DEMO_MODE', 'false').lower() == 'true'
 DEMO_EMAIL = os.getenv('DEMO_EMAIL')
 
+DEMO_WHATSAPP = os.getenv('DEMO_WHATSAPP')
+
 
 @app.context_processor
 def inject_demo_mode():
     return {
         'DEMO_MODE': DEMO_MODE
     }
-
-print("DEMO_MODE:", DEMO_MODE)
-print("DEMO_EMAIL:", DEMO_EMAIL)
 
 db.init_app(app)
 
@@ -2831,8 +2830,6 @@ def email_daily_log(child_id):
         selected_emails=[]
     )
 
-
-
 # WhatsApp Route
 @app.route('/daily-log/<int:child_id>/whatsapp')
 def whatsapp_daily_log(child_id):
@@ -2842,10 +2839,15 @@ def whatsapp_daily_log(child_id):
     date_string = request.args.get('date')
 
     if date_string:
-        selected_date = datetime.strptime(
-            date_string,
-            '%Y-%m-%d'
-        ).date()
+        try:
+            selected_date = datetime.strptime(
+                date_string,
+                '%Y-%m-%d'
+            ).date()
+
+        except ValueError:
+            selected_date = date.today()
+
     else:
         selected_date = date.today()
 
@@ -2860,7 +2862,9 @@ def whatsapp_daily_log(child_id):
     return render_template(
         'whatsapp_daily_log.html',
         child=child,
-        selected_date=selected_date
+        selected_date=selected_date,
+        demo_mode=DEMO_MODE,
+        demo_whatsapp=DEMO_WHATSAPP
     )
 
 # Calendar
