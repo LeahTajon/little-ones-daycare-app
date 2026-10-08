@@ -143,6 +143,23 @@
         <!--End: Flash Message-->
 
         {% block content %} {% endblock %}
+
+        {% if DEMO_MODE %}
+        <div class="demo-environment-notice">
+
+          <div class="demo-notice-icon">
+            <i class="ti ti-info-circle"></i>
+          </div>
+
+          <div class="demo-notice-text">
+            <strong>Demo Environment</strong>
+            <span>
+              All children, parents, and records are fictional
+              and created for demonstration purposes.
+            </span>
+          </div>
+        </div>
+        {% endif %}
       </main>
     </div>
 

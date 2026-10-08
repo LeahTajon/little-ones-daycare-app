@@ -2188,6 +2188,84 @@ body {
   background: #fef2f2;
 }
 
+/* ========================================
+   Demo Environment Notice
+======================================== */
+
+.demo-environment-notice {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin: 32px auto 24px;
+    padding: 12px 16px;
+
+    max-width: 900px;
+
+    background: #f5f3ff;
+    border: 1px solid #e5e0ff;
+    border-radius: 12px;
+
+    color: #6f6a80;
+}
+
+.demo-notice-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 34px;
+    height: 34px;
+
+    border-radius: 9px;
+
+    background: #ebe7ff;
+    color: #7c5cff;
+
+    font-size: 18px;
+}
+
+.demo-notice-text {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.demo-notice-text strong {
+    color: #4b4560;
+    font-weight: 700;
+}
+
+.demo-notice-text span {
+    color: #777185;
+}
+
+
+/* Mobile */
+@media (max-width: 767px) {
+
+    .demo-environment-notice {
+        align-items: flex-start;
+        margin: 24px 16px 20px;
+        padding: 12px 14px;
+    }
+
+    .demo-notice-text {
+        display: block;
+    }
+
+    .demo-notice-text strong {
+        display: block;
+        margin-bottom: 2px;
+    }
+}
+
 /* ================================
    FLASH MESSAGE
 ================================ */

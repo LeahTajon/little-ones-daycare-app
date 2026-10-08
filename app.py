@@ -55,6 +55,19 @@ app.config['UPLOAD_FOLDER'] = os.path.join(
 
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
+DEMO_MODE = os.getenv('DEMO_MODE', 'false').lower() == 'true'
+DEMO_EMAIL = os.getenv('DEMO_EMAIL')
+
+
+@app.context_processor
+def inject_demo_mode():
+    return {
+        'DEMO_MODE': DEMO_MODE
+    }
+
+print("DEMO_MODE:", DEMO_MODE)
+print("DEMO_EMAIL:", DEMO_EMAIL)
+
 db.init_app(app)
 
 from models import (
